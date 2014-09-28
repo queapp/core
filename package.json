@@ -1,0 +1,21 @@
+{
+  "name": "Qube",
+  "description": "iot manager",
+  "version": "0.0.1",
+  "dependencies": {
+    "minimist": "0.2.x",
+    "mime": "1.2.x",
+    "express": "4.x.x",
+    "request": "2.40.x",
+    "underscore": "1.7.x",
+    "body-parser": "1.8.1"
+  },
+  "author": {
+    "name": "Ryan Gaus",
+    "twitter": "@rgausnet"
+  },
+  "scripts": {
+    "test": "mocha",
+    "deps": "sh update.sh"
+  }
+}

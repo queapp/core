@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Garden Thing",
+    "id": 0,
+    "tags": [
+      "garden",
+      "hydroponics"
+    ],
+    "ip": {
+      "host": "127.0.0.1",
+      "port": 8001
+    },
+    "data": {
+      "wateringTime": "11:00:00",
+      "other": 123,
+      "data": 1235
+    }
+  }
+]
