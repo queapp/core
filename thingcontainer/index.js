@@ -6,6 +6,43 @@ var path = require("path");
 module.exports = function() {
   var root = this;
 
+  // a default thing; used in .addThing()
+  this.defaultThing = {
+    "name": "Untitled Thing",
+    "desc": "Untitled Thing Description",
+    "id": null,
+    "image": null,
+    "tags": [],
+    "ip": {
+      "host": null,
+      "port": null
+    },
+    "data": {}
+  }
+
+  /**
+    Add a new thing to the list of things
+  */
+  this.addThing = function(data, done) {
+    // update
+    this.getThings(null, function(all) {
+
+      // allocate id
+      maxId = _.max(all, function(i) {
+        return i.id;
+      }).id;
+
+      // add new record
+      item = _.extend(root.defaultThing, data);
+      item.id = ++maxId;
+      all.push( item );
+      root.putThings(all);
+
+      // callback
+      done(item.id);
+    });
+  }
+
   /**
   Get a list of all things connected to the container
   */
@@ -49,15 +86,17 @@ module.exports = function() {
       });
 
       // update record's data
-      record.data = _.extend(record.data, changes || {});
+      if (record) {
+        record.data = _.extend(record.data, changes || {});
 
-      // recompile the record
-      var all = data;
-      all[listIndex] = record;
-      root.putThings(all);
+        // recompile the record
+        var all = data;
+        all[listIndex] = record;
+        root.putThings(all);
 
-      // callback
-      done(all);
+        // callback
+        done(all);
+      }
     });
   }
 
@@ -66,8 +105,8 @@ module.exports = function() {
   /**
   Create a response packet with the correct status and message
   */
-  this.createResponsePacket = function(status, msg) {
-    return {"status": status || "OK", "msg": msg || null};
+  this.createResponsePacket = function(status, data) {
+    return _.extend({"status": status || "OK", "msg": null}, data || {});
   }
 
 

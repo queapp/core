@@ -1,7 +1,9 @@
 [
   {
-    "name": "Garden Thing",
+    "name": "Hydroponic Garden",
+    "desc": "A garden that grows stuff for me",
     "id": 0,
+    "image": "http://panamashippingcontainerhouse.com/wp-content/uploads/2012/07/Hydroponics-650x487.jpg",
     "tags": [
       "garden",
       "hydroponics"
@@ -13,7 +15,26 @@
     "data": {
       "wateringTime": "11:00:00",
       "other": 123,
-      "data": 1235
+      "data": 123
+    }
+  },
+  {
+    "name": "Hydroponic Garden",
+    "desc": "A garden that grows stuff for me",
+    "id": 0,
+    "image": "http://panamashippingcontainerhouse.com/wp-content/uploads/2012/07/Hydroponics-650x487.jpg",
+    "tags": [
+      "garden",
+      "hydroponics"
+    ],
+    "ip": {
+      "host": "127.0.0.1",
+      "port": 8001
+    },
+    "data": {
+      "wateringTime": "11:00:00",
+      "other": 123,
+      "data": 123
     }
   }
 ]

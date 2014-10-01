@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Qube</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="css/index.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      ">">https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js">
+      ">">https://oss.maxcdn.com/respond/1.4.2/respond.min.js">
+    <![endif]-->
+  </head>
+  <body ng-app="QueGui">
+    <div ng-controller="navController as nC">
+
+      <!-- header -->
+      <nav class="navbar navbar-default navbar-que" role="navigation">
+
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+              <!-- <img src="img/logo-black.svg"/> -->
+              Que Concept
+            </a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-click="nC.toPage(0)" ng-class="{active: nC.pageId == 0}">
+                <a href="#">Dashboard</a>
+              </li>
+              <li ng-click="nC.toPage(1)" ng-class="{active: nC.pageId == 1}">
+                <a href="#">Things</a>
+              </li>
+              <li ng-click="nC.toPage(2)" ng-class="{active: nC.pageId == 2}">
+                <a href="#">Services</a>
+              </li>
+              <li ng-click="nC.toPage(3)" ng-class="{active: nC.pageId == 3}">
+                <a href="#">Notifications</a>
+              </li>
+              <li ng-click="nC.toPage(4)" ng-class="{active: nC.pageId == 4}">
+                <a href="#">Stats</a>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+
+
+        </div><!-- /.container-fluid -->
+      </nav>
+
+      <!-- Thing View: shows a list of all things -->
+      <div class="container" ng-controller="ThingsController as tC" ng-show="nC.pageId == 1">
+        <ul class="card-list">
+          <div
+            class="card"
+            ng-repeat="thing in tC.things"
+            ng-class="{'card-expanded': $scope.expandedCard == $index}"
+            >
+
+            <div class="card-info">
+              <img class="card-image" src="{{thing.image}}"/>
+
+              <div class="card-body">
+                <h3>{{thing.name}}</h3>
+                <p>{{thing.desc}}</p>
+              </div>
+            </div>
+
+            <ul class="card-form clearfix">
+              <li ng-repeat="(k, v) in thing.data">
+                <label title="{{k}}">{{tC.convertIntoSpaces(k)}}</label>
+                <input
+                  class="form-control"
+                  type="{{ tC.getTypeFor(v) }}"
+                  ng-model="v"
+                  ng-change="tC.updateThingData(thing.id, k, v)"
+                  placeholder="{{k}}"
+                />
+              </li>
+            </ul>
+
+          </div>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- all javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="//underscorejs.org/underscore-min.js"></script>
+    <script src="js/angular.min.js"></script>
+
+
+    <!-- <script src="js/can.min.js"/> -->
+    <script src="js/app.js"/>
+    <script>
+      alert();
+    </script>
+
+  </body>
+</html>

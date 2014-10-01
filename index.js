@@ -1,17 +1,39 @@
 var express = require("express");
+var cors = require('cors');
+
 var bodyParser = require("body-parser");
-var thingcontainer = require("./thingcontainer/index");
+var ThingServer = require("./thingcontainer");
 
 var app = express();
 app.use(bodyParser.json());
 
-var things = new thingcontainer();
+var things = new ThingServer();
 
+// cors
+app.use(cors());
+
+// get all things
+app.get("/things/all", function(req, res, next) {
+  things.getThings(null, function(data) {
+    res.send( {data: data} );
+  });
+});
+
+
+
+// THING STUFF
+
+// add a new thing
+app.post("/things/add", function(req, res, next) {
+  things.addThing(req.body, function(id) {
+    res.send( things.createResponsePacket("OK", {id: id}) );
+  });
+});
 
 // list a specific thing's data
 app.get("/things/:id/data", function(req, res, next) {
   things.getThings(parseInt(req.param("id")), function(data) {
-    res.send( data.data );
+    res.send( data && data.data || things.createResponsePacket("NOHIT") );
   });
 });
 
