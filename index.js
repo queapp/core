@@ -57,6 +57,13 @@ app.get("/things/:id/location/:new", function(req, res, next) {
   });
 });
 
+// delete a thing
+app.delete("/things/:id", function(req, res, next) {
+  things.deleteThing(parseInt(req.param("id")), function() {
+    res.send( things.createResponsePacket() );
+  });
+});
+
 
 // run server
 var server = app.listen(process.env.PORT || 8000, function() {

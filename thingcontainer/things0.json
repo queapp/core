@@ -13,30 +13,22 @@
       "port": 8001
     },
     "data": {
-      "wateringTime": {
-        "value": "11:00:00"
-      },
-      "wateringDurationMinutes": {
-        "value": 10
-      },
-      "currentlyWatering": {
-        "value": false,
-        "type": "button",
-        "readonly": true
-      }
+      "wateringTime": "11:00:00",
+      "wateringDurationMinutes": 11797,
+      "currentlyWatering": false
     }
   },
   {
     "name": "Printrbot",
     "desc": "3D Printer",
-    "id": 4,
+    "id": 1,
     "image": "http://makezineblog.files.wordpress.com/2013/10/sip06-printrbotsimple.jpg?w=620&h=465",
-    "link": "http://127.0.0.1:0000/3dprinter",
     "tags": [
       "printer",
       "3d-printer",
       "gcode"
     ],
+    "link": "127.0.0.1:0000/3dprinter",
     "ip": {
       "host": "127.0.0.1",
       "port": 8001

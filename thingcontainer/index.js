@@ -44,6 +44,28 @@ module.exports = function() {
   }
 
   /**
+    Delete a thing from the list of things
+  */
+  this.deleteThing = function(id, done) {
+    // update
+    this.getThings(null, function(all) {
+
+      // get the modified record
+      var listIndex = null;
+      record = _.find(all, function(i, indx) {
+        listIndex = indx;
+        return i.id == id || undefined;
+      });
+
+      all.splice(listIndex, 1);
+      root.putThings(all);
+
+      // callback
+      done();
+    });
+  }
+
+  /**
   Get a list of all things connected to the container
   */
   this.getThings = function(id, done) {
