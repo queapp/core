@@ -6236,6 +6236,10 @@ ul.card-list {
   padding: 20px;
   width: 294px;
 }
+.card .card-move {
+  padding: 14px;
+  cursor: pointer;
+}
 .card .card-form {
   display: block;
   float: right;

@@ -20,16 +20,13 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
   // select a thing
   this.selectThing = function(thing, event) {
-    clickable = $(event.target).hasClass("card") ||
-      $(event.target).hasClass("card-info") ||
-      $(event.target).hasClass("card-body") ||
-      $(event.target).hasClass("card-image");
+    clickable = $(event.target).hasClass("card-move");
+    cardWidth = $(".card").width();
 
     if (event.button != 0 || !clickable) return true;
 
     var selectThingRoot = this;
     var move = false;
-    console.log(event.target)
 
     falseFunction = function(){return false;}
     $("*").mousedown(falseFunction);
@@ -37,7 +34,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     // on movement
     mousemove = function(event) {
       selectThingRoot.selectedThing = thing.id;
-      $('.card.above').css('left', event.pageX);
+      $('.card.above').css('left', ($(document).width()-cardWidth)/2-4 );
       $('.card.above').css('top', event.pageY);
       move = true;
     };

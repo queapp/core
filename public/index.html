@@ -80,6 +80,10 @@
               </div>
             </div>
 
+            <span class="card-icons">
+              <span class="pull-right card-move glyphicon glyphicon-resize-vertical" title="Move Card"></span>
+            </span>
+
             <ul class="card-form clearfix">
 
               <!-- external page -->
@@ -90,7 +94,7 @@
               </li>
 
               <li ng-repeat="(k, v) in thing.data">
-                <label title="{{k}}">{{tC.convertIntoSpaces(k)}}</label>
+                <label title="{{k}}">{{k.label || tC.convertIntoSpaces(k)}}</label>
                 <input
                   type="{{ tC.getTypeFor(v) }}"
                   ng-model="v.value"
