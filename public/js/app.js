@@ -1,4 +1,5 @@
-var host = "http://que-app-backend.herokuapp.com";
+// var host = "http://que-app-backend.herokuapp.com";
+var host = "http://127.0.0.1:8000"
 
 var app = angular.module("QueGui", {});
 
@@ -25,17 +26,26 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
   // given a data type, get the textbox type it would go into
   this.getTypeFor = function(value) {
-    switch (typeof value) {
-      case "number":
-        return "number";
-        break;
-      case "boolean":
-        return "checkbox";
-        break;
-      default:
-        return "text";
-        break;
+    if (value.type) {
+      return value.type;
+    } else {
+      switch (typeof value.value) {
+        case "number":
+          return "number";
+          break;
+        case "boolean":
+          return "checkbox";
+          break;
+        default:
+          return "text";
+          break;
+      }
     }
+  }
+
+  // is this control represented as a button?
+  this.isButton = function(v) {
+    return v.type == "button";
   }
 
   // update backend on keypress

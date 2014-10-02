@@ -13,9 +13,17 @@
       "port": 8001
     },
     "data": {
-      "wateringTime": "11:00:00",
-      "wateringDurationMinutes": 11797,
-      "currentlyWatering": false
+      "wateringTime": {
+        "value": "11:00:00"
+      },
+      "wateringDurationMinutes": {
+        "value": 10
+      },
+      "currentlyWatering": {
+        "value": true,
+        "type": "button",
+        "readonly": true
+      }
     }
   },
   {

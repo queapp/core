@@ -87,9 +87,12 @@
                 <label title="{{k}}">{{tC.convertIntoSpaces(k)}}</label>
                 <input
                   type="{{ tC.getTypeFor(v) }}"
-                  ng-model="v"
+                  ng-model="v.value"
                   ng-change="tC.updateThingData(thing.id, k, v)"
+                  ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
                   placeholder="{{k}}"
+                  value="{{tC.isButton(v) &amp;&amp; v.value}}"
+                  ng-disabled="v.readonly"
                 />
               </li>
             </ul>
