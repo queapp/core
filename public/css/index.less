@@ -7,6 +7,7 @@
 body {
   height: 100%;
   background: @bgcolor;
+  overflow-y: scroll;
 }
 
 // mixins
@@ -72,6 +73,7 @@ ul.card-list {
   margin: 6px;
   // width: 296px;
   max-width: 100%;
+  z-index: 0;
 
   position: relative;
 
@@ -79,6 +81,15 @@ ul.card-list {
     position: absolute;
     top: @padding-base-vertical;
     right: @padding-base-horizontal;
+  }
+
+  &.above {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    z-index: 100;
+    opacity: 0.5;
   }
 
   .card-info {
@@ -100,10 +111,7 @@ ul.card-list {
     float: right;
 
     padding: 20px 80px;
-
-    &.empty {
-      padding: 0px;
-    }
+    min-width: 800px;
 
     li {
       list-style-type: none;

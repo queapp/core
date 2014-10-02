@@ -100,6 +100,27 @@ module.exports = function() {
     });
   }
 
+  this.reorderThing = function(id, newLocation, callback) {
+    this.getThings(null, function(data) {
+
+      // get the modified record
+      var listIndex = null;
+      record = _.find(data, function(i, indx) {
+        listIndex = indx;
+        return i.id == id || undefined;
+      });
+
+      // shift it around
+      tempData = data[listIndex];
+      data.splice(listIndex, 1);
+      data.splice(newLocation, 0, tempData);
+
+      // save it
+      root.putThings(data);
+      callback(data);
+    });
+  }
+
 
 
   /**

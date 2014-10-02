@@ -11,12 +11,65 @@ app.controller("navController", function($scope) {
   }
 });
 
-app.controller("ThingsController", function($scope, $http, thingService, $interval) {
+app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
   var root = this;
 
-  // get length of thing data
-  this.thingDataLength = function(obj) {
-    return Object.keys(obj.data).length == 0;
+  this.selectedThing = null;
+
+  // select a thing
+  this.selectThing = function(thing, event) {
+    clickable = $(event.target).hasClass("card") ||
+      $(event.target).hasClass("card-info") ||
+      $(event.target).hasClass("card-body") ||
+      $(event.target).hasClass("card-image");
+
+    if (event.button != 0 || !clickable) return true;
+    
+    var selectThingRoot = this;
+    var move = false;
+    console.log(event.target)
+
+    falseFunction = function(){return false;}
+    $("*").mousedown(falseFunction);
+
+    // on movement
+    mousemove = function(event) {
+      selectThingRoot.selectedThing = thing.id;
+      $('.card.above').css('left', event.pageX);
+      $('.card.above').css('top', event.pageY);
+      move = true;
+    };
+
+    // unbide and destruct
+    mouseup = function(event) {
+      root.selectedThing = null;
+      if (!move) {
+        return true;
+      }
+      $document.unbind('mousemove', mousemove);
+      $document.unbind('mouseup', mouseup);
+      $("*").unbind('mousedown', falseFunction);
+      $('.card.above').css('left', 0);
+      $('.card.above').css('top', 0);
+
+      // where to reorder?
+      Ry = Math.floor( event.pageY / $(".card").height() );
+
+      // do the reorder
+      root.things.splice( root.things.indexOf(thing), 1 );
+      root.things.splice(Ry, 0, thing);
+
+      // make the request
+      thingService.reorderThing(thing.id, Ry, function() {
+
+      });
+
+      // update angular
+      $scope.$apply();
+    };
+
+    $document.on('mousemove', mousemove);
+    $document.on('mouseup', mouseup);
   };
 
   // get all data from server
@@ -112,6 +165,15 @@ app.factory("thingService", function($http) {
           method: "put",
           url: host + "/things/" + id + "/data",
           data: JSON.stringify(data)
+        }).success(function(data) {
+          callback(data);
+        });
+      },
+
+      reorderThing: function(id, newLocation, callback) {
+        $http({
+          method: "get",
+          url: host + "/things/" + id + "/location/" + newLocation,
         }).success(function(data) {
           callback(data);
         });

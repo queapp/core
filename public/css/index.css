@@ -6167,6 +6167,7 @@ button.close {
 body {
   height: 100%;
   background: #e9edf0;
+  overflow-y: scroll;
 }
 .navbar-que {
   background: #FFF;
@@ -6209,12 +6210,20 @@ ul.card-list {
   display: inline-block;
   margin: 6px;
   max-width: 100%;
+  z-index: 0;
   position: relative;
 }
 .card .card-badge {
   position: absolute;
   top: 6px;
   right: 12px;
+}
+.card.above {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  opacity: 0.5;
 }
 .card .card-info {
   float: left;
@@ -6231,9 +6240,7 @@ ul.card-list {
   display: block;
   float: right;
   padding: 20px 80px;
-}
-.card .card-form.empty {
-  padding: 0px;
+  min-width: 800px;
 }
 .card .card-form li {
   list-style-type: none;

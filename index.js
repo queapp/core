@@ -50,6 +50,13 @@ app.put("/things/:id/data", function(req, res, next) {
   });
 });
 
+// reorder things
+app.get("/things/:id/location/:new", function(req, res, next) {
+  things.reorderThing(parseInt(req.param("id")), parseInt(req.param("new")), function() {
+    res.send( things.createResponsePacket() );
+  });
+});
+
 
 // run server
 var server = app.listen(process.env.PORT || 8000, function() {
