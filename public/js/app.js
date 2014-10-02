@@ -1,4 +1,4 @@
-var host = "http://192.168.1.14:8000";
+var host = "http://que-app-backend.herokuapp.com";
 
 var app = angular.module("QueGui", {});
 
