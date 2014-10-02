@@ -1,6 +1,8 @@
-// var host = "http://que-app-backend.herokuapp.com";
+/**/
+var host = "http://que-app-backend.herokuapp.com";
+/*/
 var host = "http://127.0.0.1:8000"
-
+/**/
 var app = angular.module("QueGui", {});
 
 app.controller("navController", function($scope) {
@@ -24,7 +26,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
       $(event.target).hasClass("card-image");
 
     if (event.button != 0 || !clickable) return true;
-    
+
     var selectThingRoot = this;
     var move = false;
     console.log(event.target)
