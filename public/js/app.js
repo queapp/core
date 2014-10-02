@@ -1,4 +1,4 @@
-/**/
+/*/
 var host = "http://que-app-backend.herokuapp.com";
 /*/
 var host = "http://127.0.0.1:8000"
@@ -125,6 +125,11 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     return string.replace('-', ' ').replace('_', ' ');
   }
 
+  this.removeThing = function(id, index) {
+    root.things.splice(index, 1);
+    thingService.removeThing(id, function() {});
+  }
+
   $interval(function(){
     thingService.getAllThings(function(data) {
 
@@ -173,6 +178,15 @@ app.factory("thingService", function($http) {
         $http({
           method: "get",
           url: host + "/things/" + id + "/location/" + newLocation,
+        }).success(function(data) {
+          callback(data);
+        });
+      },
+
+      removeThing: function(id, callback) {
+        $http({
+          method: "delete",
+          url: host + "/things/" + id,
         }).success(function(data) {
           callback(data);
         });

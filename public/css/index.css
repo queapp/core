@@ -6223,7 +6223,7 @@ ul.card-list {
   top: 0px;
   left: 0px;
   z-index: 100;
-  opacity: 0.5;
+  opacity: 0.75;
 }
 .card .card-info {
   float: left;
@@ -6236,7 +6236,7 @@ ul.card-list {
   padding: 20px;
   width: 294px;
 }
-.card .card-move {
+.card .card-icon {
   padding: 14px;
   cursor: pointer;
 }
