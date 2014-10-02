@@ -1,6 +1,7 @@
 // out: index.css, cgompress: true
 @import url(http://fonts.googleapis.com/css?family=Oxygen);
 @import "../bootstrap/less/bootstrap.less";
+
 @bgcolor: #E9EDF0;
 
 body {
@@ -70,7 +71,7 @@ ul.card-list {
 
   margin: 6px;
   // width: 296px;
-  width: 100%;
+  max-width: 100%;
 
   position: relative;
 
@@ -98,7 +99,11 @@ ul.card-list {
     display: block;
     float: right;
 
-    padding: 20px 60px;
+    padding: 20px 80px;
+
+    &.empty {
+      padding: 0px;
+    }
 
     li {
       list-style-type: none;
@@ -117,6 +122,12 @@ ul.card-list {
         width: 300px;
         display: inline-block;
         margin: @padding-small-vertical 0px;
+
+        &[type=text], &[type=number], &[type=time], &[type=checkbox]{
+          .form-control;
+          width: 300px;
+          display: inline-block;
+        }
       }
 
     }

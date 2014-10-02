@@ -34,7 +34,7 @@
             </button>
             <a class="navbar-brand" href="#">
               <!-- <img src="img/logo-black.svg"/> -->
-              Que Concept
+              Concept
             </a>
           </div>
 
@@ -66,26 +66,26 @@
       <!-- Thing View: shows a list of all things -->
       <div class="container" ng-controller="ThingsController as tC" ng-show="nC.pageId == 1">
         <ul class="card-list">
-          <div
-            class="card"
-            ng-repeat="thing in tC.things"
-            ng-class="{'card-expanded': $scope.expandedCard == $index}"
-            >
+          <div class="card" ng-repeat="thing in tC.things">
 
             <div class="card-info">
               <img class="card-image" src="{{thing.image}}"/>
 
               <div class="card-body">
                 <h3>{{thing.name}}</h3>
-                <p>{{thing.desc}}</p>
+                <p>
+                  {{thing.desc}}
+                  <small>
+                    <a href="{{thing.link}}">{{thing.link}}</a>
+                  </small>
+                </p>
               </div>
             </div>
 
-            <ul class="card-form clearfix">
+            <ul class="card-form clearfix" ng-class="{empty: tC.thingDataLength(thing)}">
               <li ng-repeat="(k, v) in thing.data">
                 <label title="{{k}}">{{tC.convertIntoSpaces(k)}}</label>
                 <input
-                  class="form-control"
                   type="{{ tC.getTypeFor(v) }}"
                   ng-model="v"
                   ng-change="tC.updateThingData(thing.id, k, v)"

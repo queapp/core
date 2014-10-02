@@ -1,4 +1,4 @@
-var host = "http://127.0.0.1:8000";
+var host = "http://192.168.1.14:8000";
 
 var app = angular.module("QueGui", {});
 
@@ -10,8 +10,13 @@ app.controller("navController", function($scope) {
   }
 });
 
-app.controller("ThingsController", function($scope, $http, thingService) {
+app.controller("ThingsController", function($scope, $http, thingService, $interval) {
   var root = this;
+
+  // get length of thing data
+  this.thingDataLength = function(obj) {
+    return Object.keys(obj.data).length == 0;
+  };
 
   // get all data from server
   thingService.getAllThings(function(data) {
@@ -23,6 +28,9 @@ app.controller("ThingsController", function($scope, $http, thingService) {
     switch (typeof value) {
       case "number":
         return "number";
+        break;
+      case "boolean":
+        return "checkbox";
         break;
       default:
         return "text";
@@ -55,19 +63,15 @@ app.controller("ThingsController", function($scope, $http, thingService) {
     return string.replace('-', ' ').replace('_', ' ');
   }
 
-  // push changes to server
-  // this.push = function() {
-  //   $http({
-  //       url: "http://" + host + ":" + port + "/things/" + root.id + "/data",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify(d)
-  //     }, function(error, response, body) {
-  //       done && done(body);
-  //     }
-  //   );
-  // }
+  $interval(function(){
+    thingService.getAllThings(function(data) {
+
+      if ( angular.toJson(root.things) != angular.toJson(data) ) {
+        root.things = data;
+      }
+
+    });
+  }, 1000);
 
 });
 
