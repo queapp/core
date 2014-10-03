@@ -1,55 +1,30 @@
 var request = require("request");
 
-var thing = function(host, port, id) {
+var thing = function(host, port, id, structure, callback) {
 
   var root = this;
 
-  // did user give a numerical id
-  var structure;
-  if (typeof id == "object") {
-    request.post(
-      {
-        url: "http://" + host + ":" + port + "/things/add",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(id)
-      }, function(error, response, body) {
-        body = JSON.parse(body);
-        root.id = body.id;
-        console.log(root.id)
+  // does the specific id specified exist on the server backend?
+  this.doesIdExist = function(id, callback) {
+    request.get({
+      url: "http://" + host + ":" + port + "/things/" + id + "/data",
+      headers: {
+        "Content-Type": "application/json"
       }
-    );
-  } else {
-    structure = {};
-    root.id = id;
+    }, function(error, response, body) {
+      body = JSON.parse(body);
+      callback( body.status != "NOHIT" );
+    });
   }
-
-
-  // does the specified id exist?
-  // request.get(
-  //   {
-  //     url: "http://" + host + ":" + port + "/things/" + id + "/data",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   }, function(error, response, body) {
-  //     body = JSON.parse(body);
-  //     if (body.status == "NOHIT") {
-  //       // add the thing
-  //       console.log(JSON.stringify(structure || {}))
-  //
-  //
-  //     }
-  //   }
-  // );
 
 
   this.data = {
 
     push: function(property, val, done) {
       var d = {}
-      d[property] = val;
+      d[property] = {
+        value: val
+      };
 
       this.cache = {};
 
@@ -84,20 +59,47 @@ var thing = function(host, port, id) {
 
   }
 
+  // did user give a numerical id?
+  this.doesIdExist(id, function(doesIt) {
+    if (doesIt == false || typeof id != "number") {
+      request.post(
+        {
+          url: "http://" + host + ":" + port + "/things/add",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(structure)
+        }, function(error, response, body) {
+          body = JSON.parse(body);
+          root.id = body.id;
+
+          callback(root);
+        }
+      );
+    } else {
+      root.id = id;
+      callback(root);
+    }
+  });
 
 }
 
 
-// t = new thing("127.0.0.1", 8000, 0);
-// t.data.push("data", 1235, function() {
-//   t.data.pull("data", function(val) {
-//     console.log(val)
-//   });
-// });
+id = 5;
 
-t = new thing("127.0.0.1", 8000, 0);
-t.data.push("data", 1235, function() {
-  t.data.pull("data", function(val) {
-    console.log(val)
+t = new thing("127.0.0.1", 8000, id, {
+  name: "Hydroponic Garden",
+  desc: "A garden that grows me stuff",
+  tags: ["garden", "hydroponics"]
+}, function(thing) {
+  console.log("Thing ID is", thing.id);
+
+  // sample data operation
+  thing.data.push("data", 10000, function() {
+    thing.data.pull("data", function(val) {
+      console.log(val)
+    });
   });
+
+
 });

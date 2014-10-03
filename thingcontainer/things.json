@@ -42,5 +42,24 @@
       "port": 8001
     },
     "data": {}
+  },
+  {
+    "name": "Hydroponic Garden",
+    "desc": "A garden that grows me stuff",
+    "id": 5,
+    "image": null,
+    "tags": [
+      "garden",
+      "hydroponics"
+    ],
+    "ip": {
+      "host": null,
+      "port": null
+    },
+    "data": {
+      "data": {
+        "value": 10000
+      }
+    }
   }
 ]
