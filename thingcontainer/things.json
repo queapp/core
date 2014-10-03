@@ -1,32 +1,5 @@
 [
   {
-    "name": "Hydroponic Garden",
-    "desc": "A garden that grows stuff for me",
-    "id": 0,
-    "image": "http://panamashippingcontainerhouse.com/wp-content/uploads/2012/07/Hydroponics-650x487.jpg",
-    "tags": [
-      "garden",
-      "hydroponics"
-    ],
-    "ip": {
-      "host": "127.0.0.1",
-      "port": 8001
-    },
-    "data": {
-      "wateringTime": {
-        "value": "11:00:00"
-      },
-      "wateringDurationMinutes": {
-        "value": 10
-      },
-      "currentlyWatering": {
-        "value": false,
-        "type": "button",
-        "readonly": true
-      }
-    }
-  },
-  {
     "name": "Printrbot",
     "desc": "3D Printer",
     "id": 4,
@@ -47,7 +20,7 @@
     "name": "Hydroponic Garden",
     "desc": "A garden that grows me stuff",
     "id": 5,
-    "image": null,
+    "image": "http://panamashippingcontainerhouse.com/wp-content/uploads/2012/07/Hydroponics-650x487.jpg",
     "tags": [
       "garden",
       "hydroponics"
@@ -57,8 +30,20 @@
       "port": null
     },
     "data": {
-      "data": {
-        "value": 10000
+      "wateringTime": {
+        "value": "19:30:00"
+      },
+      "wateringDurationMinutes": {
+        "value": 0.5
+      },
+      "currentlyWatering": {
+        "value": false,
+        "type": "button",
+        "readonly": true
+      },
+      "turnPumpOn": {
+        "label": "Run pump through a cycle",
+        "value": false
       }
     }
   }

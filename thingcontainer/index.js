@@ -2,6 +2,19 @@ var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
 
+Object.deepExtend = function(destination, source) {
+  for (var property in source) {
+    if (source[property] && source[property].constructor &&
+     source[property].constructor === Object) {
+      destination[property] = destination[property] || {};
+      arguments.callee(destination[property], source[property]);
+    } else {
+      destination[property] = source[property];
+    }
+  }
+  return destination;
+};
+
 // a thing container
 module.exports = function() {
   var root = this;
@@ -109,7 +122,17 @@ module.exports = function() {
 
       // update record's data
       if (record) {
-        record.data = _.extend(record.data, changes || {});
+        // _.each(record.data, function(value, key) {
+        //   console.log(key, )
+        //   if (changes[key]) {
+        //     record.data[key] = _.extend({}, record.data, changes[key]);
+        //   };
+        // });
+        //
+        // console.log("-----------------");
+
+        record.data = Object.deepExtend(record.data, changes || {});
+        // record.data = _.extend({}, record.data, changes || {});
 
         // recompile the record
         var all = data;

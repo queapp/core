@@ -3,8 +3,7 @@
   "description": "iot example thing",
   "version": "0.0.1",
   "dependencies": {
-    "request": "2.40.x",
-    "strftime": "latest"
+    "request": "2.40.x"
   },
   "author": {
     "name": "Ryan Gaus",
