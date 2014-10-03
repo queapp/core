@@ -42,7 +42,7 @@
         "readonly": true
       },
       "turnPumpOn": {
-        "label": "Run pump through a cycle",
+        "label": "Manually Cycle Pump",
         "value": false
       }
     }

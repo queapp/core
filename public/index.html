@@ -95,7 +95,7 @@
               </li>
 
               <li ng-repeat="(k, v) in thing.data">
-                <label title="{{k}}">{{k.label || tC.convertIntoSpaces(k)}}</label>
+                <label title="{{k}}">{{v.label || tC.convertIntoSpaces(k)}}</label>
                 <input
                   type="{{ tC.getTypeFor(v) }}"
                   ng-model="v.value"
