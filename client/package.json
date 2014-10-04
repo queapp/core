@@ -1,13 +1,17 @@
 {
-  "name": "Qube-Client",
-  "description": "iot example thing",
+  "name": "sampleIoTClient",
   "version": "0.0.1",
-  "dependencies": {
-    "request": "2.40.x",
-    "strftime": "latest"
+  "description": "Sample IoT Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": {
-    "name": "Ryan Gaus",
-    "twitter": "@rgausnet"
-  }
+  "keywords": [
+    "iot"
+  ],
+  "dependencies": {
+    "iot-thing": "latest"
+  },
+  "author": "Ryan Gaus <rsg1egoman@gmail.com>",
+  "license": "MIT"
 }
