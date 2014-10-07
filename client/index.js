@@ -14,7 +14,7 @@ id = 6
 // create the thing
 // specify the hostname and port of the server, the id, and
 // the structure object. This contains all the default settings for the thing.
-new thing("127.0.0.1", 8000, id, {
+new thing("que-app-backend.herokuapp.com", 80, id, {
   name: "Example Thing",
   desc: "Prooves that stuff works",
   data: {
