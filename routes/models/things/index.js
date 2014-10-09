@@ -19,6 +19,9 @@ Object.deepExtend = function(destination, source) {
 module.exports = function() {
   var root = this;
 
+  // where to store things
+  this.dataFile = "things.json";
+
   // a default thing; used in .addThing()
   this.defaultThing = {
     "name": "Untitled Thing",
@@ -82,7 +85,7 @@ module.exports = function() {
   Get a list of all things connected to the container
   */
   this.getThings = function(id, done) {
-    fs.readFile(path.join(__dirname, "things.json"), 'utf8', function(err, data) {
+    fs.readFile(path.join(__dirname, this.dataFile), 'utf8', function(err, data) {
       records = JSON.parse(data);
 
       if (id !== null) {
@@ -100,7 +103,7 @@ module.exports = function() {
   */
   this.putThings = function(data, done) {
     txt = JSON.stringify(data, null, 2);
-    fs.writeFile(path.join(__dirname, "things.json"), txt, function(err) {
+    fs.writeFile(path.join(__dirname, this.dataFile), txt, function(err) {
       !err && done && done();
     });
   }
