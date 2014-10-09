@@ -2,7 +2,15 @@
 @import url(http://fonts.googleapis.com/css?family=Oxygen);
 @import "../bootstrap/less/bootstrap.less";
 
+// page bg color
 @bgcolor: #E9EDF0;
+
+// top section colors
+@top-color-yellow: #FCBD4B;
+@top-color-red: #FC4B4B;
+@top-color-blue: #4B86FC;
+@top-color-green: #42BF3F;
+@top-color-purple: #BF3F89;
 
 body {
   height: 100%;
@@ -23,12 +31,21 @@ body {
 
 // the custom navbar
 .navbar-que {
-  background: #FFF;
-  height: 96px;
+  height: 320px;
+
+  .border-radius(0px);
+
+  h1 {
+    text-align: center;
+    color: #FFF;
+    font-size: @font-size-base * 5;
+  }
+
 }
 
 .navbar-que .container {
   height: 100%;
+  height: 96px;
 }
 
 .navbar-que .navbar-header, .navbar-que .navbar-nav {
@@ -48,6 +65,23 @@ body {
 .navbar-que .navbar-brand img {
   height: 64px;
   margin-top: -16px;
+}
+
+.navbar-que .navbar-brand {
+  color: #FFF;
+}
+
+.navbar-que .navbar-nav {
+  li a, a:hover {
+    background: transparent;
+    color: #FFF;
+  }
+
+  .active a, .active a:hover {
+    font-weight: bold;
+    background: transparent;
+    color: #FFF;
+  }
 }
 
 

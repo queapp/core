@@ -6170,11 +6170,22 @@ body {
   overflow-y: scroll;
 }
 .navbar-que {
-  background: #FFF;
-  height: 96px;
+  height: 320px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.navbar-que h1 {
+  text-align: center;
+  color: #FFF;
+  font-size: 70px;
 }
 .navbar-que .container {
   height: 100%;
+  height: 96px;
 }
 .navbar-que .navbar-header,
 .navbar-que .navbar-nav {
@@ -6191,6 +6202,20 @@ body {
 .navbar-que .navbar-brand img {
   height: 64px;
   margin-top: -16px;
+}
+.navbar-que .navbar-brand {
+  color: #FFF;
+}
+.navbar-que .navbar-nav li a,
+.navbar-que .navbar-nav a:hover {
+  background: transparent;
+  color: #FFF;
+}
+.navbar-que .navbar-nav .active a,
+.navbar-que .navbar-nav .active a:hover {
+  font-weight: bold;
+  background: transparent;
+  color: #FFF;
 }
 ul.card-list {
   list-style-type: none;

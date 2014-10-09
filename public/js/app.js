@@ -5,12 +5,73 @@ var host = "http://127.0.0.1:8000"
 /**/
 var app = angular.module("QueGui", {});
 
+// the top nav colors
+var navColorYellow = "#FCBD4B";
+var navColorRed = "#FC4B4B";
+var navColorBlue = "#4BA9FC";
+var navColorGreen = "#42BF3F";
+var navColorPurple = "#FC4BA6";
+
 app.controller("navController", function($scope) {
+  var root = this;
+
   this.pageId = 1;
 
   this.toPage = function(id) {
+
+    // set page id
     this.pageId = id;
+
+    // fade the colors in the top navbar
+    $(".navbar-que").animate({
+      backgroundColor: root.getPageColor()
+    }, 350);
   }
+
+
+  // get title area of navbar's color
+  this.getPageColor = function() {
+    switch (this.pageId) {
+      case 0:
+        return navColorYellow;
+        break;
+      case 1:
+        return navColorGreen;
+        break;
+      case 2:
+        return navColorBlue;
+        break;
+      case 3:
+        return navColorRed;
+        break;
+      case 4:
+        return navColorPurple;
+        break;
+    }
+  }
+
+  // get the page's title
+  this.getPageTitle = function() {
+    switch (this.pageId) {
+      case 0:
+        return "Dashboard";
+        break;
+      case 1:
+        return "My Things";
+        break;
+      case 2:
+        return "My Services";
+        break;
+      case 3:
+        return "Notifications";
+        break;
+      case 4:
+        return "Stats";
+        break;
+    }
+  }
+
+  this.toPage(0);
 });
 
 app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
