@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 // some middleware
 app.use(cors());
+app.use(express.static(__dirname+'/public'));
 
 
 // create all of the routes
