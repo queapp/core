@@ -39,7 +39,7 @@ module.exports = function() {
   /**
     Add a new thing to the list of things
   */
-  this.addThing = function(data, done) {
+  this.add = function(data, done) {
     // update
     this.getThings(null, function(all) {
 
@@ -62,7 +62,7 @@ module.exports = function() {
   /**
     Delete a thing from the list of things
   */
-  this.deleteThing = function(id, done) {
+  this.delete = function(id, done) {
     // update
     this.getThings(null, function(all) {
 
@@ -84,7 +84,7 @@ module.exports = function() {
   /**
   Get a list of all things connected to the container
   */
-  this.getThings = function(id, done) {
+  this.get = function(id, done) {
     fs.readFile(path.join(__dirname, this.dataFile), 'utf8', function(err, data) {
       records = JSON.parse(data);
 
@@ -101,7 +101,7 @@ module.exports = function() {
   /**
   Update the whole list of things
   */
-  this.putThings = function(data, done) {
+  this.put = function(data, done) {
     txt = JSON.stringify(data, null, 2);
     fs.writeFile(path.join(__dirname, this.dataFile), txt, function(err) {
       !err && done && done();
@@ -111,7 +111,7 @@ module.exports = function() {
   /**
   Replace modified records in one specific thing
   */
-  this.updateThings = function(id, changes, done) {
+  this.update = function(id, changes, done) {
 
     // update
     this.getThings(null, function(data) {
@@ -148,7 +148,7 @@ module.exports = function() {
     });
   }
 
-  this.reorderThing = function(id, newLocation, callback) {
+  this.reorder = function(id, newLocation, callback) {
     this.getThings(null, function(data) {
 
       // get the modified record
