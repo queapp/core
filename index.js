@@ -1,6 +1,10 @@
 var express = require("express");
+var passport = require('passport');
 var cors = require('cors');
+
 var bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 var routes = require("./routes");
 

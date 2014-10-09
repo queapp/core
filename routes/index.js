@@ -1,5 +1,5 @@
 // create all of the routes for the application
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
   // root route (haha that sounds funny)
   app.get("/", function(req, res, next) {
