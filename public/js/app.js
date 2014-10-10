@@ -1,4 +1,4 @@
-/**/
+/*/
 var host = "http://que-app-backend.herokuapp.com";
 /*/
 var host = "http://127.0.0.1:8000"
@@ -10,7 +10,7 @@ var navColorYellow = "#FCBD4B";
 var navColorRed = "#FC4B4B";
 var navColorBlue = "#4BA9FC";
 var navColorGreen = "#42BF3F";
-var navColorPurple = "#FC4BA6";
+var navColorBrown = "#B7521E";
 
 app.controller("navController", function($scope) {
   var root = this;
@@ -45,7 +45,7 @@ app.controller("navController", function($scope) {
         return navColorRed;
         break;
       case 4:
-        return navColorPurple;
+        return navColorBrown;
         break;
     }
   }
@@ -82,7 +82,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   // select a thing
   this.selectThing = function(thing, event) {
     clickable = $(event.target).hasClass("card-move");
-    cardWidth = $(".card").last().width();
+    cardWidth = $(".card").first().width();
 
     if (event.button != 0 || !clickable) return true;
 

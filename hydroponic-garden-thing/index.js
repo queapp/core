@@ -88,7 +88,7 @@ var thing = function(host, port, id, structure, callback) {
 
 id = 5;
 
-t = new thing("que-app-backend.herokuapp.com", 80, id, {
+t = new thing("127.0.0.1", 8000, id, {
 // t = new thing("127.0.0.1", 8000, id, {
   name: "Hydroponic Garden",
   desc: "A garden that grows me stuff",

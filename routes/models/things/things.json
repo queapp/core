@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "name": "Example Thing",
+    "desc": "Prooves that stuff works",
+    "type": "thing",
+    "id": 1,
+    "image": null,
+    "tags": [],
+    "ip": {
+      "host": null,
+      "port": null
+    },
+    "data": {
+      "message": {
+        "value": "Hello World"
+      },
+      "showMessage": {
+        "value": false,
+        "label": "Show message in terminal"
+      }
+    }
+  }
+]

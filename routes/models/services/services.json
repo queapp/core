@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "name": "Example Service",
+    "desc": "Prooves that stuff works",
+    "type": "service",
+    "id": 4,
+    "image": null,
+    "tags": [],
+    "data": {
+      "message": {
+        "value": "Hello World"
+      },
+      "showMessage": {
+        "value": false,
+        "label": "Show message in terminal"
+      }
+    }
+  }
+]
