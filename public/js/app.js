@@ -82,7 +82,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   // select a thing
   this.selectThing = function(thing, event) {
     clickable = $(event.target).hasClass("card-move");
-    cardWidth = $(".card").width();
+    cardWidth = $(".card").last().width();
 
     if (event.button != 0 || !clickable) return true;
 
@@ -211,7 +211,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   // select a thing
   this.selectThing = function(thing, event) {
     clickable = $(event.target).hasClass("card-move");
-    cardWidth = $(".card").width();
+    cardWidth = $(".card").last().width();
 
     if (event.button != 0 || !clickable) return true;
 
