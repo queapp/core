@@ -54,18 +54,21 @@
                 <a href>Notifications</a>
               </li>
               <li ng-click="nC.toPage(4)" ng-class="{active: nC.pageId == 4}">
-                <a href>Stats</a>
+                <a href>Settings</a>
               </li>
-              <li class="button">
+              <!-- <li class="button">
                 <a href>login</a>
-              </li>
+              </li> -->
             </ul>
           </div><!-- /.navbar-collapse -->
 
 
         </div><!-- /.container-fluid -->
 
-        <h1>{{nC.getPageTitle()}}</h1>
+        <h1>
+          {{nC.getPageTitle().title}}
+          <small class="">{{nC.getPageTitle().desc}}</small>
+        </h1>
 
       </nav>
 

@@ -54,19 +54,19 @@ app.controller("navController", function($scope) {
   this.getPageTitle = function() {
     switch (this.pageId) {
       case 0:
-        return "Dashboard";
+        return {title: "Dashboard", desc: "Overview of everything happening on this Que instance"};
         break;
       case 1:
-        return "My Things";
+        return {title: "My Things", desc: "A list of all your things"};
         break;
       case 2:
-        return "My Services";
+        return {title: "My Services", desc: "A list of all services linked to this Que instance"};
         break;
       case 3:
-        return "Notifications";
+        return {title: "Notifications", desc: "Notifications from Things and Services"};
         break;
       case 4:
-        return "Stats";
+        return {title: "Settings", desc: "Adjust preferences for this Que instance"};
         break;
     }
   }

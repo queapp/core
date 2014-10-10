@@ -6183,6 +6183,12 @@ body {
   color: #FFF;
   font-size: 70px;
 }
+.navbar-que h1 small {
+  display: block;
+  color: #fff;
+  font-size: 30%;
+  margin-top: 24px;
+}
 .navbar-que .container {
   height: 100%;
   height: 96px;
