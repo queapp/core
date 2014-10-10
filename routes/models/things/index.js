@@ -26,6 +26,7 @@ module.exports = function() {
   this.defaultThing = {
     "name": "Untitled Thing",
     "desc": "Untitled Thing Description",
+    "type": "thing",
     "id": null,
     "image": null,
     "tags": [],
@@ -41,18 +42,18 @@ module.exports = function() {
   */
   this.add = function(data, done) {
     // update
-    this.getThings(null, function(all) {
+    this.get(null, function(all) {
 
       // allocate id
       maxId = _.max(all, function(i) {
         return i.id;
-      }).id;
+      }).id || 0;
 
       // add new record
       item = _.extend(root.defaultThing, data);
       item.id = ++maxId;
       all.push( item );
-      root.putThings(all);
+      root.put(all);
 
       // callback
       done(item.id);
@@ -64,7 +65,7 @@ module.exports = function() {
   */
   this.delete = function(id, done) {
     // update
-    this.getThings(null, function(all) {
+    this.get(null, function(all) {
 
       // get the modified record
       var listIndex = null;
@@ -74,7 +75,7 @@ module.exports = function() {
       });
 
       all.splice(listIndex, 1);
-      root.putThings(all);
+      root.put(all);
 
       // callback
       done();
@@ -114,7 +115,7 @@ module.exports = function() {
   this.update = function(id, changes, done) {
 
     // update
-    this.getThings(null, function(data) {
+    this.get(null, function(data) {
 
       // get the modified record
       var listIndex = null;
@@ -140,7 +141,7 @@ module.exports = function() {
         // recompile the record
         var all = data;
         all[listIndex] = record;
-        root.putThings(all);
+        root.put(all);
 
         // callback
         done(all);
@@ -149,7 +150,7 @@ module.exports = function() {
   }
 
   this.reorder = function(id, newLocation, callback) {
-    this.getThings(null, function(data) {
+    this.get(null, function(data) {
 
       // get the modified record
       var listIndex = null;
@@ -164,7 +165,7 @@ module.exports = function() {
       data.splice(newLocation, 0, tempData);
 
       // save it
-      root.putThings(data);
+      root.put(data);
       callback(data);
     });
   }

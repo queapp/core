@@ -6,8 +6,9 @@ module.exports = function(app, passport) {
     res.send("<h1>Que Backend</h1>If you're here, this most likely isn't what you want. This is a backend API; for the fontend interface start a web server in public/");
   });
 
-  // thing routes
+  // other routes
   require("./things")(app);
+  require("./services")(app);
 }
 
 // route middleware to make sure a user is logged in
