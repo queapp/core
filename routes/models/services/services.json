@@ -3,18 +3,13 @@
     "name": "123",
     "desc": "Untitled Service Description",
     "type": "service",
-    "id": 1,
+    "id": 2,
     "image": null,
     "tags": [
       1,
       2
     ],
-    "data": {
-      "abc": {
-        "type": "text",
-        "value": "123"
-      }
-    }
+    "data": {}
   },
   {
     "name": "123",
@@ -26,11 +21,6 @@
       1,
       2
     ],
-    "data": {
-      "abc": {
-        "type": "text",
-        "value": "123"
-      }
-    }
+    "data": {}
   }
 ]

@@ -71,7 +71,7 @@ app.controller("navController", function($scope) {
     }
   }
 
-  this.toPage(0);
+  this.toPage(1); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
 app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
