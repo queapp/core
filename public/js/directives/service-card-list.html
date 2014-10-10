@@ -1,0 +1,52 @@
+
+<!-- Thing View: shows a list of all things -->
+<div class="container" ng-controller="ServicesController as sC" ng-show="nC.pageId == 2">
+  <ul class="card-list card-list-things">
+
+    <!-- each thing is listed here, in a card -->
+    <div class="card"
+      ng-repeat="thing in sC.things"
+      ng-class="{above: sC.selectedThing == thing.id}"
+      ng-mousedown="sC.selectThing(thing, $event)"
+      >
+
+      <div class="card-info">
+        <img class="card-image" src="{{thing.image}}"/>
+        <div class="card-body">
+          <h3>{{thing.name}}</h3>
+          <p>{{thing.desc}}</p>
+        </div>
+      </div>
+
+      <span class="card-icons">
+        <span class="pull-right card-icon glyphicon glyphicon glyphicon-remove" title="Remove Card" ng-click="sC.removeThing(thing.id, $index)"></span>
+        <span class="pull-right card-icon card-move glyphicon glyphicon-resize-vertical" title="Move Card"></span>
+      </span>
+
+      <ul class="card-form clearfix">
+
+        <!-- external page -->
+        <li ng-show="thing.link">
+          <a href="{{thing.link}}" class="btn btn-default btn-lg" style="width: 100%; margin-top: 10%;">
+            Thing Page
+          </a>
+        </li>
+
+        <li ng-repeat="(k, v) in thing.data">
+          <label title="{{k}}">{{v.label || sC.convertIntoSpaces(k)}}</label>
+          <input
+            type="{{ sC.getTypeFor(v) }}"
+            ng-model="v.value"
+            ng-change="sC.updateThingData(thing.id, k, v)"
+            ng-class="{'btn': sC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
+            placeholder="{{k}}"
+            value="{{sC.isButton(v) &amp;&amp; v.value}}"
+            ng-disabled="v.readonly"
+          />
+        </li>
+      </ul>
+
+    </div>
+
+  </ul>
+</div>
