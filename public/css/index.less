@@ -141,6 +141,11 @@ ul.card-list {
 
     .card-image {
       width: 294px;
+      min-height: 220px;
+      &[src=''] {
+        border: 0px;
+        border-style: none;
+      }
     }
 
     .card-body {
@@ -183,6 +188,21 @@ ul.card-list {
           .form-control;
           width: 300px;
           display: inline-block;
+        }
+
+        &[type=checkbox] {
+          appearance: none;
+          -webkit-appearance: none;
+          .btn;
+          .btn-primary;
+
+          &:before { content: "Off"; }
+
+          &:checked {
+            .btn-success;
+            &:before { content: "On"; }
+          }
+
         }
       }
 
