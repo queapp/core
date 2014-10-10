@@ -1,1 +1,3 @@
 node_modules/
+routes/models/services/services.json
+routes/models/things/things.json
