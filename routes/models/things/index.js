@@ -1,7 +1,6 @@
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
-var mongoose = require("mongoose");
 
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
