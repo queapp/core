@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 // some middleware
 app.use(cors());
+app.use(session({secret: "secret", saveUninitialized: true, resave: true}));
 app.use(express.static(__dirname+'/public'));
 
 
