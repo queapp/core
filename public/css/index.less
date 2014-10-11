@@ -102,6 +102,31 @@ ul.card-list {
   margin: 0px 0px 20px 0px;
 }
 
+ul.card-list div.no-cards {
+  background-image: url("../img/things-none.svg");
+  width: 800px;
+  height: 400px;
+  margin: 0px auto;
+  background-repeat: no-repeat;
+
+  .side {
+    float: right;
+    width: 250px;
+    margin-right: 12px;
+    margin-top: 20px;
+
+    font-size: @font-size-base * 1.2;
+
+    span {
+      color: #444;
+      font-size: 75%;
+      display: block;
+      margin-top: 5px;
+      &:before { content: "Examples: "; }
+    }
+  }
+}
+
 // cards
 
 .card {

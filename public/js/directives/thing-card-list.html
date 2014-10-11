@@ -1,9 +1,18 @@
 
 <!-- Thing View: shows a list of all things -->
 <div class="container" ng-controller="ThingsController as tC" ng-show="nC.pageId == 1">
+  <!-- each thing is listed here, in a card -->
   <ul class="card-list card-list-things">
 
-    <!-- each thing is listed here, in a card -->
+    <div class="no-cards" ng-show="tC.things.length === 0">
+      <div class="side">
+        A thing is a physical object that Que can control.
+        <span>A garden, an Autofeeding pet dish, or a 3d Printer</span>
+        <br/>
+        <a href class="btn btn-success btn-lg">Add a thing</a>
+      </div>
+    </div>
+
     <div class="card"
       ng-repeat="thing in tC.things"
       ng-class="{above: tC.selectedThing == thing.id}"

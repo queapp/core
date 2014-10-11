@@ -6228,6 +6228,29 @@ ul.card-list {
   padding: 0px;
   margin: 0px 0px 20px 0px;
 }
+ul.card-list div.no-cards {
+  background-image: url("../img/things-none.svg");
+  width: 800px;
+  height: 400px;
+  margin: 0px auto;
+  background-repeat: no-repeat;
+}
+ul.card-list div.no-cards .side {
+  float: right;
+  width: 250px;
+  margin-right: 12px;
+  margin-top: 20px;
+  font-size: 16.8px;
+}
+ul.card-list div.no-cards .side span {
+  color: #444;
+  font-size: 75%;
+  display: block;
+  margin-top: 5px;
+}
+ul.card-list div.no-cards .side span:before {
+  content: "Examples: ";
+}
 .card {
   background: #FFF;
   border: 1px solid #ebedee;

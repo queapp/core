@@ -3,6 +3,15 @@
 <div class="container" ng-controller="ServicesController as sC" ng-show="nC.pageId == 2">
   <ul class="card-list card-list-things">
 
+    <div class="no-cards" ng-show="sC.things.length === 0">
+      <div class="side">
+        A service is an intangible object that Que can control.
+        <span>Email, social networks, or other online services</span>
+        <br/>
+        <a href class="btn btn-primary btn-lg">Add a service</a>
+      </div>
+    </div>
+
     <!-- each thing is listed here, in a card -->
     <div class="card"
       ng-repeat="thing in sC.things"
