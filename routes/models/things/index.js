@@ -1,6 +1,7 @@
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
+var mongoose = require("mongoose");
 
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
@@ -21,6 +22,10 @@ module.exports = function() {
 
   // where to store things
   this.dataFile = "things.json";
+
+  // cache for the things
+  this.cache = []
+  this.isModified = false;
 
   // a default thing; used in .addThing()
   this.defaultThing = {
@@ -87,7 +92,11 @@ module.exports = function() {
   */
   this.get = function(id, done) {
     fs.readFile(path.join(__dirname, this.dataFile), 'utf8', function(err, data) {
+      data || done([]);
       records = JSON.parse(data);
+
+      // save to the cache
+      root.cache = records;
 
       if (id !== null) {
         records = _.find(records, function(i) {
@@ -100,14 +109,19 @@ module.exports = function() {
   }
 
   /**
-  Update the whole list of things
+  Update the whole list of things - it's throttled because file writes
+  can occer at such a frequency that the file will be read before it's written
+  and that's a problem because corruption starts happening.
   */
-  this.put = function(data, done) {
-    txt = JSON.stringify(data, null, 2);
-    fs.writeFile(path.join(__dirname, this.dataFile), txt, function(err) {
-      !err && done && done();
-    });
-  }
+  this.put = _.throttle(function(data, done) {
+    if (data) {
+      txt = JSON.stringify(data, null, 2);
+      root.cache = txt;
+      fs.writeFile(path.join(__dirname, this.dataFile), txt, function(err) {
+        !err && done && done();
+      });
+    }
+  }, 500);
 
   /**
   Replace modified records in one specific thing

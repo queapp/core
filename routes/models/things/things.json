@@ -1,22 +1,33 @@
 [
   {
-    "name": "Example Thing",
-    "desc": "Prooves that stuff works",
+    "name": "Hydroponic Garden",
+    "desc": "A garden that grows me stuff",
     "type": "thing",
     "id": 1,
-    "image": null,
-    "tags": [],
+    "image": "http://panamashippingcontainerhouse.com/wp-content/uploads/2012/07/Hydroponics-650x487.jpg",
+    "tags": [
+      "garden",
+      "hydroponics"
+    ],
     "ip": {
       "host": null,
       "port": null
     },
     "data": {
-      "message": {
-        "value": "Hello World"
+      "wateringTime": {
+        "value": "11:00:00"
       },
-      "showMessage": {
-        "value": false,
-        "label": "Show message in terminal"
+      "wateringDurationMinutes": {
+        "value": 10
+      },
+      "currentlyWatering": {
+        "value": 413,
+        "type": "button",
+        "readonly": true
+      },
+      "turnPumpOn": {
+        "label": "Run pump through a cycle",
+        "value": false
       }
     }
   }
