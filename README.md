@@ -59,16 +59,14 @@ index.js
 To run it:
   - Terminal window 1: `node index.js` (inside the root of this repository)
   - Terminal window 2: `node index.js` (inside the client thing you just made)
+  - Now go to '127.0.0.1:8000' in your web browser
 
-*NOTE: If you want to see what is happening in a nice, fancy web ui, I'd also recommend in a 3rd window
+<!-- *NOTE: If you want to see what is happening in a nice, fancy web ui, I'd also recommend in a 3rd window
 (I know, starting to get a little crazy with the terminal windows) running
 `cd public; python -m SimpleHTTPServer 8001` and go to 127.0.0.1:8001 in a web browser before running any
-of the above commands*
+of the above commands* -->
 
 ### License
-Well, this is an interesting topic, actually. All the code you see right now is under the MIT License, but
-I will be make some closed source thing's that people could buy from me later on. In short, this repository
-under the MIT but not every thing has to be.
 
 The MIT License (MIT)
 Copyright (c) 2014 Ryan Gaus
