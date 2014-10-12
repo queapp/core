@@ -15,18 +15,19 @@ this:
 
 index.js
 ```javascript
-  var thing = require("iot-thing"); // make sure to add this to your package.json!
+  var iot = require("iot-thing"); // make sure to add this to your package.json!
 
   // this is your app's id, set it to null and one will be auto-assigned to you
   // the id is available below as thing.id, so store it somewhere for next run and pass it in here
-  id = null  
+  id = null
 
   // create the thing
   // specify the hostname and port of the server, the id, and
   // the structure object. This contains all the default settings for the thing.
-  new thing("127.0.0.1", 8000, id, {
+  new iot.thing("127.0.0.1", 8000, id, {
     name: "Example Thing",
     desc: "Prooves that stuff works",
+    tags: ["example"],
     data: {
       message: {
         value: "Hello World"
@@ -37,22 +38,20 @@ index.js
       }
     }
   }, function(thing) {
-    // get the thing id, and print it out
-    console.log("Thing ID is", thing.id);
 
     // did the user set showMessage to true?
     thing.data.pull("showMessage", function(val) {
-      if (val == true) {
+      if (val.value == true) {
         // set it to false
         thing.data.push("showMessage", false);
 
         // show the message in the console
         thing.data.pull("message", function(val) {
-          console.log("Output:", val);
+          console.log("Output:", val.value);
         });
       }
     });
-  });
+  }).go();
 
 ```
 
