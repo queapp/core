@@ -1,4 +1,4 @@
-/**/
+/*/
 var host = "http://que-app-backend.herokuapp.com";
 /*/
 var host = "http://127.0.0.1:8000"
@@ -54,7 +54,7 @@ app.controller("navController", function($scope) {
   this.getPageTitle = function() {
     switch (this.pageId) {
       case 0:
-        return {title: "Dashboard", desc: "Overview of everything happening on this Que instance"};
+        return {title: "Overview", desc: "Overview of everything happening on this Que instance"};
         break;
       case 1:
         return {title: "My Things", desc: "A list of all your things"};
@@ -71,7 +71,7 @@ app.controller("navController", function($scope) {
     }
   }
 
-  this.toPage(1); // go to thing page to start (for now, will be changed back to dashboard later)
+  this.toPage(0); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
 app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
@@ -332,6 +332,28 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
 
 });
 
+app.controller("DashboardController", function($scope, servicesService, thingService) {
+  var root = $scope;
+
+  // thing count
+  root.thingCount = 0;
+  root.getThingCount = function() {
+    thingService.getAllThings(function(data) {
+      root.thingCount = data.length;
+    });
+  }
+  root.getThingCount();
+
+  // service count
+  root.serviceCount = 0;
+  root.getServiceCount = function() {
+    servicesService.getAllThings(function(data) {
+      root.serviceCount = data.length;
+    });
+  }
+  root.getServiceCount();
+
+});
 
 app.directive("thingCardList", function() {
   return {
@@ -344,6 +366,13 @@ app.directive("serviceCardList", function() {
   return {
     restrict: 'E',
     templateUrl: "js/directives/service-card-list.html"
+  }
+});
+
+app.directive("dashboardOverview", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "js/directives/dashboard-overview.html"
   }
 });
 

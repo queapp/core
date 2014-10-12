@@ -6164,6 +6164,307 @@ button.close {
     display: none !important;
   }
 }
+.container.dashboard-overview .first .notif {
+  background: #FFF;
+  border: 1px solid #ebedee;
+  box-shadow: 0px 2px 0px #dde1e4;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  display: inline-block;
+  margin: 6px;
+  max-width: 100%;
+  z-index: 0;
+  height: 348px;
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  height: auto;
+  min-height: 100px;
+}
+.container.dashboard-overview .first .notif .card-badge {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+}
+.container.dashboard-overview .first .notif.above {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  opacity: 0.75;
+}
+.container.dashboard-overview .first .notif .card-info {
+  float: left;
+  border-left: 2px solid #EEE;
+}
+.container.dashboard-overview .first .notif .card-info .card-image {
+  width: 294px;
+  min-height: 220px;
+}
+.container.dashboard-overview .first .notif .card-info .card-image[src=''] {
+  border: 0px;
+  border-style: none;
+}
+.container.dashboard-overview .first .notif .card-info .card-body {
+  padding: 20px;
+  width: 294px;
+}
+.container.dashboard-overview .first .notif .card-icon {
+  padding: 14px;
+  cursor: pointer;
+}
+.container.dashboard-overview .first .notif .card-form {
+  display: block;
+  float: right;
+  padding: 20px 80px;
+  min-width: 800px;
+}
+.container.dashboard-overview .first .notif .card-form li {
+  list-style-type: none;
+  width: 640px;
+  margin: 0px auto;
+}
+.container.dashboard-overview .first .notif .card-form li label {
+  width: 320px;
+  font-weight: normal;
+  font-size: 18px;
+}
+.container.dashboard-overview .first .notif .card-form li label:after {
+  content: ":";
+}
+.container.dashboard-overview .first .notif .card-form li input {
+  width: 300px;
+  display: inline-block;
+  margin: 5px 0px;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text],
+.container.dashboard-overview .first .notif .card-form li input[type=number],
+.container.dashboard-overview .first .notif .card-form li input[type=time],
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  width: 300px;
+  display: inline-block;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=number]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=time]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text]::-moz-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=number]::-moz-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=time]::-moz-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text]:-ms-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=number]:-ms-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=time]:-ms-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:-ms-input-placeholder {
+  color: #777777;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text]::-webkit-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=number]::-webkit-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=time]::-webkit-input-placeholder,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]::-webkit-input-placeholder {
+  color: #777777;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=text][disabled],
+.container.dashboard-overview .first .notif .card-form li input[type=number][disabled],
+.container.dashboard-overview .first .notif .card-form li input[type=time][disabled],
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled],
+.container.dashboard-overview .first .notif .card-form li input[type=text][readonly],
+.container.dashboard-overview .first .notif .card-form li input[type=number][readonly],
+.container.dashboard-overview .first .notif .card-form li input[type=time][readonly],
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][readonly],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=text],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=number],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=time],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.container.dashboard-overview .first .notif .card-form li input[type=text],
+textarea.container.dashboard-overview .first .notif .card-form li input[type=number],
+textarea.container.dashboard-overview .first .notif .card-form li input[type=time],
+textarea.container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  height: auto;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:active:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].active,
+.open > .dropdown-toggle.container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  color: #ffffff;
+  background-color: #1991fb;
+  border-color: #047fec;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].active,
+.open > .dropdown-toggle.container.dashboard-overview .first .notif .card-form li input[type=checkbox] {
+  background-image: none;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox],
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled]:hover,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled]:focus,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled]:active,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox].disabled.active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox][disabled].active,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox].active {
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox] .badge {
+  color: #4ba9fc;
+  background-color: #ffffff;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:before {
+  content: "Off";
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.active,
+.open > .dropdown-toggle.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.active,
+.open > .dropdown-toggle.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked {
+  background-image: none;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.disabled,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked[disabled],
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.disabled:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked[disabled]:hover,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:hover,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.disabled:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked[disabled]:focus,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:focus,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.disabled:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked[disabled]:active,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.disabled.active,
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked[disabled].active,
+fieldset[disabled] .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+.container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:before {
+  content: "On";
+}
+.container.dashboard-overview .first .notif .body {
+  padding-left: 4px;
+  font-size: 15.68px;
+}
+.container.dashboard-overview .first .notif .title {
+  font-size: 21px;
+  margin-bottom: 6px;
+}
+.container.dashboard-overview .second div.pane h1 {
+  font-size: 28px;
+}
+.container.dashboard-overview .second div.pane .body {
+  list-style-type: none;
+  padding-left: 10px;
+}
 body {
   height: 100%;
   background: #e9edf0;
