@@ -6,6 +6,19 @@ module.exports = function(app, passport) {
     res.send("<h1>Que Backend</h1>If you're here, this most likely isn't what you want. This is a backend API; for the fontend interface start a web server in public/");
   });
 
+  // set host variable (where the backend is)
+  app.get("/js/get-host.js", function(req, res) {
+    res.setHeader('content-type', 'text/javascript');
+
+    if (process.env.HEROKU == "true") {
+      res.send('var host = "http://que-app-backend.herokuapp.com";');
+    } else if (process.env.PORT) {
+      res.send('var host = "http://' + process.env.HOST || "127.0.0.1" + ':' + process.env.PORT + '";');
+    } else {
+      res.send('var host = "http://127.0.0.1:8000";');
+    }
+  });
+
   // other routes
   require("./things")(app);
   require("./services")(app);

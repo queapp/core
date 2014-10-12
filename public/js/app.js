@@ -1,8 +1,3 @@
-/*/
-var host = "http://que-app-backend.herokuapp.com";
-/*/
-var host = "http://127.0.0.1:8000"
-/**/
 var app = angular.module("QueGui", {});
 
 // the top nav colors
