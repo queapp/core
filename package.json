@@ -15,12 +15,24 @@
     "request": "2.40.x",
     "underscore": "1.7.x"
   },
-  "author": {
-    "name": "Ryan Gaus",
-    "twitter": "@rgausnet"
-  },
+  "author": "Ryan Gaus",
   "scripts": {
     "test": "mocha",
     "deps": "sh update.sh"
-  }
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1egoman/que-iot.git"
+  },
+  "keywords": [
+    "iot",
+    "iot-controller"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1egoman/que-iot/issues"
+  },
+  "homepage": "https://github.com/1egoman/que-iot"
 }
