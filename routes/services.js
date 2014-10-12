@@ -23,6 +23,15 @@ module.exports = function(app) {
     });
   });
 
+  // get things that match a specific tag
+  app.get("/services/tag/:tag", function(req, res, next) {
+    services.get(null, function(data) {
+      res.send({data: _.filter(data, function(item) {
+        return _.contains(item.tags, req.param("tag"));
+      })});
+    });
+  });
+
   // add a new thing
   app.post("/services/add", function(req, res, next) {
     services.add(req.body, function(id) {

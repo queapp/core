@@ -2,6 +2,7 @@
 // manages the thing model
 
 // create instance of thing model
+var _ = require("underscore");
 var ThingServer = require("./models/things");
 var things = new ThingServer();
 
@@ -12,6 +13,15 @@ module.exports = function(app) {
   app.get("/things/all", function(req, res, next) {
     things.get(null, function(data) {
       res.send( {data: data} );
+    });
+  });
+
+  // get things that match a specific tag
+  app.get("/things/tag/:tag", function(req, res, next) {
+    things.get(null, function(data) {
+      res.send({data: _.filter(data, function(item) {
+        return _.contains(item.tags, req.param("tag"));
+      })});
     });
   });
 
