@@ -6203,7 +6203,7 @@ button.close {
 }
 .container.dashboard-overview .first .notif .card-info .card-image {
   width: 294px;
-  min-height: 220px;
+  height: 220px;
 }
 .container.dashboard-overview .first .notif .card-info .card-image[src=''] {
   border: 0px;
@@ -6587,7 +6587,7 @@ ul.card-list div.no-cards .side span:before {
 }
 .card .card-info .card-image {
   width: 294px;
-  min-height: 220px;
+  height: 220px;
 }
 .card .card-info .card-image[src=''] {
   border: 0px;
