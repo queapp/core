@@ -26,8 +26,10 @@ module.exports = function() {
   // name in the persistant data store to look
   this.underName = "things";
 
+  // currently active auth key
+  this.currentAuthKey = null;
 
-  // a default thing; used in .addThing()
+  // a default thing; used in .add()
   this.defaultThing = {
     "name": "Untitled Thing",
     "desc": "Untitled Thing Description",
@@ -40,6 +42,50 @@ module.exports = function() {
       "port": null
     },
     "data": {}
+  }
+
+  /**
+    Create a new auth key for adding a thing
+  */
+  this.createNewAuthKey = function(length, chars) {
+
+    // result string
+    var result = '';
+
+    // character choices
+    chars = chars || '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // generate the key
+    for (var i = length || 8; i > 0; --i)
+      result += chars[Math.round(Math.random() * (chars.length - 1))];
+
+    // cache it for later
+    this.currentAuthKey = result;
+
+    return result;
+  }
+
+  /**
+    Try and add a new thing, but only if the user specifies
+    the correct authentication key
+  */
+  this.addWithAuth = function(userKey, data, done) {
+
+    // only if auth key exists
+    if (typeof this.currentAuthKey !== "string" || typeof userKey !== "string") {
+      done(null);
+      return;
+    }
+
+    // is auth key correct?
+    if ( this.currentAuthKey.toLowerCase() == userKey.toLowerCase() ) {
+
+      // reset key and add thing
+      this.currentAuthKey = null;
+      this.add(data, done);
+    } else {
+      done(null);
+    }
   }
 
   /**

@@ -32,10 +32,26 @@ module.exports = function(app) {
     });
   });
 
-  // add a new thing
-  app.post("/services/add", function(req, res, next) {
-    services.add(req.body, function(id) {
-      res.send( services.createResponsePacket("OK", {id: id}) );
+
+  // create auth key for adding a new thing
+  app.get("/services/genkey", function(req, res, next) {
+    res.send(
+      services.createResponsePacket(
+        "OK", {
+          key: services.createNewAuthKey()
+        }
+      )
+    );
+  });
+
+  // add a new thing with authentication
+  app.post("/services/add/:key", function(req, res, next) {
+    services.addWithAuth(req.param("key"), req.body, function(id) {
+      if (id) {
+        res.send( services.createResponsePacket("OK", {id: id}) );
+      } else {
+        res.send( services.createResponsePacket("AUTHFAIL") );
+      }
     });
   });
 

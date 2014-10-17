@@ -25,10 +25,25 @@ module.exports = function(app) {
     });
   });
 
-  // add a new thing
-  app.post("/things/add", function(req, res, next) {
-    things.add(req.body, function(id) {
-      res.send( things.createResponsePacket("OK", {id: id}) );
+  // create auth key for adding a new thing
+  app.get("/things/genkey", function(req, res, next) {
+    res.send(
+      things.createResponsePacket(
+        "OK", {
+          key: things.createNewAuthKey()
+        }
+      )
+    );
+  });
+
+  // add a new thing with authentication
+  app.post("/things/add/:key", function(req, res, next) {
+    things.addWithAuth(req.param("key"), req.body, function(id) {
+      if (id) {
+        res.send( things.createResponsePacket("OK", {id: id}) );
+      } else {
+        res.send( things.createResponsePacket("AUTHFAIL") );
+      }
     });
   });
 
@@ -59,5 +74,6 @@ module.exports = function(app) {
       res.send( things.createResponsePacket() );
     });
   });
+
 
 };
