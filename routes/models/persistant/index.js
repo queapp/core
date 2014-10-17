@@ -32,6 +32,13 @@ module.exports = {
       persistantInstance = this;
     }
 
+    // check if file exists
+    fs.exists(fileName, function(exists) {
+      if (!exists) {
+        fs.writeFile(fileName, "{}");
+      }
+    });
+
     // auto-updating of the data structure
     setInterval(function(){
       if (root.update) {
@@ -70,7 +77,11 @@ module.exports = {
     Read data contents for a specific name
   */
   read: function(name) {
-    return name && this.cache[name] || this.cache;
+    if (name) {
+      return this.cache[name] || [];
+    } else {
+      return this.cache;
+    }
   },
 
   /**
