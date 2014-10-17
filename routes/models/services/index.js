@@ -20,7 +20,7 @@ var ServiceConverter = function(things) {
   }
 
   // different datafile location
-  things.dataFile = path.join("..", "services", "services.json");
+  things.underName = "services";
 
   return things;
 };

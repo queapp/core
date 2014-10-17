@@ -1,4 +1,3 @@
 node_modules/
-routes/models/services/services.json
-routes/models/things/things.json
+routes/models/persistant/persistant.json
 1things_and_services/

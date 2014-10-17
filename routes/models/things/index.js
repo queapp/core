@@ -1,6 +1,8 @@
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
+var p = require("../persistant").init();
+
 
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
@@ -15,16 +17,15 @@ Object.deepExtend = function(destination, source) {
   return destination;
 };
 
+
+
 // a thing container
 module.exports = function() {
   var root = this;
 
-  // where to store things
-  this.dataFile = "things.json";
+  // name in the persistant data store to look
+  this.underName = "things";
 
-  // cache for the things
-  this.cache = []
-  this.isModified = false;
 
   // a default thing; used in .addThing()
   this.defaultThing = {
@@ -87,43 +88,36 @@ module.exports = function() {
   }
 
   /**
-  Get a list of all things connected to the container
+    Get a list of all things connected to the container
   */
   this.get = function(id, done) {
-    fs.readFile(path.join(__dirname, this.dataFile), 'utf8', function(err, data) {
-      data || done([]);
-      records = JSON.parse(data);
 
-      // save to the cache
-      root.cache = records;
+    // get from persistant data store
+    records = p.read(this.underName);
 
-      if (id !== null) {
-        records = _.find(records, function(i) {
-          return i.id == id || undefined;
-        });
-      }
+    // search for id
+    if (id !== null) {
+      records = _.find(records, function(i) {
+        return i.id == id || undefined;
+      });
+    }
 
-      !err && done( records );
-    });
+    done(records);
   }
 
   /**
-  Update the whole list of things - it's throttled because file writes
-  can occer at such a frequency that the file will be read before it's written
-  and that's a problem because corruption starts happening.
+    Update the whole list of things
   */
-  this.put = _.throttle(function(data, done) {
-    if (data) {
-      txt = JSON.stringify(data, null, 2);
-      root.cache = txt;
-      fs.writeFile(path.join(__dirname, this.dataFile), txt, function(err) {
-        !err && done && done();
-      });
-    }
-  }, 500);
+  this.put = function(data, done) {
+
+    // write to cache
+    root.cache = data;
+    p.write(this.underName, data);
+    done && done();
+  };
 
   /**
-  Replace modified records in one specific thing
+    Replace modified records in one specific thing
   */
   this.update = function(id, changes, done) {
 
@@ -186,7 +180,7 @@ module.exports = function() {
 
 
   /**
-  Create a response packet with the correct status and message
+    Create a response packet with the correct status and message
   */
   this.createResponsePacket = function(status, data) {
     return _.extend({"status": status || "OK", "msg": null}, data || {});
