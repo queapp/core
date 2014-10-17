@@ -74,6 +74,9 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
   this.selectedThing = null;
 
+  // thing authentication key
+  this.authKey = null;
+
   // select a thing
   this.selectThing = function(thing, event) {
     clickable = $(event.target).hasClass("card-move");
@@ -181,6 +184,15 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     return string.replace('-', ' ').replace('_', ' ');
   }
 
+  // generate an authentication key
+  // used for adding a new thing
+  this.generateAuthKey = function() {
+    thingService.genAuthKey(function(data) {
+      root.authKey = data.key || null;
+    });
+  }
+  this.generateAuthKey();
+
   this.removeThing = function(id, index) {
     root.things.splice(index, 1);
     thingService.removeThing(id, function() {});
@@ -190,6 +202,14 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     thingService.getAllThings(function(data) {
 
       if ( angular.toJson(root.things) != angular.toJson(data) ) {
+
+        // if a new item was added, hide the modal
+        if (root.things.length !== data.length) {
+          $("#addThingModal").modal('hide');
+          root.generateAuthKey();
+        }
+
+        // update the data
         root.things = data;
       }
 
@@ -202,6 +222,9 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   var root = this;
 
   this.selectedThing = null;
+
+  // service authentication key
+  this.authKey = null;
 
   // select a thing
   this.selectThing = function(thing, event) {
@@ -315,10 +338,27 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
     servicesService.removeThing(id, function() {});
   }
 
+  // generate an authentication key
+  // used for adding a new service
+  this.generateAuthKey = function() {
+    servicesService.genAuthKey(function(data) {
+      root.authKey = data.key || null;
+    });
+  }
+  this.generateAuthKey();
+
   $interval(function(){
     servicesService.getAllThings(function(data) {
 
       if ( angular.toJson(root.things) != angular.toJson(data) ) {
+
+        // if a new item was added, hide the modal
+        if (root.things.length !== data.length) {
+          $("#addServiceModal").modal('hide');
+          root.generateAuthKey();
+        }
+
+        // update the data
         root.things = data;
       }
 
@@ -419,6 +459,15 @@ app.factory("thingService", function($http) {
         }).success(function(data) {
           callback(data);
         });
+      },
+
+      genAuthKey: function(callback) {
+        $http({
+          method: "get",
+          url: host + "/things/genkey",
+        }).success(function(data) {
+          callback(data);
+        });
       }
 
     };
@@ -469,6 +518,15 @@ app.factory("servicesService", function($http) {
         $http({
           method: "delete",
           url: host + "/services/" + id,
+        }).success(function(data) {
+          callback(data);
+        });
+      },
+
+      genAuthKey: function(callback) {
+        $http({
+          method: "get",
+          url: host + "/services/genkey",
         }).success(function(data) {
           callback(data);
         });

@@ -1,0 +1,36 @@
+// main: index.less
+
+// material design 'fab' button
+.material-fab(@size: 74px) {
+  position: fixed;
+  bottom: 20px;
+  display: inline-block;
+
+  cursor: pointer;
+  z-index: 100;
+
+  width: @size;
+  height: @size;
+
+  font-size: @size*.66;
+  text-align: center;
+
+  background: @brand-info;
+  color: #FFF;
+
+  .border-radius(@size/2);
+
+  overflow: hidden;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26),
+    inset 2px 2px 5px 0 lighten(@brand-info, 4%);
+
+
+  &:active {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+      inset 2px 2px 5px 0 lighten(@brand-info, 4%);
+  }
+}
+
+.add-button {
+  .material-fab;
+}

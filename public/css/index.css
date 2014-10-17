@@ -6470,6 +6470,30 @@ body {
   background: #e9edf0;
   overflow-y: scroll;
 }
+.add-button {
+  position: fixed;
+  bottom: 20px;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 100;
+  width: 74px;
+  height: 74px;
+  font-size: 48.84px;
+  text-align: center;
+  background: #5bc0de;
+  color: #FFF;
+  -webkit-border-radius: 37px;
+  -moz-border-radius: 37px;
+  border-radius: 37px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  overflow: hidden;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), inset 2px 2px 5px 0 #6cc7e1;
+}
+.add-button:active {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), inset 2px 2px 5px 0 #6cc7e1;
+}
 .navbar-que {
   height: 320px;
   -webkit-border-radius: 0px;
@@ -6833,4 +6857,7 @@ fieldset[disabled] .card .card-form li input[type=checkbox]:checked.active {
 }
 .card .card-form li input[type=checkbox]:checked:before {
   content: "On";
+}
+pre.big {
+  font-size: 28px;
 }
