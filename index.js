@@ -9,10 +9,10 @@ var session = require('express-session');
 var routes = require("./routes");
 
 var app = express();
-app.use(bodyParser.json());
 
 // some middleware
 app.use(cors());
+app.use(bodyParser.json());
 app.use(session({secret: "secret", saveUninitialized: true, resave: true}));
 app.use(express.static(__dirname+'/public'));
 
