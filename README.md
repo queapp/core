@@ -10,50 +10,11 @@ I, like many people, want to be able to control every aspect of each thing. That
 app plans to fill.
 
 ### Ok, that sounds cool. How do I make this "thing" you speak of?
-Well, it's pretty simple if you're familiar in Javascript and Node. A simple thing could look like
-this:
+Well, it's pretty simple if you're familiar in Javascript and Node. A simple thing is available in another
+repository that I have:
 
-index.js
-```javascript
-  var iot = require("iot-thing"); // make sure to add this to your package.json!
+[Examples are here](https://github.com/1egoman/que-iot-examples)
 
-  // this is your app's id, set it to null and one will be auto-assigned to you
-  // the id is available below as thing.id, so store it somewhere for next run and pass it in here
-  id = null
-
-  // create the thing
-  // specify the hostname and port of the server, the id, and
-  // the structure object. This contains all the default settings for the thing.
-  new iot.thing("127.0.0.1", 8000, id, {
-    name: "Example Thing",
-    desc: "Prooves that stuff works",
-    tags: ["example"],
-    data: {
-      message: {
-        value: "Hello World"
-      },
-      showMessage: {
-        value: false,
-        label: "Show message in terminal"
-      }
-    }
-  }, function(thing) {
-
-    // did the user set showMessage to true?
-    thing.data.pull("showMessage", function(val) {
-      if (val.value == true) {
-        // set it to false
-        thing.data.push("showMessage", false);
-
-        // show the message in the console
-        thing.data.pull("message", function(val) {
-          console.log("Output:", val.value);
-        });
-      }
-    });
-  }).go();
-
-```
 
 To run it:
   - Terminal window 1: `node index.js` (inside the root of this repository)
