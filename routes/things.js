@@ -3,11 +3,9 @@
 
 // create instance of thing model
 var _ = require("underscore");
-var ThingServer = require("./models/things");
-var things = new ThingServer();
 
 // all the routes
-module.exports = function(app) {
+module.exports = function(app, things) {
 
   // get all things
   app.get("/things/all", function(req, res, next) {
@@ -54,7 +52,7 @@ module.exports = function(app) {
     });
   });
 
-  // update thing data
+  // update thing data over http
   app.put("/things/:id/data", function(req, res, next) {
     things.update(parseInt(req.param("id")), req.body, function() {
       res.send( things.createResponsePacket() );

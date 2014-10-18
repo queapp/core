@@ -413,7 +413,8 @@ app.directive("dashboardOverview", function() {
 
 
 app.factory("thingService", function($http) {
-    return {
+    thingservice = {
+      cache: {},
 
       getAllThings: function(callback) {
         $http({
@@ -424,23 +425,37 @@ app.factory("thingService", function($http) {
         });
       },
 
+      // get thing data
+      // try from cache, but fall back onto
+      // a http request
       getThingData: function(id, callback) {
-        $http({
-          method: "get",
-          url: host + "/things/" + id + "/data",
-        }).success(function(data) {
-          callback(data);
-        });
+        if (this.cache[id]) {
+          callback(this.cache[id]);
+        } else {
+          $http({
+            method: "get",
+            url: host + "/things/" + id + "/data",
+          }).success(function(data) {
+            thingservice.cache = data;
+            callback(data);
+          });
+        }
       },
 
       updateThingData: function(id, data, callback) {
-        $http({
-          method: "put",
-          url: host + "/things/" + id + "/data",
-          data: JSON.stringify(data)
-        }).success(function(data) {
-          callback(data);
+        // push it back to te server
+        socket.emit('push-thing-data-update', {
+          id: id,
+          data: data
         });
+
+        // $http({
+        //   method: "put",
+        //   url: host + "/things/" + id + "/data",
+        //   data: JSON.stringify(data)
+        // }).success(function(data) {
+        //   callback(data);
+        // });
       },
 
       reorderThing: function(id, newLocation, callback) {
@@ -471,11 +486,29 @@ app.factory("thingService", function($http) {
       }
 
     };
+
+    // update thing cache
+    socket.on('pull-thing-data-update', function(changed) {
+
+      // create the item if it doesn't exist
+      if (!thingservice.cache[changed.id]) {
+        thingservice.cache[changed.id] = {};
+      }
+
+      // update cache
+      _.each(changed.data, function(v, k) {
+        thingservice.cache[changed.id][k] = v;
+      });
+
+      console.log(thingservice.cache);
+    });
+    return thingservice;
  });
 
 
 app.factory("servicesService", function($http) {
-    return {
+    serviceservice = {
+      cache: {},
 
       getAllThings: function(callback) {
         $http({
@@ -487,22 +520,32 @@ app.factory("servicesService", function($http) {
       },
 
       getThingData: function(id, callback) {
-        $http({
-          method: "get",
-          url: host + "/services/" + id + "/data",
-        }).success(function(data) {
-          callback(data);
-        });
+        if (this.cache[id]) {
+          callback(this.cache[id]);
+        } else {
+          $http({
+            method: "get",
+            url: host + "/services/" + id + "/data",
+          }).success(function(data) {
+            serviceservice.cache = data;
+            callback(data);
+          });
+        }
       },
 
       updateThingData: function(id, data, callback) {
-        $http({
-          method: "put",
-          url: host + "/services/" + id + "/data",
-          data: JSON.stringify(data)
-        }).success(function(data) {
-          callback(data);
+        socket.emit('push-service-data-update', {
+          id: id,
+          data: data
         });
+
+        // $http({
+        //   method: "put",
+        //   url: host + "/services/" + id + "/data",
+        //   data: JSON.stringify(data)
+        // }).success(function(data) {
+        //   callback(data);
+        // });
       },
 
       reorderThing: function(id, newLocation, callback) {
@@ -533,4 +576,19 @@ app.factory("servicesService", function($http) {
       }
 
     };
+
+    // update thing cache
+    socket.on('pull-service-data-update', function(changed) {
+
+      // create the item if it doesn't exist
+      if (!serviceservice.cache[changed.id]) {
+        serv.cache[changed.id] = {};
+      }
+
+      // update cache
+      _.each(changed.data, function(v, k) {
+        serv.cache[changed.id][k] = v;
+      });
+    });
+    return serviceservice;
  });

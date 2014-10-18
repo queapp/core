@@ -8,13 +8,9 @@
 // // convert thing model to service model
 // var services = ServiceConverter(new ThingServer());
 
-var ServiceServer = require("./models/services");
-
-// convert thing model to service model
-var services = new ServiceServer();
 
 // all the routes
-module.exports = function(app) {
+module.exports = function(app, services) {
 
   // get all things
   app.get("/services/all", function(req, res, next) {

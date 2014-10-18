@@ -1,4 +1,5 @@
 var express = require("express");
+var http = require("http");
 var passport = require('passport');
 var cors = require('cors');
 
@@ -16,11 +17,13 @@ app.use(bodyParser.json());
 app.use(session({secret: "secret", saveUninitialized: true, resave: true}));
 app.use(express.static(__dirname+'/public'));
 
+// create http Server
+var server = http.Server(app);
 
 // create all of the routes
-routes(app);
+routes(app, server);
 
 // run server
-var server = app.listen(process.env.PORT || 8000, function() {
+server.listen(process.env.PORT || 8000, function() {
   console.log('Listening on port %d', server.address().port);
 });

@@ -22,8 +22,9 @@ module.exports = {
   /**
     Initialize the file storage auto-updater
   */
-  init: function() {
+  init: function(socket) {
     var root = this;
+    root.io = socket;
 
     // is one already made?
     if (persistantInstance) {

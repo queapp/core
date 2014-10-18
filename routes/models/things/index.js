@@ -197,7 +197,7 @@ module.exports = function() {
         root.put(all);
 
         // callback
-        done(all);
+        done && done(all);
       }
     });
   }

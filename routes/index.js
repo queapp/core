@@ -1,5 +1,8 @@
+var ThingServer = require("./models/things");
+var ServiceServer = require("./models/services");
+
 // create all of the routes for the application
-module.exports = function(app, passport) {
+module.exports = function(app, server) {
 
   // root route (haha that sounds funny)
   app.get("/", function(req, res, next) {
@@ -19,9 +22,16 @@ module.exports = function(app, passport) {
     }
   });
 
-  // other routes
-  require("./things")(app);
-  require("./services")(app);
+  // create thing server and service server
+  var things = new ThingServer();
+  var services = new ServiceServer();
+
+  // web socket routes
+  require("./sockets.js")(app, server, things, services);
+
+  // http routes
+  require("./things")(app, things);
+  require("./services")(app, services);
 }
 
 // route middleware to make sure a user is logged in
