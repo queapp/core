@@ -1,3 +1,6 @@
 node_modules/
 routes/models/persistant/persistant.json
 1things_and_services/
+client/
+client-dev/
+hydroponic-garden-thing/
