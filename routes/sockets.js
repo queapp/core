@@ -9,7 +9,7 @@ module.exports = function(app, http, things, services) {
 
   // client has connected
   io.on('connection', function(socket) {
-    console.log("Connect");
+    // console.log("Connect");
 
     // (things) frontend -> backend
     socket.on('push-thing-data-update', function(changed) {
@@ -32,9 +32,9 @@ module.exports = function(app, http, things, services) {
     });
 
     // the client diconnected
-    socket.on('disconnect', function() {
-      console.log("Disconnect")
-    });
+    // socket.on('disconnect', function() {
+      // console.log("Disconnect")
+    // });
   });
 
 
