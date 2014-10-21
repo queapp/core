@@ -4,3 +4,4 @@ routes/models/persistant/persistant.json
 client/
 client-dev/
 hydroponic-garden-thing/
+logs/
