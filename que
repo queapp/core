@@ -1,0 +1,3 @@
+#!/bin/bash
+node index.js \
+--db="mongodb://dev:dev@045970.mongolab.com:45970/queapp"

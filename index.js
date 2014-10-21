@@ -3,12 +3,22 @@ var http = require("http");
 var passport = require('passport');
 var cors = require('cors');
 
+// express middleware
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
+// parse arguments
+var argv = require('minimist')(process.argv.slice(2));
+
+
+// connect to database
 var db = require("./routes/models/persistant/provider");
-db.connect('mongodb://dev:dev@ds045970.mongolab.com:45970/queapp')
+if (process.env.MONGOURI || argv.db) {
+  db.connect(process.env.MONGOURI || argv.db);
+} else {
+  throw new Error("Please set the MONGOURI environment variable to the uri of your mongodb instance.");
+}
 
 require("./logger")();
 var routes = require("./routes");
