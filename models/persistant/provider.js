@@ -52,7 +52,7 @@ var db = module.exports = {
 
     this.db.once('open', function() {
       root.isOpen = true;
-      console.log("Connected To DB");
+      console.log("Connected To Mongo instance:", host);
     });
   },
 
@@ -97,7 +97,7 @@ var db = module.exports = {
 
 
 
-
+  // service stuff (reading them, adding them, and deleting them)
   addService: function(data, callback) {
     data.type = "service";
     var thing = new Service(data);
