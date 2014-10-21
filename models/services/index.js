@@ -2,7 +2,6 @@ var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
 var async = require("async");
-
 var db = require("../persistant/provider");
 
 // create instance of thing model

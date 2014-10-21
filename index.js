@@ -13,8 +13,9 @@ var argv = require('minimist')(process.argv.slice(2));
 
 
 // connect to database
-var db = require("./routes/models/persistant/provider");
+var db = require("./models/persistant/provider");
 if (process.env.MONGOURI || argv.db) {
+  console.log(process.env.MONGOURI || argv.db)
   db.connect(process.env.MONGOURI || argv.db);
 } else {
   throw new Error("Please set the MONGOURI environment variable to the uri of your mongodb instance.");

@@ -1,5 +1,5 @@
-var ThingServer = require("./models/things");
-var ServiceServer = require("./models/services");
+var ThingServer = require("../models/things");
+var ServiceServer = require("../models/services");
 
 // create all of the routes for the application
 module.exports = function(app, server) {
