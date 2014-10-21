@@ -1,7 +1,9 @@
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
+var async = require("async");
 var p = require("../persistant").init();
+var db = require("../persistant/provider");
 
 
 Object.deepExtend = function(destination, source) {
@@ -20,11 +22,8 @@ Object.deepExtend = function(destination, source) {
 
 
 // a thing container
-module.exports = function() {
+module.exports = function(thedb) {
   var root = this;
-
-  // name in the persistant data store to look
-  this.underName = "things";
 
   // currently active auth key
   this.currentAuthKey = null;
@@ -139,17 +138,17 @@ module.exports = function() {
   this.get = function(id, done) {
 
     // get from persistant data store
-    records = p.read(this.underName);
+    db.findAllThings(function(err, records) {
+      // search for id
+      if (id !== null) {
+        records = _.find(records, function(i) {
+          return i.id == id || undefined;
+        });
+      }
 
-    // search for id
-    if (id !== null) {
-      records = _.find(records, function(i) {
-        return i.id == id || undefined;
-      });
-    }
-
-    done(records);
-  }
+      done(records);
+    });
+  };
 
   /**
     Update the whole list of things
@@ -158,7 +157,14 @@ module.exports = function() {
 
     // write to cache
     root.cache = data;
-    p.write(this.underName, data);
+    // p.write(this.underName, data);
+
+    // write to mongodb
+    async.map(data, function(data, callback) {
+      db.updateThingById(data.id, data, function(err, data) {
+        callback();
+      });
+    }, function(err, results) {});
     done && done();
   };
 

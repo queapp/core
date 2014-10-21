@@ -7,6 +7,9 @@ var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
+var db = require("./routes/models/persistant/provider");
+db.connect('mongodb://dev:dev@ds045970.mongolab.com:45970/queapp')
+
 require("./logger")();
 var routes = require("./routes");
 
