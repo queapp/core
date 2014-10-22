@@ -65,6 +65,27 @@ var ServiceConverter = function(services) {
 
   };
 
+  services.delete = function(id, done) {
+    // update
+    this.get(null, function(all) {
+
+      // get the modified record
+      var listIndex = null;
+      record = _.find(all, function(i, indx) {
+        listIndex = indx;
+        return i.id == id || undefined;
+      });
+
+      all.splice(listIndex, 1);
+      db.deleteService(id, function(err) {
+        done();
+      });
+      // root.put(all);
+
+      // callback
+    });
+  }
+
   return services;
 };
 

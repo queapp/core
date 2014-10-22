@@ -62,6 +62,12 @@ var db = module.exports = {
     thing.save(callback);
   },
 
+  deleteThing: function(id, callback) {
+    Thing.remove({id: id}, function(err, docs) {
+      callback(err);
+    });
+  },
+
   findAllThings: function(callback) {
     Thing.find(function(err, docs) {
       ret = [];
@@ -102,6 +108,12 @@ var db = module.exports = {
     data.type = "service";
     var thing = new Service(data);
     thing.save(callback);
+  },
+
+  deleteService: function(id, callback) {
+    Service.remove({id: id}, function(err, docs) {
+      callback(err);
+    });
   },
 
   findAllServices: function(callback) {

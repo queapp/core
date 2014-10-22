@@ -124,10 +124,12 @@ module.exports = function(thedb) {
       });
 
       all.splice(listIndex, 1);
-      root.put(all);
+      db.deleteThing(id, function(err) {
+        done();
+      });
+      // root.put(all);
 
       // callback
-      done();
     });
   }
 
