@@ -5,7 +5,8 @@ var mkdirp = require('mkdirp');
 
 module.exports = function(logFolder) {
 
-  mkdirp(path.join(__dirname, logFolder || "logs"), function(err) {
+  // make the logger directory if it doesn't exist
+  mkdirp(logFolder || "logs", function(err) {
 
     // create logger
     var logger = bunyan.createLogger({

@@ -20,7 +20,7 @@ if (process.env.MONGOURI || argv.db) {
   throw new Error("Please set the MONGOURI environment variable to the uri of your mongodb instance.");
 }
 
-require("./logger")();
+require("./models/logger")();
 var routes = require("./routes");
 
 var app = express();
