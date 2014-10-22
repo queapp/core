@@ -2,6 +2,7 @@ var express = require("express");
 var http = require("http");
 var passport = require('passport');
 var cors = require('cors');
+var cowsay = require("cowsay");
 
 // express middleware
 var bodyParser = require("body-parser");
@@ -45,5 +46,13 @@ routes(app, server);
 
 // run server
 server.listen(process.env.PORT || 8000, function() {
-  console.log('Listening on port %d', server.address().port);
+
+  // log the port
+  console.log(
+    cowsay.think({
+      text: "The magic is on port " + server.address().port,
+      f: "squirrel"
+    }) + "\n"
+  );
+
 });
