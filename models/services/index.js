@@ -49,8 +49,15 @@ var ServiceConverter = function(services) {
 
     // write to mongodb
     async.map(data, function(data, callback) {
-      db.updateServiceById(data.id, data, function(err, data) {
-        callback();
+      db.updateServiceById(data.id, data, function(err, d) {
+        if (d == 0) {
+          // instead, add it
+          db.addThing(data, function(err, d) {
+            callback();
+          });
+        } else {
+          callback();
+        }
       });
     }, function(err, results) {
       done && done();
