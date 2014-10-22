@@ -28,6 +28,11 @@ module.exports = function(logFolder) {
       log.apply(this, args);
     }
 
+    // similar to console.out above, but only logs to file
+    console.tolog = function() {
+      logger.info(Array.prototype.slice.call(arguments).join(" "));
+    }
+
     // new console.log
     console.log = function () {
       var args = Array.prototype.slice.call(arguments);

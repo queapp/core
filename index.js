@@ -33,7 +33,7 @@ app.use(express.static(__dirname+'/public'));
 
 // log all http requests
 app.use(function(req, res, next) {
-  console.log(req.method, req.url, req.statusCode, "->", req.hostname);
+  console.tolog(req.method, req.url, req.statusCode, "->", req.hostname);
   next();
 });
 
