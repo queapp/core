@@ -1,54 +1,43 @@
-var bunyan = require("bunyan");
+var winston = require("winston");
 var path = require("path");
 var mkdirp = require('mkdirp');
 
 
-module.exports = function(logFolder) {
+module.exports = function(argv, callback) {
 
   // make the logger directory if it doesn't exist
-  mkdirp(logFolder || "logs", function(err) {
+  mkdirp(process.env.LOGTO || argv.logto || "logs", function(err) {
 
     // create logger
-    var logger = bunyan.createLogger({
-      name: 'foo',
-      streams: [{
-          type: 'rotating-file',
-          path: path.join(logFolder || "logs", 'que.log'),
-          period: '1d',   // daily rotation
-          count: 3        // keep 3 back copies
-      }]
+    var logger = new winston.Logger({
+      transports: [
+          new winston.transports.File({
+              level: 'info',
+              filename: path.join(process.env.LOGTO || argv.logto || "logs", "que.log"),
+              handleExceptions: true,
+              json: true,
+              maxsize: 5242880, //5MB
+              maxFiles: 5,
+              colorize: false
+          }),
+          new winston.transports.Console({
+              level: 'debug',
+              handleExceptions: true,
+              json: false,
+              colorize: true
+          })
+      ],
+      exitOnError: false
     });
 
-    // create console.log clone
-    var log = console.log;
+    logger.transports.console.level = 'verbose';
 
-    // create a function out
-    // doesn't log to the file, only to stdout
-    console.out = function() {
-      var args = Array.prototype.slice.call(arguments);
-      log.apply(this, args);
-    }
-
-    // similar to console.out above, but only logs to file
-    console.tolog = function() {
-      logger.info(Array.prototype.slice.call(arguments).join(" "));
-    }
 
     // new console.log
-    console.log = function () {
-      var args = Array.prototype.slice.call(arguments);
-      logger.info(args.join(" "));
-      log.apply(this, args);
-    };
+    console.log = logger.info;
+    console.verbose = logger.verbose;
 
-    // new console.error
-    var error = console.error;
-    console.error = function () {
-      var args = Array.prototype.slice.call(arguments);
-      logger.info.call(args);
-      error.apply(this, args);
-    };
-
+    callback && callback(logger);
   });
 
 }
