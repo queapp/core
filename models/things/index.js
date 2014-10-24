@@ -42,6 +42,9 @@ module.exports = function(thedb) {
     "data": {}
   }
 
+  // the websocket instance
+  this.socket = null;
+
   // setting and retreiving auth keys
   this.setAuthKey = db.setThingAuthKey;
   this.getAuthKey = db.getThingAuthKey;
@@ -182,6 +185,11 @@ module.exports = function(thedb) {
         }
       });
     }, function(err, results) {
+
+      // tell other clients it's time to fetch new data
+      root.socket && root.socket.emit("backend-data-change", data);
+
+      // callback
       done && done();
     });
 

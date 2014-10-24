@@ -198,25 +198,18 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     thingService.removeThing(id, function() {});
   }
 
-  $interval(function(){
+  socket.on('backend-data-change', function(data) {
     if ($(':focus').length == 0) {
-      thingService.getAllThings(function(data) {
+      // if a new item was added, hide the modal
+      if (root.things.length !== data.length) {
+        $("#addThingModal").modal('hide');
+        root.generateAuthKey();
+      }
 
-        if ( angular.toJson(root.things) != angular.toJson(data) ) {
-
-          // if a new item was added, hide the modal
-          if (root.things.length !== data.length) {
-            $("#addThingModal").modal('hide');
-            root.generateAuthKey();
-          }
-
-          // update the data
-          root.things = data;
-        }
-
-      });
-    };
-  }, 1000);
+      // update the data
+      root.things = data;
+    }
+  });
 
 });
 
@@ -349,23 +342,36 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   }
   this.generateAuthKey();
 
-  $interval(function(){
-    servicesService.getAllThings(function(data) {
+  // $interval(function(){
+  //   servicesService.getAllThings(function(data) {
+  //
+  //     if ( angular.toJson(root.things) != angular.toJson(data) ) {
+  //
+  //       // if a new item was added, hide the modal
+  //       if (root.things.length !== data.length) {
+  //         $("#addServiceModal").modal('hide');
+  //         root.generateAuthKey();
+  //       }
+  //
+  //       // update the data
+  //       root.things = data;
+  //     }
+  //
+  //   });
+  // }, 1000);
 
-      if ( angular.toJson(root.things) != angular.toJson(data) ) {
-
-        // if a new item was added, hide the modal
-        if (root.things.length !== data.length) {
-          $("#addServiceModal").modal('hide');
-          root.generateAuthKey();
-        }
-
-        // update the data
-        root.things = data;
+  socket.on('backend-data-change', function(data) {
+    if ($(':focus').length == 0) {
+      // if a new item was added, hide the modal
+      if (root.things.length !== data.length) {
+        $("#addThingModal").modal('hide');
+        root.generateAuthKey();
       }
 
-    });
-  }, 1000);
+      // update the data
+      root.things = data;
+    }
+  });
 
 });
 

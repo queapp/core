@@ -27,7 +27,8 @@ module.exports = function(app, server) {
   var services = new ServiceServer();
 
   // web socket routes
-  require("./sockets.js")(app, server, things, services);
+  var io = require("./sockets.js")(app, server, things, services);
+  things.socket = io;
 
   // http routes
   require("./things")(app, things);

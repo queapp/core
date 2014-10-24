@@ -37,5 +37,5 @@ module.exports = function(app, http, things, services) {
     // });
   });
 
-
+  return io;
 }
