@@ -6178,7 +6178,7 @@ button.close {
   margin: 6px;
   max-width: 100%;
   z-index: 0;
-  height: 348px;
+  min-height: 348px;
   position: relative;
   width: 100%;
   padding: 20px;
@@ -6198,12 +6198,12 @@ button.close {
   opacity: 0.75;
 }
 .container.dashboard-overview .first .notif .card-info {
-  float: left;
   border-left: 2px solid #EEE;
 }
 .container.dashboard-overview .first .notif .card-info .card-image {
   width: 294px;
   height: 220px;
+  margin-left: 8px;
 }
 .container.dashboard-overview .first .notif .card-info .card-image[src=''] {
   border: 0px;
@@ -6219,25 +6219,22 @@ button.close {
 }
 .container.dashboard-overview .first .notif .card-form {
   display: block;
-  float: right;
-  padding: 20px 80px;
-  min-width: 800px;
+  padding: 20px 6px;
 }
 .container.dashboard-overview .first .notif .card-form li {
   list-style-type: none;
-  width: 640px;
-  margin: 0px auto;
+  margin: 0px;
 }
 .container.dashboard-overview .first .notif .card-form li label {
   width: 320px;
   font-weight: normal;
   font-size: 18px;
+  display: block;
 }
 .container.dashboard-overview .first .notif .card-form li label:after {
   content: ":";
 }
 .container.dashboard-overview .first .notif .card-form li input {
-  width: 300px;
   display: inline-block;
   margin: 5px 0px;
 }
@@ -6450,6 +6447,33 @@ fieldset[disabled] .container.dashboard-overview .first .notif .card-form li inp
 .container.dashboard-overview .first .notif .card-form li input[type=checkbox]:checked:before {
   content: "On";
 }
+@media (min-width: 768px) {
+  .container.dashboard-overview .first .notif {
+    width: 100%;
+  }
+  .container.dashboard-overview .first .notif .card-info {
+    float: left;
+  }
+  .container.dashboard-overview .first .notif .card-info .card-image {
+    margin-left: 0px;
+  }
+  .container.dashboard-overview .first .notif .card-form {
+    float: right;
+    padding: 20px 80px;
+    min-width: 800px;
+  }
+  .container.dashboard-overview .first .notif .card-form li {
+    width: 640px;
+    margin: 0px auto;
+  }
+  .container.dashboard-overview .first .notif .card-form li label {
+    display: inline-block;
+  }
+  .container.dashboard-overview .first .notif .card-form li input {
+    width: 300px;
+    width: 100%;
+  }
+}
 .container.dashboard-overview .first .notif .body {
   padding-left: 4px;
   font-size: 15.68px;
@@ -6495,7 +6519,7 @@ body {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), inset 2px 2px 5px 0 #6cc7e1;
 }
 .navbar-que {
-  height: 320px;
+  min-height: 96px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
@@ -6504,19 +6528,10 @@ body {
   background-clip: padding-box;
 }
 .navbar-que h1 {
-  text-align: center;
-  color: #FFF;
-  font-size: 70px;
-}
-.navbar-que h1 small {
-  display: block;
-  color: #fff;
-  font-size: 30%;
-  margin-top: 24px;
+  display: none;
 }
 .navbar-que .container {
   height: 100%;
-  height: 96px;
 }
 .navbar-que .navbar-header,
 .navbar-que .navbar-nav {
@@ -6527,6 +6542,11 @@ body {
   margin-top: 17px;
 }
 .navbar-que .navbar-collapse.in {
+  margin-top: 15px;
+  background: #FFF;
+  z-index: 1000;
+}
+.navbar-que .navbar-collapse.collapsing {
   margin-top: 15px;
   background: #FFF;
 }
@@ -6540,13 +6560,41 @@ body {
 .navbar-que .navbar-nav li a,
 .navbar-que .navbar-nav a:hover {
   background: transparent;
-  color: #FFF;
+  color: #000;
 }
 .navbar-que .navbar-nav .active a,
 .navbar-que .navbar-nav .active a:hover {
   font-weight: bold;
   background: transparent;
-  color: #FFF;
+  color: #000;
+}
+@media (min-width: 768px) {
+  .navbar-que {
+    height: 320px;
+  }
+  .navbar-que .navbar-nav li a,
+  .navbar-que .navbar-nav a:hover {
+    color: #FFF;
+  }
+  .navbar-que .navbar-nav .active a,
+  .navbar-que .navbar-nav .active a:hover {
+    color: #FFF;
+  }
+  .navbar-que .container {
+    height: 96px;
+  }
+  .navbar-que h1 {
+    text-align: center;
+    color: #FFF;
+    font-size: 350%;
+    display: block;
+  }
+  .navbar-que h1 small {
+    display: block;
+    color: #fff;
+    font-size: 40%;
+    margin-top: 24px;
+  }
 }
 ul.card-list {
   list-style-type: none;
@@ -6554,14 +6602,11 @@ ul.card-list {
   margin: 0px 0px 20px 0px;
 }
 ul.card-list div.no-cards {
-  background-image: url("../img/things-none.svg");
-  width: 800px;
   height: 400px;
   margin: 0px auto;
   background-repeat: no-repeat;
 }
 ul.card-list div.no-cards .side {
-  float: right;
   width: 250px;
   margin-right: 12px;
   margin-top: 20px;
@@ -6575,6 +6620,15 @@ ul.card-list div.no-cards .side span {
 }
 ul.card-list div.no-cards .side span:before {
   content: "Examples: ";
+}
+@media (min-width: 768px) {
+  ul.card-list div.no-cards {
+    background-image: url("../img/things-none.svg");
+    width: 800px;
+  }
+  ul.card-list div.no-cards .side {
+    float: right;
+  }
 }
 .card {
   background: #FFF;
@@ -6590,7 +6644,7 @@ ul.card-list div.no-cards .side span:before {
   margin: 6px;
   max-width: 100%;
   z-index: 0;
-  height: 348px;
+  min-height: 348px;
   position: relative;
 }
 .card .card-badge {
@@ -6606,12 +6660,12 @@ ul.card-list div.no-cards .side span:before {
   opacity: 0.75;
 }
 .card .card-info {
-  float: left;
   border-left: 2px solid #EEE;
 }
 .card .card-info .card-image {
   width: 294px;
   height: 220px;
+  margin-left: 8px;
 }
 .card .card-info .card-image[src=''] {
   border: 0px;
@@ -6627,25 +6681,22 @@ ul.card-list div.no-cards .side span:before {
 }
 .card .card-form {
   display: block;
-  float: right;
-  padding: 20px 80px;
-  min-width: 800px;
+  padding: 20px 6px;
 }
 .card .card-form li {
   list-style-type: none;
-  width: 640px;
-  margin: 0px auto;
+  margin: 0px;
 }
 .card .card-form li label {
   width: 320px;
   font-weight: normal;
   font-size: 18px;
+  display: block;
 }
 .card .card-form li label:after {
   content: ":";
 }
 .card .card-form li input {
-  width: 300px;
   display: inline-block;
   margin: 5px 0px;
 }
@@ -6857,6 +6908,33 @@ fieldset[disabled] .card .card-form li input[type=checkbox]:checked.active {
 }
 .card .card-form li input[type=checkbox]:checked:before {
   content: "On";
+}
+@media (min-width: 768px) {
+  .card {
+    width: 100%;
+  }
+  .card .card-info {
+    float: left;
+  }
+  .card .card-info .card-image {
+    margin-left: 0px;
+  }
+  .card .card-form {
+    float: right;
+    padding: 20px 80px;
+    min-width: 800px;
+  }
+  .card .card-form li {
+    width: 640px;
+    margin: 0px auto;
+  }
+  .card .card-form li label {
+    display: inline-block;
+  }
+  .card .card-form li input {
+    width: 300px;
+    width: 100%;
+  }
 }
 pre.big {
   font-size: 28px;

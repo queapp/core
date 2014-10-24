@@ -35,28 +35,16 @@ body {
 
 // the custom navbar
 .navbar-que {
-  height: 320px;
+  min-height: 96px;
 
   .border-radius(0px);
 
-  h1 {
-    text-align: center;
-    color: #FFF;
-    font-size: @font-size-base * 5;
-
-    small {
-      display: block;
-      color: #fff;
-      font-size: 30%;
-      margin-top: 24px;
-    }
-  }
+  h1 { display: none; }
 
 }
 
 .navbar-que .container {
   height: 100%;
-  height: 96px;
 }
 
 .navbar-que .navbar-header, .navbar-que .navbar-nav {
@@ -69,6 +57,12 @@ body {
 }
 
 .navbar-que .navbar-collapse.in {
+  margin-top: 15px;
+  background: #FFF;
+  z-index: 1000;
+}
+
+.navbar-que .navbar-collapse.collapsing {
   margin-top: 15px;
   background: #FFF;
 }
@@ -85,13 +79,50 @@ body {
 .navbar-que .navbar-nav {
   li a, a:hover {
     background: transparent;
-    color: #FFF;
+    color: #000;
   }
 
   .active a, .active a:hover {
     font-weight: bold;
     background: transparent;
-    color: #FFF;
+    color: #000;
+  }
+}
+
+// styles to convert mobile -> desktop
+@media (min-width: @screen-sm-min) {
+  .navbar-que {
+    height: 320px;
+
+    .navbar-nav {
+      li a, a:hover {
+        color: #FFF;
+      }
+
+      .active a, .active a:hover {
+        color: #FFF;
+      }
+    }
+
+    .container {
+      height: 96px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #FFF;
+      font-size: 350%;
+      display: block;
+
+      small {
+        display: block;
+        color: #fff;
+        font-size: 40%;
+        margin-top: 24px;
+      }
+    }
+
+
   }
 }
 
@@ -107,14 +138,12 @@ ul.card-list {
 }
 
 ul.card-list div.no-cards {
-  background-image: url("../img/things-none.svg");
-  width: 800px;
   height: 400px;
   margin: 0px auto;
   background-repeat: no-repeat;
 
   .side {
-    float: right;
+    // float: right;
     width: 250px;
     margin-right: 12px;
     margin-top: 20px;
@@ -127,6 +156,15 @@ ul.card-list div.no-cards {
       display: block;
       margin-top: 5px;
       &:before { content: "Examples: "; }
+    }
+  }
+
+  // styles to convert mobile -> desktop
+  @media (min-width: @screen-sm-min) {
+    background-image: url("../img/things-none.svg");
+    width: 800px;
+    .side {
+      float: right;
     }
   }
 }
@@ -145,7 +183,7 @@ ul.card-list div.no-cards {
   // width: 296px;
   max-width: 100%;
   z-index: 0;
-  height: 348px;
+  min-height: 348px;
 
   position: relative;
 
@@ -165,12 +203,13 @@ ul.card-list div.no-cards {
   }
 
   .card-info {
-    float: left;
+    // float: left;
     border-left: 2px solid #EEE;
 
     .card-image {
       width: 294px;
       height: 220px;
+      margin-left: 8px;
       &[src=''] {
         border: 0px;
         border-style: none;
@@ -190,26 +229,30 @@ ul.card-list div.no-cards {
 
   .card-form {
     display: block;
-    float: right;
+    // float: right;
 
-    padding: 20px 80px;
-    min-width: 800px;
+    // padding: 20px 80px;
+    padding: 20px 6px;
+    // min-width: 800px;
 
     li {
       list-style-type: none;
-      width: 640px;
-      margin: 0px auto;
+      // width: 640px;
+      // margin: 0px auto;
+      margin: 0px;
 
       label {
         width: 320px;
         font-weight: normal;
         font-size: @font-size-large;
+        display: block;
 
         &:after { content: ":"; }
       }
 
       input {
-        width: 300px;
+        // width: 300px;
+        // width: 100%;
         display: inline-block;
         margin: @padding-small-vertical 0px;
 
@@ -238,6 +281,34 @@ ul.card-list div.no-cards {
     }
   }
 
+  // styles to convert mobile -> desktop
+  @media (min-width: @screen-sm-min) {
+    width: 100%;
+
+    .card-info {
+      float: left;
+      .card-image { margin-left: 0px; }
+    }
+    .card-form {
+      float: right;
+      padding: 20px 80px;
+      min-width: 800px;
+
+      li {
+        width: 640px;
+        margin: 0px auto;
+
+        label {
+          display: inline-block;
+        }
+
+        input {
+          width: 300px;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 pre.big {
