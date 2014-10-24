@@ -31,9 +31,16 @@ var serviceSchema = mongoose.Schema({
   "data": Object
 });
 
+// schema for a thing
+var authKeySchema = mongoose.Schema({
+  "type": String,
+  "key": String,
+});
+
 // the models
 var Thing = mongoose.model('Thing', thingSchema);
 var Service = mongoose.model('Service', serviceSchema);
+var Authkey = mongoose.model('Authkey', authKeySchema);
 
 
 
@@ -100,7 +107,55 @@ var db = module.exports = {
     Thing.update({id: id}, data, {}, callback);
   },
 
+  setThingAuthKey: function(akey) {
+    // remove all current authkeys (there can only be one!)
+    Authkey.remove({type: "thing"}, function(err) {
 
+      // add our new one
+      var authkey = new Authkey();
+      authkey.type = "thing";
+      authkey.key = akey;
+      authkey.save();
+
+    });
+  },
+
+  getThingAuthKey: function(callback) {
+    // get the current thing authkey
+    Authkey.findOne({type: "thing"}, function(err, doc) {
+      // convert to object from model
+      ob = doc.toObject();
+      delete ob._id;
+
+      // callback
+      callback(err, ob.key);
+    });
+  },
+
+  setServiceAuthKey: function(akey) {
+    // remove all current authkeys (there can only be one!)
+    Authkey.remove({type: "service"}, function(err) {
+
+      // add our new one
+      var authkey = new Authkey();
+      authkey.type = "service";
+      authkey.key = akey;
+      authkey.save();
+
+    });
+  },
+
+  getServiceAuthKey: function(callback) {
+    // get the current thing authkey
+    Authkey.findOne({type: "service"}, function(err, doc) {
+      // convert to object from model
+      ob = doc.toObject();
+      delete ob._id;
+
+      // callback
+      callback(err, ob.key);
+    });
+  },
 
 
   // service stuff (reading them, adding them, and deleting them)
@@ -147,6 +202,7 @@ var db = module.exports = {
   updateServiceById: function(id, data, callback) {
     Service.update({id: id}, data, {}, callback);
   }
+
 
 
 

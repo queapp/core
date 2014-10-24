@@ -86,6 +86,10 @@ var ServiceConverter = function(services) {
     });
   }
 
+  // setting and retreiving auth key uses different functions
+  services.setAuthKey = db.setServiceAuthKey;
+  services.getAuthKey = db.getServiceAuthKey;
+
   return services;
 };
 

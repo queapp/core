@@ -42,6 +42,10 @@ module.exports = function(thedb) {
     "data": {}
   }
 
+  // setting and retreiving auth keys
+  this.setAuthKey = db.setThingAuthKey;
+  this.getAuthKey = db.getThingAuthKey;
+
   /**
     Create a new auth key for adding a thing
   */
@@ -59,6 +63,7 @@ module.exports = function(thedb) {
 
     // cache it for later
     this.currentAuthKey = result;
+    this.setAuthKey(result);
 
     return result;
   }
@@ -69,21 +74,25 @@ module.exports = function(thedb) {
   */
   this.addWithAuth = function(userKey, data, done) {
 
-    // only if auth key exists
-    if (typeof this.currentAuthKey !== "string" || typeof userKey !== "string") {
-      done(null);
-      return;
-    }
+    // fetch the auth key
+    this.getAuthKey(function(err, authkey) {
+      console.log(authkey)
+      // only if auth key exists
+      if (typeof authkey !== "string" || typeof userKey !== "string") {
+        done(null);
+        return;
+      }
 
-    // is auth key correct?
-    if ( this.currentAuthKey.toLowerCase() == userKey.toLowerCase() ) {
+      // is auth key correct?
+      if ( authkey.toLowerCase() == userKey.toLowerCase() ) {
 
-      // reset key and add thing
-      this.currentAuthKey = null;
-      this.add(data, done);
-    } else {
-      done(null);
-    }
+        // reset key and add thing
+        root.createNewAuthKey();
+        root.add(data, done);
+      } else {
+        done(null);
+      }
+    });
   }
 
   /**
