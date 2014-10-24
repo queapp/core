@@ -199,21 +199,23 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   }
 
   $interval(function(){
-    thingService.getAllThings(function(data) {
+    if ($(':focus').length == 0) {
+      thingService.getAllThings(function(data) {
 
-      if ( angular.toJson(root.things) != angular.toJson(data) ) {
+        if ( angular.toJson(root.things) != angular.toJson(data) ) {
 
-        // if a new item was added, hide the modal
-        if (root.things.length !== data.length) {
-          $("#addThingModal").modal('hide');
-          root.generateAuthKey();
+          // if a new item was added, hide the modal
+          if (root.things.length !== data.length) {
+            $("#addThingModal").modal('hide');
+            root.generateAuthKey();
+          }
+
+          // update the data
+          root.things = data;
         }
 
-        // update the data
-        root.things = data;
-      }
-
-    });
+      });
+    };
   }, 1000);
 
 });
@@ -500,7 +502,6 @@ app.factory("thingService", function($http) {
         thingservice.cache[changed.id][k] = v;
       });
 
-      console.log(thingservice.cache);
     });
     return thingservice;
  });
