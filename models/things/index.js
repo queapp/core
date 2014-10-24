@@ -55,7 +55,7 @@ module.exports = function(thedb) {
     var result = '';
 
     // character choices
-    chars = chars || '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    chars = chars || 'ABCDEFGHJKLMNPQRTWXY34689';
 
     // generate the key
     for (var i = length || 8; i > 0; --i)
