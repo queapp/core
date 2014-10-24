@@ -10,7 +10,8 @@ module.exports = function(app, things) {
   // get all things
   app.get("/things/all", function(req, res, next) {
     things.get(null, function(data) {
-      res.send( {data: data} );
+      res.status(200);
+      res.end(JSON.stringify({data: data}));
     });
   });
 

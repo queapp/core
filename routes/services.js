@@ -15,7 +15,8 @@ module.exports = function(app, services) {
   // get all things
   app.get("/services/all", function(req, res, next) {
     services.get(null, function(data) {
-      res.send( {data: data} );
+      res.status(200);
+      res.end(JSON.stringify({data: data}));
     });
   });
 
