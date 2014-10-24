@@ -199,16 +199,18 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   }
 
   socket.on('backend-data-change', function(data) {
-    if ($(':focus').length == 0) {
-      // if a new item was added, hide the modal
-      if (root.things.length !== data.length) {
-        $("#addThingModal").modal('hide');
-        root.generateAuthKey();
-      }
+    thingService.getAllThings(function(data) {
+      if ($(':focus').length == 0) {
+        // if a new item was added, hide the modal
+        if (root.things.length !== data.length) {
+          $("#addThingModal").modal('hide');
+          root.generateAuthKey();
+        }
 
-      // update the data
-      root.things = data;
-    }
+        // update the data
+        root.things = data;
+      }
+    });
   });
 
 });
@@ -361,16 +363,18 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   // }, 1000);
 
   socket.on('backend-data-change', function(data) {
-    if ($(':focus').length == 0) {
-      // if a new item was added, hide the modal
-      if (root.things.length !== data.length) {
-        $("#addThingModal").modal('hide');
-        root.generateAuthKey();
-      }
+    servicesService.getAllThings(function(data) {
+      if ($(':focus').length == 0) {
+        // if a new item was added, hide the modal
+        if (root.things.length !== data.length) {
+          $("#addThingModal").modal('hide');
+          root.generateAuthKey();
+        }
 
-      // update the data
-      root.things = data;
-    }
+        // update the data
+        root.things = data;
+      }
+    });
   });
 
 });
