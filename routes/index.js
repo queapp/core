@@ -1,5 +1,6 @@
 var ThingServer = require("../models/things");
 var ServiceServer = require("../models/services");
+var BlockServer = require("../models/blocks");
 
 // create all of the routes for the application
 module.exports = function(app, server) {
@@ -25,6 +26,7 @@ module.exports = function(app, server) {
   // create thing server and service server
   var things = new ThingServer();
   var services = new ServiceServer();
+  var blocks = new BlockServer();
 
   // web socket routes
   var io = require("./sockets.js")(app, server, things, services);
@@ -33,6 +35,7 @@ module.exports = function(app, server) {
   // http routes
   require("./things")(app, things);
   require("./services")(app, services);
+  require("./blocks")(app, blocks);
 }
 
 // route middleware to make sure a user is logged in
