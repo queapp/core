@@ -33,7 +33,7 @@ require("./models/logger")(argv, function(logger) {
   app.use(express.static(__dirname+'/public'));
 
   // log all http requests
-  // app.use( require('winston-request-logger').create(logger) );
+  app.use( require('winston-request-logger').create(logger) );
 
   // create http Server
   var server = http.Server(app);

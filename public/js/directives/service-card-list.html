@@ -49,7 +49,7 @@
 
 
     <!-- each thing is listed here, in a card -->
-    <div class="card"
+    <!-- <div class="card"
       ng-repeat="thing in sC.things"
       ng-class="{above: sC.selectedThing == thing.id}"
       ng-mousedown="sC.selectThing(thing, $event)"
@@ -68,10 +68,10 @@
         <span class="pull-right card-icon card-move glyphicon glyphicon-resize-vertical" title="Move Card"></span>
       </span>
 
-      <ul class="card-form clearfix">
+      <ul class="card-form clearfix"> -->
 
         <!-- external page -->
-        <li ng-show="thing.link">
+        <!-- <li ng-show="thing.link">
           <a href="{{thing.link}}" class="btn btn-default btn-lg" style="width: 100%; margin-top: 10%;">
             Thing Page
           </a>
@@ -91,7 +91,60 @@
         </li>
       </ul>
 
-    </div>
+    </div> -->
+
+    <ul class="list-group">
+      <li class="list-group-item thing" ng-repeat="thing in tC.things">
+        <h3>
+          {{thing.name}}
+          <small>{{thing.desc}}</small>
+        </h3>
+
+        <button class="btn btn-danger pull-right" ng-click="sC.removeThing(thing.id, $index)">Delete</button>
+        <button
+          class="btn btn-primary pull-right"
+          data-toggle="modal"
+          data-target="#{{thing.id}}-thing-data"
+          >Edit Data
+        </button>
+
+        <div class="modal fade edit-data" id="{{thing.id}}-thing-data">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                  <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Edit Thing Data</h4>
+              </div>
+              <div class="modal-body">
+                <ul class="card-form clearfix">
+
+                  <li ng-repeat="(k, v) in thing.data">
+                    <label title="{{k}}">{{v.label || tC.convertIntoSpaces(k)}}</label>
+                    <input
+                      type="{{ tC.getTypeFor(v) }}"
+                      ng-model="v.value"
+                      ng-change="tC.updateThingData(thing.id, k, v)"
+                      ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
+                      placeholder="{{k}}"
+                      value="{{tC.isButton(v) &amp;&amp; v.value}}"
+                      ng-disabled="v.readonly"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+      </li>
+    </ul>
+
 
   </ul>
 </div>

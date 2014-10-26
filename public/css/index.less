@@ -169,152 +169,73 @@ ul.card-list div.no-cards {
   }
 }
 
-// cards
-
-.card {
-  background: #FFF;
-  border: 1px solid desaturate(#E9EDF0, 10%);
-  box-shadow: 0px 2px 0px mix(#E9EDF0, #000, 95%);
-  .border-radius(2px);
-
-  display: inline-block;
-
-  margin: 6px;
-  // width: 296px;
-  max-width: 100%;
-  z-index: 0;
-  min-height: 348px;
-
-  position: relative;
-
-  .card-badge {
-    position: absolute;
-    top: @padding-base-vertical;
-    right: @padding-base-horizontal;
-  }
-
-  &.above {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-
-    z-index: 100;
-    opacity: 0.75;
-  }
-
-  .card-info {
-    // float: left;
-    border-left: 2px solid #EEE;
-
-    .card-image {
-      width: 294px;
-      height: 220px;
-      margin-left: 8px;
-      &[src=''] {
-        border: 0px;
-        border-style: none;
-      }
-    }
-
-    .card-body {
-      padding: 20px;
-      width: 294px;
-    }
-  }
-
-  .card-icon {
-    padding: 14px;
-    cursor: pointer;
-  }
-
-  .card-form {
-    display: block;
-    // float: right;
-
-    // padding: 20px 80px;
-    padding: 20px 6px;
-    // min-width: 800px;
-
-    li {
-      list-style-type: none;
-      // width: 640px;
-      // margin: 0px auto;
-      margin: 0px;
-
-      label {
-        width: 320px;
-        font-weight: normal;
-        font-size: @font-size-large;
-        display: block;
-
-        &:after { content: ":"; }
-      }
-
-      input {
-        // width: 300px;
-        // width: 100%;
-        display: inline-block;
-        margin: @padding-small-vertical 0px;
-
-        &[type=text], &[type=number], &[type=time], &[type=checkbox]{
-          .form-control;
-          width: 300px;
-          display: inline-block;
-        }
-
-        &[type=checkbox] {
-          appearance: none;
-          -webkit-appearance: none;
-          .btn;
-          .btn-primary;
-
-          &:before { content: "Off"; }
-
-          &:checked {
-            .btn-success;
-            &:before { content: "On"; }
-          }
-
-        }
-      }
-
-    }
-  }
-
-  // styles to convert mobile -> desktop
-  @media (min-width: @screen-sm-min) {
-    width: 100%;
-
-    .card-info {
-      float: left;
-      .card-image { margin-left: 0px; }
-    }
-    .card-form {
-      float: right;
-      padding: 20px 80px;
-      min-width: 800px;
-
-      li {
-        width: 640px;
-        margin: 0px auto;
-
-        label {
-          display: inline-block;
-        }
-
-        input {
-          width: 300px;
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-
 pre.big {
   font-size: @font-size-base * 2;
 }
 
+// make list group look different
+ul.list-group {
+  li.list-group-item {
+    background: #FFF;
+    border: 1px solid desaturate(#E9EDF0, 10%);
+    box-shadow: 0px 2px 0px mix(#E9EDF0, #000, 95%);
+    .border-radius(2px);
+
+    h3 {
+      display: inline-block;
+    }
+
+    button.pull-right {
+      margin: 12px 0px 4px 10px;
+      vertical-align: middle;
+    }
+  }
+}
+
+// styling of the data editor modal
+.modal.edit-data {
+
+  li {
+    padding: 8px 0px;
+    list-style-type: none;
+
+    label {
+      font-weight: normal;
+      font-size: @font-size-large * .9;
+      display: inline-block;
+      margin-top: 10px;
+
+      &:after { content: ":"; }
+    }
+
+    input {
+      .pull-right;
+      display: inline-block;
+      margin: @padding-small-vertical 0px;
+
+      &[type=text], &[type=number], &[type=time], &[type=checkbox]{
+        .form-control;
+        width: 300px;
+        display: inline-block;
+      }
+
+      &[type=checkbox] {
+        appearance: none;
+        -webkit-appearance: none;
+        .btn;
+        .btn-primary;
+
+        &:before { content: "Off"; }
+
+        &:checked {
+          .btn-success;
+          &:before { content: "On"; }
+        }
+
+      }
+    }
+  }
+}
 
 // for the code blocks
 .blocks {
@@ -372,7 +293,7 @@ pre.big {
   }
 
   li {
-    min-height: 64px;
+    min-height: 74px;
 
     .modal {
       textarea {

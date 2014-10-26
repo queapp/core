@@ -199,6 +199,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   }
 
   socket.on('backend-data-change', function(data) {
+    // console.log(data)
     thingService.getAllThings(function(data) {
       if ($(':focus').length == 0) {
         // if a new item was added, hide the modal
@@ -385,18 +386,18 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   // thing count
   root.thingCount = 0;
   root.getThingCount = function() {
-    thingService.getAllThings(function(data) {
-      root.thingCount = data.length;
-    });
+    // thingService.getAllThings(function(data) {
+    //   root.thingCount = data.length;
+    // });
   }
   root.getThingCount();
 
   // service count
   root.serviceCount = 0;
   root.getServiceCount = function() {
-    servicesService.getAllThings(function(data) {
-      root.serviceCount = data.length;
-    });
+    // servicesService.getAllThings(function(data) {
+    //   root.serviceCount = data.length;
+    // });
   }
   root.getServiceCount();
 
