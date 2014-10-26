@@ -366,7 +366,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
     servicesService.getAllThings(function(data) {
       if ($(':focus').length == 0) {
         // if a new item was added, hide the modal
-        if (root.things.length !== data.length) {
+        if (root.things && root.things.length !== data.length) {
           $("#addThingModal").modal('hide');
           root.generateAuthKey();
         }
@@ -434,7 +434,7 @@ app.controller("BlockController", function($scope, blockService) {
   this.addBlock = function() {
 
     // make sure tags are formatted correctly tags
-    if (!this.newBlock.tags.length) {
+    if (this.newBlock.tags && this.newBlock.tags.length === undefined) {
       this.newBlock.tags = this.newBlock.tags.split(" ");
     }
 

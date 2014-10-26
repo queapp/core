@@ -3,7 +3,7 @@ var ServiceServer = require("../models/services");
 var BlockServer = require("../models/blocks");
 
 // create all of the routes for the application
-module.exports = function(app, server) {
+module.exports = function(app, server, argv) {
 
   // root route (haha that sounds funny)
   app.get("/", function(req, res, next) {
@@ -16,8 +16,10 @@ module.exports = function(app, server) {
 
     if (process.env.HEROKU == "true") {
       res.send('var host = "http://que-app-backend.herokuapp.com";');
-    } else if (process.env.PORT) {
-      res.send('var host = "http://' + process.env.HOST || "127.0.0.1" + ':' + process.env.PORT + '";');
+    } else if (process.env.PORT || argv.port || argv.host || process.env.HOST) {
+      hostname = process.env.HOST || argv.host || "127.0.0.1";
+      netport = process.env.PORT || argv.port || 8000;
+      res.send('var host = "http://' + hostname + ':' + netport + '";');
     } else {
       res.send('var host = "http://127.0.0.1:8000";');
     }

@@ -159,7 +159,7 @@ module.exports = function(things, services) {
   // converts a list of lines of code into an anonymous function
   this.convertCode = function(block, callback) {
     // the code
-    code = block.code;
+    code = block.code.slice(0);
 
     // already compiled?
     if (block.compiled_code) callback(block.compiled_code);
@@ -236,6 +236,7 @@ module.exports = function(things, services) {
               },
 
               set: function(elem, value) {
+                if (!item.data) item.data = []
                 item.data[elem] = value;
                 return true;
               },

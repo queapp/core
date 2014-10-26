@@ -7004,7 +7004,7 @@ pre.big {
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   width: 100%;
-  min-height: 400px;
+  min-height: 300px;
   font-family: monospace;
   resize: vertical;
 }
