@@ -52,7 +52,7 @@
                 <a href>Services</a>
               </li>
               <li ng-click="nC.toPage(3)" ng-class="{active: nC.pageId == 3}">
-                <a href>Notifications</a>
+                <a href>Blocks</a>
               </li>
               <li ng-click="nC.toPage(4)" ng-class="{active: nC.pageId == 4}">
                 <a href>Settings</a>
@@ -82,6 +82,9 @@
       <!-- Services View: shows a list of all services -->
       <service-card-list></service-card-list>
 
+      <!-- blocks view -->
+      <block-list></block-list>
+      
     </div>
 
     <!-- all javascript -->

@@ -26,11 +26,12 @@ module.exports = function(app, server) {
   // create thing server and service server
   var things = new ThingServer();
   var services = new ServiceServer();
-  var blocks = new BlockServer();
+  var blocks = new BlockServer(things, services);
 
   // web socket routes
   var io = require("./sockets.js")(app, server, things, services);
   things.socket = io;
+  blocks.socket = io;
 
   // http routes
   require("./things")(app, things);

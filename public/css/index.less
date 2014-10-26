@@ -314,3 +314,92 @@ ul.card-list div.no-cards {
 pre.big {
   font-size: @font-size-base * 2;
 }
+
+
+// for the code blocks
+.blocks {
+
+  #addBlockModel input {
+    margin: 10px 0px;
+  }
+
+  span.title {
+    margin-top: 4px;
+    font-size: @font-size-base * 1.75;
+    small {
+      font-size: 60%;
+      color: @gray-light;
+      margin-left: 10px;
+    }
+  }
+
+  button {
+    margin: 4px 0px 4px 10px;
+    vertical-align: middle;
+  }
+
+  // screen that greets users with no blocks
+  div.no-cards {
+    height: 400px;
+    margin: 0px auto;
+    background-repeat: no-repeat;
+
+    .side {
+      // float: right;
+      width: 250px;
+      margin-right: 12px;
+      margin-top: 20px;
+
+      font-size: @font-size-base * 1.2;
+
+      span {
+        color: #444;
+        font-size: 75%;
+        display: block;
+        margin-top: 5px;
+        &:before { content: "Examples: "; }
+      }
+    }
+
+    // styles to convert mobile -> desktop
+    @media (min-width: @screen-sm-min) {
+      background-image: url("../img/things-none.svg");
+      width: 800px;
+      .side {
+        float: right;
+      }
+    }
+  }
+
+  li {
+    min-height: 64px;
+
+    .modal {
+      textarea {
+        .form-control;
+        width: 100%;
+        min-height: 400px;
+        font-family: monospace;
+        resize: vertical;
+      }
+
+      .block-name {
+        display: inline;
+      }
+
+      input.block-name {
+        .form-control;
+        display: inline;
+        width: 200px;
+      }
+
+      .log-space {
+        .well;
+        .well-sm;
+        margin-top: 14px;
+        max-height: 200px;
+        height: 200px;
+      }
+    }
+  }
+}

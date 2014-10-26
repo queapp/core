@@ -58,7 +58,7 @@ app.controller("navController", function($scope) {
         return {title: "My Services", desc: "A list of all services linked to this Que instance"};
         break;
       case 3:
-        return {title: "Notifications", desc: "Notifications from Things and Services"};
+        return {title: "Blocks", desc: "Blocks are what tell your things and services how to work"};
         break;
       case 4:
         return {title: "Settings", desc: "Adjust preferences for this Que instance"};
@@ -402,6 +402,103 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
 
 });
 
+app.controller("BlockController", function($scope, blockService) {
+  var root = this;
+  this.blocks = [];
+
+  // block information stored here
+  // for new block
+  this.newBlock = {
+    name: "",
+    desc: "",
+    tags: []
+  }
+
+  // fetch all the blocks
+  this.fetchBlocks = function() {
+    blockService.getAllBlocks(function(blocks) {
+      root.blocks = blocks;
+
+      // create devcode (join code together so it can be edited)
+      _.each(blocks, function(block) {
+        block.devCode = block.code.join("\n");
+
+        // also, create space for logs
+        block.log = [];
+      });
+    });
+  }
+  this.fetchBlocks();
+
+  // add a new block
+  this.addBlock = function() {
+
+    // make sure tags are formatted correctly tags
+    if (!this.newBlock.tags.length) {
+      this.newBlock.tags = this.newBlock.tags.split(" ");
+    }
+
+    // add block
+    blockService.addBlock(this.newBlock, function() {
+      // refetch blocks
+      root.fetchBlocks();
+    });
+
+    // reset the new block form
+    this.newBlock = {
+      name: "",
+      desc: "",
+      tags: []
+    }
+  }
+
+  // delete an old block
+  this.deleteBlock = function(block) {
+
+    blockService.removeBlock(block.id, function() {
+      // refetch blocks
+      root.fetchBlocks();
+    });
+
+  }
+
+  // update the code back on the server inside
+  // the block
+  this.updateBlock = function(block) {
+    // split up code into its transmitable form
+    block.code = block.devCode.split("\n");
+    delete block.log;
+
+    // send it on its way
+    b = angular.fromJson(angular.toJson(block)); // strip out all the angular crap
+    blockService.updateBlockData(block.id, b, function(e){
+      block.log = [];
+    });
+  }
+
+  // format the log (to display better)
+  this.formatLogs = function(block) {
+    return block.log && block.log.length ? "> " + block.log.join("\n> ") : "";
+  }
+
+  // update block log
+  socket.on('block-log', function(blk) {
+
+    // get the correct id
+    b = _.filter(root.blocks, function(item) {
+      return item.id == blk.id;
+    });
+
+    // append to the log, and update the view
+    if (b.length && b[0].log) {
+      b[0].log.push(blk.msg.toString());
+      $scope.$apply();
+    };
+  });
+
+
+});
+
 app.directive("thingCardList", function() {
   return {
     restrict: 'E',
@@ -413,6 +510,13 @@ app.directive("serviceCardList", function() {
   return {
     restrict: 'E',
     templateUrl: "js/directives/service-card-list.html"
+  }
+});
+
+app.directive("blockList", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "js/directives/blocks-list.html"
   }
 });
 
@@ -602,4 +706,66 @@ app.factory("servicesService", function($http) {
       });
     });
     return serviceservice;
+ });
+
+app.factory("blockService", function($http) {
+    blockservice = {
+      cache: {},
+
+      addBlock: function(data, callback) {
+        $http({
+          method: "post",
+          url: host + "/blocks/add",
+          data: JSON.stringify(data)
+        }).success(function(data) {
+          callback && callback(data.id || data);
+        });
+      },
+
+      removeBlock: function(id, callback) {
+        $http({
+          method: "delete",
+          url: host + "/blocks/"+id
+        }).success(function(data) {
+          console.log(data);
+          callback && callback(data);
+        });
+      },
+
+      getAllBlocks: function(callback) {
+        $http({
+          method: "get",
+          url: host + "/blocks/all",
+        }).success(function(data) {
+          callback(data.data);
+        });
+      },
+
+      getBlockData: function(id, callback) {
+        if (this.cache[id]) {
+          callback(this.cache[id]);
+        } else {
+          $http({
+            method: "get",
+            url: host + "/blocks/" + id + "/code",
+          }).success(function(data) {
+            serviceservice.cache = data;
+            callback(data);
+          });
+        }
+      },
+
+      updateBlockData: function(id, data, callback) {
+        console.log(data)
+        $http({
+          method: "put",
+          url: host + "/blocks/" + id + "/code",
+          data: JSON.stringify(data)
+        }).success(function(data) {
+          callback(data);
+        });
+      }
+
+    };
+    return blockservice;
  });

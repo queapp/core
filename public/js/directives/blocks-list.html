@@ -1,0 +1,116 @@
+<div class="container blocks" ng-controller="BlockController as bC" ng-show="nC.pageId == 3">
+
+  <!-- button to generate new key and add a thing -->
+  <div
+    class="add-button"
+    ng-show="bC.blocks.length !== 0"
+    data-toggle="modal"
+    data-target="#addBlockModel">
+    +
+  </div>
+
+  <div class="no-cards" ng-show="bC.blocks.length === 0">
+    <div class="side">
+      A block is a little snippet of code that tells Que what to do with Things and Services.
+      <span>Turning on the light when you enter a room, or tweeting the temperature of your house</span>
+      <br/>
+      <a href class="btn btn-danger btn-lg" data-toggle="modal" data-target="#addBlockModel">Add a block</a>
+    </div>
+  </div>
+
+  <!-- model that contains the stuff to add new blocks -->
+  <div class="modal fade" id="addBlockModel" tabindex="-1" role="dialog" aria-labelledby="AddBlockModel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+            <span class="block-name">New Block</span>
+          </h4>
+        </div>
+
+        <div class="modal-body">
+
+          <input class="form-control" placeholder="Block Name" ng-model="bC.newBlock.name"/>
+          <input class="form-control" placeholder="Block Description" ng-model="bC.newBlock.desc"/>
+          <input class="form-control" placeholder="Block Tags (space seperated)" ng-model="bC.newBlock.tags"/>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            ng-click="bC.addBlock();"
+            >Add
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- list of blocks -->
+  <ul class="list-group">
+
+
+    <li class="list-group-item" ng-repeat="block in bC.blocks">
+      <span class="title">
+        {{block.name}}
+        <small>{{block.desc}}</small>
+      </span>
+
+      <!-- delete button -->
+      <button class="btn btn-danger pull-right" ng-click="bC.deleteBlock(block);">Delete</button>
+
+      <!-- code edit button -->
+      <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#{{block.id}}-code-modal">Edit Code</button>
+
+      <!-- Modal to update code for block -->
+      <div class="modal fade" id="{{block.id}}-code-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">
+                <span class="block-name">Block Name: {{block.name}}</span>
+                <!-- <input type="text" class="block-name" ng-model="block.name"/> -->
+              </h4>
+            </div>
+
+            <div class="modal-body">
+
+              <!-- code editor -->
+              <label for="textarea">Block Code:</label>
+              <textarea ng-model="block.devCode" placeholder="Blocks are written in javascript."></textarea>
+
+              <!-- log area -->
+              <pre class="log-space">{{bC.formatLogs(block)}}</pre>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" ng-click="block.log=[]">Clear Log</button>
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" ng-click="bC.updateBlock(block);">Save</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </li>
+
+
+  </ul>
+</div>
