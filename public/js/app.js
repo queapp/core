@@ -386,18 +386,18 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   // thing count
   root.thingCount = 0;
   root.getThingCount = function() {
-    // thingService.getAllThings(function(data) {
-    //   root.thingCount = data.length;
-    // });
+    thingService.getAllThings(function(data) {
+      root.thingCount = data.length;
+    });
   }
   root.getThingCount();
 
   // service count
   root.serviceCount = 0;
   root.getServiceCount = function() {
-    // servicesService.getAllThings(function(data) {
-    //   root.serviceCount = data.length;
-    // });
+    servicesService.getAllThings(function(data) {
+      root.serviceCount = data.length;
+    });
   }
   root.getServiceCount();
 
@@ -532,12 +532,15 @@ app.directive("dashboardOverview", function() {
 app.factory("thingService", function($http) {
     thingservice = {
       cache: {},
+      count: 0,
 
       getAllThings: function(callback) {
+        var r = this;
         $http({
           method: "get",
           url: host + "/things/all",
         }).success(function(data) {
+          r.count = data.data.length;
           callback(data.data);
         });
       },
