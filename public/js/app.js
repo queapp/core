@@ -364,6 +364,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   // }, 1000);
 
   socket.on('backend-data-change', function(data) {
+    console.log(1)
     servicesService.getAllThings(function(data) {
       if ($(':focus').length == 0) {
         // if a new item was added, hide the modal
@@ -701,12 +702,12 @@ app.factory("servicesService", function($http) {
 
       // create the item if it doesn't exist
       if (!serviceservice.cache[changed.id]) {
-        serv.cache[changed.id] = {};
+        serviceservice.cache[changed.id] = {};
       }
 
       // update cache
       _.each(changed.data, function(v, k) {
-        serv.cache[changed.id][k] = v;
+        serviceservice.cache[changed.id][k] = v;
       });
     });
     return serviceservice;

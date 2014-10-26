@@ -13,7 +13,7 @@
     </div>
 
 
-    <!-- button to generate new key and add a thing -->
+    <!-- button to generate new key and add a service -->
     <div
       class="add-button"
       ng-show="sC.things.length !== 0"
@@ -94,21 +94,21 @@
     </div> -->
 
     <ul class="list-group">
-      <li class="list-group-item thing" ng-repeat="thing in tC.things">
+      <li class="list-group-item thing" ng-repeat="service in sC.things">
         <h3>
-          {{thing.name}}
-          <small>{{thing.desc}}</small>
+          {{service.name}}
+          <small>{{service.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="sC.removeThing(thing.id, $index)">Delete</button>
+        <button class="btn btn-danger pull-right" ng-click="sC.removeThing(service.id, $index)">Delete</button>
         <button
           class="btn btn-primary pull-right"
           data-toggle="modal"
-          data-target="#{{thing.id}}-thing-data"
+          data-target="#{{service.id}}-service-data"
           >Edit Data
         </button>
 
-        <div class="modal fade edit-data" id="{{thing.id}}-thing-data">
+        <div class="modal fade edit-data" id="{{service.id}}-service-data">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -116,20 +116,20 @@
                   <span aria-hidden="true">&times;</span>
                   <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title">Edit Thing Data</h4>
+                <h4 class="modal-title">Edit Service Data</h4>
               </div>
               <div class="modal-body">
                 <ul class="card-form clearfix">
 
-                  <li ng-repeat="(k, v) in thing.data">
-                    <label title="{{k}}">{{v.label || tC.convertIntoSpaces(k)}}</label>
+                  <li ng-repeat="(k, v) in service.data">
+                    <label title="{{k}}">{{v.label || sC.convertIntoSpaces(k)}}</label>
                     <input
-                      type="{{ tC.getTypeFor(v) }}"
+                      type="{{ sC.getTypeFor(v) }}"
                       ng-model="v.value"
-                      ng-change="tC.updateThingData(thing.id, k, v)"
-                      ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
+                      ng-change="sC.updateThingData(service.id, k, v)"
+                      ng-class="{'btn': sC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
                       placeholder="{{k}}"
-                      value="{{tC.isButton(v) &amp;&amp; v.value}}"
+                      value="{{sC.isButton(v) &amp;&amp; v.value}}"
                       ng-disabled="v.readonly"
                     />
                   </li>
