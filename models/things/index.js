@@ -113,11 +113,14 @@ module.exports = function(thedb) {
       // add new record
       item = _.extend(root.defaultThing, data);
       item.id = ++maxId;
-      all.push( item );
-      root.put(all);
 
-      // callback
-      done(item.id);
+      db.addThing(item, function(err, d) {
+        // tell the frontend it needs to pull in a new thing
+        root.socket && root.socket.emit("backend-data-change", data);
+
+        // callback
+        done && done(item.id);
+      });
     });
   }
 
@@ -125,23 +128,12 @@ module.exports = function(thedb) {
     Delete a thing from the list of things
   */
   this.delete = function(id, done) {
-    // update
-    this.get(null, function(all) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(all, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      all.splice(listIndex, 1);
-      db.deleteThing(id, function(err) {
-        done();
-      });
-      // root.put(all);
+    db.deleteThing(id, function(err) {
+      // tell the frontend it's time to update
+      root.socket && root.socket.emit("backend-data-change", data);
 
       // callback
+      done && done();
     });
   }
 
@@ -225,12 +217,18 @@ module.exports = function(thedb) {
         // record.data = _.extend({}, record.data, changes || {});
 
         // recompile the record
-        var all = data;
-        all[listIndex] = record;
-        root.put(all);
+        // var all = data;
+        // all[listIndex] = record;
+        // root.put(all);
 
-        // callback
-        done && done(all);
+        db.updateThingById(id, record, function(err) {
+          // tell the frontend it's time to update
+          root.socket && root.socket.emit("backend-data-change", data);
+
+          // callback
+          done && done();
+        });
+        
       }
     });
   }
