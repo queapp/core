@@ -6606,11 +6606,11 @@ ul.list-group li.list-group-item button.pull-right {
 .blocks #addBlockModel input {
   margin: 10px 0px;
 }
-.blocks span.title {
-  margin-top: 4px;
-  font-size: 24.5px;
+.blocks .title {
+  float: left !important;
+  margin-top: 10px;
 }
-.blocks span.title small {
+.blocks .title small {
   font-size: 60%;
   color: #777777;
   margin-left: 10px;
