@@ -72,6 +72,10 @@
       <!-- code edit button -->
       <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#{{block.id}}-code-modal">Edit Code</button>
 
+      <!-- disable button -->
+      <button class="btn btn-warning pull-right" ng-click="bC.setBlockDisabled(block, true);" ng-hide="block.disable">Disable</button>
+      <button class="btn btn-default pull-right" ng-click="bC.setBlockDisabled(block, false);" ng-show="block.disable">Enable</button>
+
       <!-- Modal to update code for block -->
       <div class="modal fade" id="{{block.id}}-code-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

@@ -37,7 +37,8 @@ var blockSchema = mongoose.Schema({
   "desc": String,
   "id": Number,
   "tags": Array,
-  "code": Array
+  "code": Array,
+  "disable": Boolean
 });
 
 // schema for an authkey
@@ -230,6 +231,7 @@ var db = module.exports = {
   // blocks
   addBlock: function(data, callback) {
     var block = new Block(data);
+    block.disable = false;
     block.save(callback);
   },
 

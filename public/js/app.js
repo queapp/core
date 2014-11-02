@@ -302,6 +302,7 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
     });
   };
 
+  // dismiss notification
   root.dismiss = function(id) {
     notificationService.dismissNotification(id);
     toDismiss = _.filter(root.notifications, function(i) {
@@ -397,6 +398,12 @@ app.controller("BlockController", function($scope, blockService) {
   // format the log (to display better)
   this.formatLogs = function(block) {
     return block.log && block.log.length ? "> " + block.log.join("\n> ") : "";
+  }
+
+  // disable a block
+  this.setBlockDisabled = function(block, state) {
+    block.disable = state || !block.disable;
+    this.updateBlock(block);
   }
 
   // update block log
@@ -693,7 +700,6 @@ app.factory("blockService", function($http) {
       },
 
       updateBlockData: function(id, data, callback) {
-        console.log(data)
         $http({
           method: "put",
           url: host + "/blocks/" + id + "/code",

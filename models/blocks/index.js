@@ -211,7 +211,7 @@ module.exports = function(things, services, notify) {
       async.map(data, function(item, callback) {
 
         // convert the code from an array to an executable function
-        item.code.length && root.convertCode(item, function(code) {
+        item.disable === false && item.code.length && root.convertCode(item, function(code) {
           if (typeof code == "function") {
 
             // create helpers
