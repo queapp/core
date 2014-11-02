@@ -7,7 +7,7 @@ var helperConstructor = require("./helpers");
 var jsp = require("uglify-js").parser;
 var pro = require("uglify-js").uglify;
 
-module.exports = function(things, services) {
+module.exports = function(things, services, notify) {
   var root = this;
 
   this.defaultBlock = {
@@ -215,7 +215,7 @@ module.exports = function(things, services) {
           if (typeof code == "function") {
 
             // create helpers
-            helpers = helperConstructor(root.socket, things, services, item);
+            helpers = helperConstructor(root.socket, things, services, notify, item);
 
             // try and run the block
             function container() {

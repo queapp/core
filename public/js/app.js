@@ -1,4 +1,4 @@
-var app = angular.module("QueGui", {});
+var app = angular.module("QueGui", ["ngAnimate"]);
 
 // the top nav colors
 var navColorYellow = "#FCBD4B";
@@ -273,8 +273,9 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
 
 });
 
-app.controller("DashboardController", function($scope, servicesService, thingService) {
+app.controller("DashboardController", function($scope, servicesService, thingService, notificationService) {
   var root = $scope;
+  root.notifications = [];
 
   // thing count
   root.thingCount = 0;
@@ -294,6 +295,29 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   }
   root.getServiceCount();
 
+  // notifications
+  root.refetch = function() {
+    notificationService.getNotifications(function(data) {
+      root.notifications = data;
+    });
+  };
+
+  root.dismiss = function(id) {
+    notificationService.dismissNotification(id);
+    toDismiss = _.filter(root.notifications, function(i) {
+      return i.id == id;
+    });
+    root.notifications.splice(root.notifications.indexOf(toDismiss[0]), 1);
+    root.refetch();
+  };
+
+
+  // update notifications
+  socket.on('backend-data-change', function(data) {
+    data === "notify" && root.refetch();
+  });
+
+  root.refetch();
 });
 
 app.controller("BlockController", function($scope, blockService) {
@@ -682,3 +706,39 @@ app.factory("blockService", function($http) {
     };
     return blockservice;
  });
+
+app.service("notificationService", function($http) {
+ notificationservice = {
+   cache: {},
+
+   addNotification: function(data, callback) {
+     $http({
+       method: "post",
+       url: host + "/notify/add",
+       data: JSON.stringify(data)
+     }).success(function(data) {
+       callback && callback(data.id || data);
+     });
+   },
+
+   dismissNotification: function(id, callback) {
+     $http({
+       method: "delete",
+       url: host + "/notify/"+id
+     }).success(function(data) {
+       callback && callback(data);
+     });
+   },
+
+   getNotifications: function(callback) {
+     $http({
+       method: "get",
+       url: host + "/notify/all",
+     }).success(function(data) {
+       callback(data.data);
+     });
+   }
+
+ };
+ return notificationservice;
+});

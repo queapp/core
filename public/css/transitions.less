@@ -1,0 +1,25 @@
+// main: index.less
+
+@enter-speed: 0.5s;
+@leave-speed: 0.5s;
+
+// fade enter and leave transisitons for notifications
+.notif.ng-enter {
+  -webkit-transition: @enter-speed;
+  transition: @enter-speed;
+  opacity:0;
+}
+
+.notif.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.notif.ng-leave {
+  -webkit-transition: @leave-speed;
+  transition: @leave-speed;
+}
+
+.notif.ng-leave.ng-leave-active {
+  opacity: 0;
+  margin-right: 100px;
+}

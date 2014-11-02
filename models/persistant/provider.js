@@ -40,18 +40,30 @@ var blockSchema = mongoose.Schema({
   "code": Array
 });
 
-// schema for a thing
+// schema for an authkey
 var authKeySchema = mongoose.Schema({
   "type": String,
-  "key": String,
+  "key": String
+});
+
+// schema for a notification
+var notifySchema = mongoose.Schema({
+  "id": Number,
+  "title": String,
+  "body": String,
+  "icon": String
 });
 
 // the models
+
+// The three user-creatable items
 var Thing = mongoose.model('Thing', thingSchema);
 var Service = mongoose.model('Service', serviceSchema);
 var Block = mongoose.model('Block', blockSchema);
 
+// others
 var Authkey = mongoose.model('Authkey', authKeySchema);
+var Notify = mongoose.model('Notify', notifySchema);
 
 
 
@@ -257,9 +269,48 @@ var db = module.exports = {
 
   updateBlockById: function(id, data, callback) {
     Block.update({id: id}, data, {}, callback);
+  },
+
+
+  // notifys
+  addNotify: function(data, callback) {
+    var notify = new Notify(data);
+    notify.save(callback);
+  },
+
+  deleteNotify: function(id, callback) {
+    Notify.remove({id: id}, function(err, docs) {
+      callback(err);
+    });
+  },
+
+  findAllNotifys: function(callback) {
+    Notify.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
+
+      callback(err, ret);
+    });
+  },
+
+  findNotifyById: function(id, callback) {
+    Notify.findOne({id: id}, function(err, doc) {
+      // convert to object from model
+      ob = doc.toObject();
+      delete ob._id;
+
+      // callback
+      callback(err, ob);
+    });
   }
-
-
 
 };
 

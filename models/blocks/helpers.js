@@ -1,5 +1,8 @@
-// some small helper apis to make stuff easier
-module.exports = function(socket, things, services, item) {
+var _ = require("underscore");
+
+// some small helper apis to make outside interaction
+// possible inside of a code block
+module.exports = function(socket, things, services, notifys, item) {
 
   return {
 
@@ -55,6 +58,11 @@ module.exports = function(socket, things, services, item) {
         type: "info",
         msg: msg
       });
+    },
+
+    // send a notification to the user
+    notify: function(msg, title) {
+      notifys.createNotify(msg, title);
     }
 
 

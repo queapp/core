@@ -6178,6 +6178,7 @@ button.close {
   padding: 20px;
   height: auto;
   min-height: 100px;
+  margin: 10px 0px;
 }
 .container.dashboard-overview .first .notif .body {
   padding-left: 4px;
@@ -6193,6 +6194,22 @@ button.close {
 .container.dashboard-overview .second div.pane .body {
   list-style-type: none;
   padding-left: 10px;
+}
+.notif.ng-enter {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  opacity: 0;
+}
+.notif.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.notif.ng-leave {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.notif.ng-leave.ng-leave-active {
+  opacity: 0;
+  margin-right: 100px;
 }
 .add-button {
   position: fixed;
