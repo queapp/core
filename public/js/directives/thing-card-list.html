@@ -50,17 +50,24 @@
 
     <ul class="list-group">
       <li class="list-group-item thing" ng-repeat="thing in tC.things">
-        <h3>
+        <h3 tooltip data-toggle="tooltip" data-placement="left" title="Tags: {{thing.tags.join(', ')}}">
           {{thing.name}}
           <small>{{thing.desc}}</small>
         </h3>
 
         <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)">Delete</button>
 
+        <!-- list of toggleable attributes -->
         <ul class="card-form clearfix edit-data">
-
           <li ng-repeat="(k, v) in thing.data">
-            <label title="{{k}}">{{v.label || tC.convertIntoSpaces(k)}}</label>
+            <label
+              tooltip
+              data-toggle="tooltip"
+              data-placement="left"
+              title="{{k}}"
+              >
+              {{v.label || tC.convertIntoSpaces(k)}}
+            </label>
             <input
               type="{{ tC.getTypeFor(v) }}"
               ng-model="v.value"
