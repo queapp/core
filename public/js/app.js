@@ -77,59 +77,6 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   // thing authentication key
   this.authKey = null;
 
-  // select a thing
-  this.selectThing = function(thing, event) {
-    clickable = $(event.target).hasClass("card-move");
-    cardWidth = $(".card").first().width();
-
-    if (event.button != 0 || !clickable) return true;
-
-    var selectThingRoot = this;
-    var move = false;
-
-    falseFunction = function(){return false;}
-    $("*").mousedown(falseFunction);
-
-    // on movement
-    mousemove = function(event) {
-      selectThingRoot.selectedThing = thing.id;
-      $('.card.above').css('left', ($(document).width()-cardWidth)/2-4 );
-      $('.card.above').css('top', event.pageY);
-      move = true;
-    };
-
-    // unbide and destruct
-    mouseup = function(event) {
-      root.selectedThing = null;
-      if (!move) {
-        return true;
-      }
-      $document.unbind('mousemove', mousemove);
-      $document.unbind('mouseup', mouseup);
-      $("*").unbind('mousedown', falseFunction);
-      $('.card.above').css('left', 0);
-      $('.card.above').css('top', 0);
-
-      // where to reorder?
-      Ry = Math.floor( event.pageY / $(".card").height() );
-
-      // do the reorder
-      root.things.splice( root.things.indexOf(thing), 1 );
-      root.things.splice(Ry, 0, thing);
-
-      // make the request
-      thingService.reorderThing(thing.id, Ry, function() {
-
-      });
-
-      // update angular
-      $scope.$apply();
-    };
-
-    $document.on('mousemove', mousemove);
-    $document.on('mouseup', mouseup);
-  };
-
   // get all data from server
   thingService.getAllThings(function(data) {
     root.things = data;
@@ -199,9 +146,8 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   }
 
   socket.on('backend-data-change', function(data) {
-    // console.log(data)
     thingService.getAllThings(function(data) {
-      if ($(':focus').length == 0) {
+      if ( $(':focus').length == 0 ) { // || _.contains(["checkbox", "button"], $(':focus').attr("type"))
         // if a new item was added, hide the modal
         if (root.things.length !== data.length) {
           $("#addThingModal").modal('hide');
@@ -223,59 +169,6 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
 
   // service authentication key
   this.authKey = null;
-
-  // select a thing
-  this.selectThing = function(thing, event) {
-    clickable = $(event.target).hasClass("card-move");
-    cardWidth = $(".card").last().width();
-
-    if (event.button != 0 || !clickable) return true;
-
-    var selectThingRoot = this;
-    var move = false;
-
-    falseFunction = function(){return false;}
-    $("*").mousedown(falseFunction);
-
-    // on movement
-    mousemove = function(event) {
-      selectThingRoot.selectedThing = thing.id;
-      $('.card.above').css('left', ($(document).width()-cardWidth)/2-4 );
-      $('.card.above').css('top', event.pageY);
-      move = true;
-    };
-
-    // unbide and destruct
-    mouseup = function(event) {
-      root.selectedThing = null;
-      if (!move) {
-        return true;
-      }
-      $document.unbind('mousemove', mousemove);
-      $document.unbind('mouseup', mouseup);
-      $("*").unbind('mousedown', falseFunction);
-      $('.card.above').css('left', 0);
-      $('.card.above').css('top', 0);
-
-      // where to reorder?
-      Ry = Math.floor( event.pageY / $(".card").height() );
-
-      // do the reorder
-      root.things.splice( root.things.indexOf(thing), 1 );
-      root.things.splice(Ry, 0, thing);
-
-      // make the request
-      servicesService.reorderThing(thing.id, Ry, function() {
-
-      });
-
-      // update angular
-      $scope.$apply();
-    };
-
-    $document.on('mousemove', mousemove);
-    $document.on('mouseup', mouseup);
-  };
 
   // get all data from server
   servicesService.getAllThings(function(data) {
@@ -364,12 +257,11 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   // }, 1000);
 
   socket.on('backend-data-change', function(data) {
-    console.log(1)
     servicesService.getAllThings(function(data) {
       if ($(':focus').length == 0) {
         // if a new item was added, hide the modal
         if (root.things && root.things.length !== data.length) {
-          $("#addThingModal").modal('hide');
+          $("#addServiceModal").modal('hide');
           root.generateAuthKey();
         }
 
