@@ -1,0 +1,96 @@
+// main: index.less
+
+
+// the custom navbar
+.navbar-que {
+  min-height: 96px;
+
+  .border-radius(0px);
+
+  h1 { display: none; }
+
+  .container {
+    height: 100%;
+  }
+
+  .navbar-header, .navbar-nav {
+    padding-top: 17px;
+  }
+
+  .navbar-toggle {
+    border: 0px;
+    margin-top: 17px;
+  }
+
+  .navbar-collapse {
+    &.in {
+      margin-top: 15px;
+      background: #FFF;
+      z-index: 1000;
+    }
+
+    &.collapsing {
+      margin-top: 15px;
+      background: #FFF;
+    }
+  }
+
+  .navbar-brand img {
+    height: 64px;
+    margin-top: -16px;
+  }
+
+  .navbar-brand {
+    color: #FFF;
+  }
+
+  .navbar-nav {
+    li a, a:hover {
+      background: transparent;
+      color: #000;
+    }
+
+    .active a, .active a:hover {
+      font-weight: bold;
+      background: transparent;
+      color: #000;
+    }
+  }
+}
+
+// styles to convert mobile -> desktop
+@media (min-width: @screen-sm-min) {
+  .navbar-que {
+    height: 320px;
+
+    .navbar-nav {
+      li a, a:hover {
+        color: #FFF;
+      }
+
+      .active a, .active a:hover {
+        color: #FFF;
+      }
+    }
+
+    .container {
+      height: 96px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #FFF;
+      font-size: 350%;
+      display: block;
+
+      small {
+        display: block;
+        color: #fff;
+        font-size: 40%;
+        margin-top: 24px;
+      }
+    }
+
+
+  }
+}

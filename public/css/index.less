@@ -13,124 +13,19 @@
 @top-color-green: #42BF3F;
 @top-color-purple: #BF3F89;
 
+// custom imports
+@import "mixins.less";
+@import "material-button.less";
+@import "navbar.less";
+@import "things.less";
+
 body {
   height: 100%;
   background: @bgcolor;
   overflow-y: scroll;
 }
 
-// mixins
-.border-radius (@radius: 5px) {
-	-webkit-border-radius: @radius;
-	-moz-border-radius:    @radius;
-	border-radius:         @radius;
-
-	-moz-background-clip:    padding;
-	-webkit-background-clip: padding-box;
-	background-clip:         padding-box;
-}
-
-// custom imports
-@import "material-button.less";
-
-// the custom navbar
-.navbar-que {
-  min-height: 96px;
-
-  .border-radius(0px);
-
-  h1 { display: none; }
-
-}
-
-.navbar-que .container {
-  height: 100%;
-}
-
-.navbar-que .navbar-header, .navbar-que .navbar-nav {
-  padding-top: 17px;
-}
-
-.navbar-que .navbar-toggle {
-  border: 0px;
-  margin-top: 17px;
-}
-
-.navbar-que .navbar-collapse.in {
-  margin-top: 15px;
-  background: #FFF;
-  z-index: 1000;
-}
-
-.navbar-que .navbar-collapse.collapsing {
-  margin-top: 15px;
-  background: #FFF;
-}
-
-.navbar-que .navbar-brand img {
-  height: 64px;
-  margin-top: -16px;
-}
-
-.navbar-que .navbar-brand {
-  color: #FFF;
-}
-
-.navbar-que .navbar-nav {
-  li a, a:hover {
-    background: transparent;
-    color: #000;
-  }
-
-  .active a, .active a:hover {
-    font-weight: bold;
-    background: transparent;
-    color: #000;
-  }
-}
-
-// styles to convert mobile -> desktop
-@media (min-width: @screen-sm-min) {
-  .navbar-que {
-    height: 320px;
-
-    .navbar-nav {
-      li a, a:hover {
-        color: #FFF;
-      }
-
-      .active a, .active a:hover {
-        color: #FFF;
-      }
-    }
-
-    .container {
-      height: 96px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #FFF;
-      font-size: 350%;
-      display: block;
-
-      small {
-        display: block;
-        color: #fff;
-        font-size: 40%;
-        margin-top: 24px;
-      }
-    }
-
-
-  }
-}
-
-
-
-
 // card list
-
 ul.card-list {
   list-style-type: none;
   padding: 0px;
@@ -188,51 +83,6 @@ ul.list-group {
     button.pull-right {
       margin: 12px 0px 4px 10px;
       vertical-align: middle;
-    }
-  }
-}
-
-// styling of the data editor modal
-.modal.edit-data {
-
-  li {
-    padding: 8px 0px;
-    list-style-type: none;
-
-    label {
-      font-weight: normal;
-      font-size: @font-size-large * .9;
-      display: inline-block;
-      margin-top: 10px;
-
-      &:after { content: ":"; }
-    }
-
-    input {
-      .pull-right;
-      display: inline-block;
-      margin: @padding-small-vertical 0px;
-
-      &[type=text], &[type=number], &[type=time], &[type=checkbox]{
-        .form-control;
-        width: 300px;
-        display: inline-block;
-      }
-
-      &[type=checkbox] {
-        appearance: none;
-        -webkit-appearance: none;
-        .btn;
-        .btn-primary;
-
-        &:before { content: "Off"; }
-
-        &:checked {
-          .btn-success;
-          &:before { content: "On"; }
-        }
-
-      }
     }
   }
 }

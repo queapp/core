@@ -6194,11 +6194,6 @@ button.close {
   list-style-type: none;
   padding-left: 10px;
 }
-body {
-  height: 100%;
-  background: #e9edf0;
-  overflow-y: scroll;
-}
 .add-button {
   position: fixed;
   bottom: 20px;
@@ -6301,6 +6296,241 @@ body {
     margin-top: 24px;
   }
 }
+ul.edit-data {
+  padding-left: 0px;
+}
+ul.edit-data li {
+  padding: 8px 0px;
+  list-style-type: none;
+}
+ul.edit-data li label {
+  font-weight: normal;
+  font-size: 16.2px;
+  display: inline-block;
+  margin-top: 10px;
+}
+ul.edit-data li label:after {
+  content: ":";
+}
+ul.edit-data li input {
+  float: right !important;
+  display: inline-block;
+  margin: 5px 0px;
+}
+ul.edit-data li input[type=text],
+ul.edit-data li input[type=number],
+ul.edit-data li input[type=time],
+ul.edit-data li input[type=checkbox] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  width: 300px;
+  display: inline-block;
+}
+ul.edit-data li input[type=text]:focus,
+ul.edit-data li input[type=number]:focus,
+ul.edit-data li input[type=time]:focus,
+ul.edit-data li input[type=checkbox]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+ul.edit-data li input[type=text]::-moz-placeholder,
+ul.edit-data li input[type=number]::-moz-placeholder,
+ul.edit-data li input[type=time]::-moz-placeholder,
+ul.edit-data li input[type=checkbox]::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+ul.edit-data li input[type=text]:-ms-input-placeholder,
+ul.edit-data li input[type=number]:-ms-input-placeholder,
+ul.edit-data li input[type=time]:-ms-input-placeholder,
+ul.edit-data li input[type=checkbox]:-ms-input-placeholder {
+  color: #777777;
+}
+ul.edit-data li input[type=text]::-webkit-input-placeholder,
+ul.edit-data li input[type=number]::-webkit-input-placeholder,
+ul.edit-data li input[type=time]::-webkit-input-placeholder,
+ul.edit-data li input[type=checkbox]::-webkit-input-placeholder {
+  color: #777777;
+}
+ul.edit-data li input[type=text][disabled],
+ul.edit-data li input[type=number][disabled],
+ul.edit-data li input[type=time][disabled],
+ul.edit-data li input[type=checkbox][disabled],
+ul.edit-data li input[type=text][readonly],
+ul.edit-data li input[type=number][readonly],
+ul.edit-data li input[type=time][readonly],
+ul.edit-data li input[type=checkbox][readonly],
+fieldset[disabled] ul.edit-data li input[type=text],
+fieldset[disabled] ul.edit-data li input[type=number],
+fieldset[disabled] ul.edit-data li input[type=time],
+fieldset[disabled] ul.edit-data li input[type=checkbox] {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textareaul.edit-data li input[type=text],
+textareaul.edit-data li input[type=number],
+textareaul.edit-data li input[type=time],
+textareaul.edit-data li input[type=checkbox] {
+  height: auto;
+}
+ul.edit-data li input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+ul.edit-data li input[type=checkbox]:focus,
+ul.edit-data li input[type=checkbox]:active:focus,
+ul.edit-data li input[type=checkbox].active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+ul.edit-data li input[type=checkbox]:hover,
+ul.edit-data li input[type=checkbox]:focus {
+  color: #333333;
+  text-decoration: none;
+}
+ul.edit-data li input[type=checkbox]:active,
+ul.edit-data li input[type=checkbox].active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+ul.edit-data li input[type=checkbox].disabled,
+ul.edit-data li input[type=checkbox][disabled],
+fieldset[disabled] ul.edit-data li input[type=checkbox] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+ul.edit-data li input[type=checkbox]:hover,
+ul.edit-data li input[type=checkbox]:focus,
+ul.edit-data li input[type=checkbox]:active,
+ul.edit-data li input[type=checkbox].active,
+.open > .dropdown-toggleul.edit-data li input[type=checkbox] {
+  color: #ffffff;
+  background-color: #1991fb;
+  border-color: #047fec;
+}
+ul.edit-data li input[type=checkbox]:active,
+ul.edit-data li input[type=checkbox].active,
+.open > .dropdown-toggleul.edit-data li input[type=checkbox] {
+  background-image: none;
+}
+ul.edit-data li input[type=checkbox].disabled,
+ul.edit-data li input[type=checkbox][disabled],
+fieldset[disabled] ul.edit-data li input[type=checkbox],
+ul.edit-data li input[type=checkbox].disabled:hover,
+ul.edit-data li input[type=checkbox][disabled]:hover,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:hover,
+ul.edit-data li input[type=checkbox].disabled:focus,
+ul.edit-data li input[type=checkbox][disabled]:focus,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:focus,
+ul.edit-data li input[type=checkbox].disabled:active,
+ul.edit-data li input[type=checkbox][disabled]:active,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:active,
+ul.edit-data li input[type=checkbox].disabled.active,
+ul.edit-data li input[type=checkbox][disabled].active,
+fieldset[disabled] ul.edit-data li input[type=checkbox].active {
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+ul.edit-data li input[type=checkbox] .badge {
+  color: #4ba9fc;
+  background-color: #ffffff;
+}
+ul.edit-data li input[type=checkbox]:before {
+  content: "Off";
+}
+ul.edit-data li input[type=checkbox]:checked {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+ul.edit-data li input[type=checkbox]:checked:hover,
+ul.edit-data li input[type=checkbox]:checked:focus,
+ul.edit-data li input[type=checkbox]:checked:active,
+ul.edit-data li input[type=checkbox]:checked.active,
+.open > .dropdown-toggleul.edit-data li input[type=checkbox]:checked {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+ul.edit-data li input[type=checkbox]:checked:active,
+ul.edit-data li input[type=checkbox]:checked.active,
+.open > .dropdown-toggleul.edit-data li input[type=checkbox]:checked {
+  background-image: none;
+}
+ul.edit-data li input[type=checkbox]:checked.disabled,
+ul.edit-data li input[type=checkbox]:checked[disabled],
+fieldset[disabled] ul.edit-data li input[type=checkbox]:checked,
+ul.edit-data li input[type=checkbox]:checked.disabled:hover,
+ul.edit-data li input[type=checkbox]:checked[disabled]:hover,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:hover,
+ul.edit-data li input[type=checkbox]:checked.disabled:focus,
+ul.edit-data li input[type=checkbox]:checked[disabled]:focus,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:focus,
+ul.edit-data li input[type=checkbox]:checked.disabled:active,
+ul.edit-data li input[type=checkbox]:checked[disabled]:active,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:active,
+ul.edit-data li input[type=checkbox]:checked.disabled.active,
+ul.edit-data li input[type=checkbox]:checked[disabled].active,
+fieldset[disabled] ul.edit-data li input[type=checkbox]:checked.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+ul.edit-data li input[type=checkbox]:checked .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+ul.edit-data li input[type=checkbox]:checked:before {
+  content: "On";
+}
+body {
+  height: 100%;
+  background: #e9edf0;
+  overflow-y: scroll;
+}
 ul.card-list {
   list-style-type: none;
   padding: 0px;
@@ -6355,233 +6585,6 @@ ul.list-group li.list-group-item h3 {
 ul.list-group li.list-group-item button.pull-right {
   margin: 12px 0px 4px 10px;
   vertical-align: middle;
-}
-.modal.edit-data li {
-  padding: 8px 0px;
-  list-style-type: none;
-}
-.modal.edit-data li label {
-  font-weight: normal;
-  font-size: 16.2px;
-  display: inline-block;
-  margin-top: 10px;
-}
-.modal.edit-data li label:after {
-  content: ":";
-}
-.modal.edit-data li input {
-  float: right !important;
-  display: inline-block;
-  margin: 5px 0px;
-}
-.modal.edit-data li input[type=text],
-.modal.edit-data li input[type=number],
-.modal.edit-data li input[type=time],
-.modal.edit-data li input[type=checkbox] {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555555;
-  background-color: #ffffff;
-  background-image: none;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  width: 300px;
-  display: inline-block;
-}
-.modal.edit-data li input[type=text]:focus,
-.modal.edit-data li input[type=number]:focus,
-.modal.edit-data li input[type=time]:focus,
-.modal.edit-data li input[type=checkbox]:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-.modal.edit-data li input[type=text]::-moz-placeholder,
-.modal.edit-data li input[type=number]::-moz-placeholder,
-.modal.edit-data li input[type=time]::-moz-placeholder,
-.modal.edit-data li input[type=checkbox]::-moz-placeholder {
-  color: #777777;
-  opacity: 1;
-}
-.modal.edit-data li input[type=text]:-ms-input-placeholder,
-.modal.edit-data li input[type=number]:-ms-input-placeholder,
-.modal.edit-data li input[type=time]:-ms-input-placeholder,
-.modal.edit-data li input[type=checkbox]:-ms-input-placeholder {
-  color: #777777;
-}
-.modal.edit-data li input[type=text]::-webkit-input-placeholder,
-.modal.edit-data li input[type=number]::-webkit-input-placeholder,
-.modal.edit-data li input[type=time]::-webkit-input-placeholder,
-.modal.edit-data li input[type=checkbox]::-webkit-input-placeholder {
-  color: #777777;
-}
-.modal.edit-data li input[type=text][disabled],
-.modal.edit-data li input[type=number][disabled],
-.modal.edit-data li input[type=time][disabled],
-.modal.edit-data li input[type=checkbox][disabled],
-.modal.edit-data li input[type=text][readonly],
-.modal.edit-data li input[type=number][readonly],
-.modal.edit-data li input[type=time][readonly],
-.modal.edit-data li input[type=checkbox][readonly],
-fieldset[disabled] .modal.edit-data li input[type=text],
-fieldset[disabled] .modal.edit-data li input[type=number],
-fieldset[disabled] .modal.edit-data li input[type=time],
-fieldset[disabled] .modal.edit-data li input[type=checkbox] {
-  cursor: not-allowed;
-  background-color: #eeeeee;
-  opacity: 1;
-}
-textarea.modal.edit-data li input[type=text],
-textarea.modal.edit-data li input[type=number],
-textarea.modal.edit-data li input[type=time],
-textarea.modal.edit-data li input[type=checkbox] {
-  height: auto;
-}
-.modal.edit-data li input[type=checkbox] {
-  appearance: none;
-  -webkit-appearance: none;
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  border-radius: 4px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  color: #ffffff;
-  background-color: #4ba9fc;
-  border-color: #329dfc;
-}
-.modal.edit-data li input[type=checkbox]:focus,
-.modal.edit-data li input[type=checkbox]:active:focus,
-.modal.edit-data li input[type=checkbox].active:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-.modal.edit-data li input[type=checkbox]:hover,
-.modal.edit-data li input[type=checkbox]:focus {
-  color: #333333;
-  text-decoration: none;
-}
-.modal.edit-data li input[type=checkbox]:active,
-.modal.edit-data li input[type=checkbox].active {
-  outline: 0;
-  background-image: none;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-.modal.edit-data li input[type=checkbox].disabled,
-.modal.edit-data li input[type=checkbox][disabled],
-fieldset[disabled] .modal.edit-data li input[type=checkbox] {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.65;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.modal.edit-data li input[type=checkbox]:hover,
-.modal.edit-data li input[type=checkbox]:focus,
-.modal.edit-data li input[type=checkbox]:active,
-.modal.edit-data li input[type=checkbox].active,
-.open > .dropdown-toggle.modal.edit-data li input[type=checkbox] {
-  color: #ffffff;
-  background-color: #1991fb;
-  border-color: #047fec;
-}
-.modal.edit-data li input[type=checkbox]:active,
-.modal.edit-data li input[type=checkbox].active,
-.open > .dropdown-toggle.modal.edit-data li input[type=checkbox] {
-  background-image: none;
-}
-.modal.edit-data li input[type=checkbox].disabled,
-.modal.edit-data li input[type=checkbox][disabled],
-fieldset[disabled] .modal.edit-data li input[type=checkbox],
-.modal.edit-data li input[type=checkbox].disabled:hover,
-.modal.edit-data li input[type=checkbox][disabled]:hover,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:hover,
-.modal.edit-data li input[type=checkbox].disabled:focus,
-.modal.edit-data li input[type=checkbox][disabled]:focus,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:focus,
-.modal.edit-data li input[type=checkbox].disabled:active,
-.modal.edit-data li input[type=checkbox][disabled]:active,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:active,
-.modal.edit-data li input[type=checkbox].disabled.active,
-.modal.edit-data li input[type=checkbox][disabled].active,
-fieldset[disabled] .modal.edit-data li input[type=checkbox].active {
-  background-color: #4ba9fc;
-  border-color: #329dfc;
-}
-.modal.edit-data li input[type=checkbox] .badge {
-  color: #4ba9fc;
-  background-color: #ffffff;
-}
-.modal.edit-data li input[type=checkbox]:before {
-  content: "Off";
-}
-.modal.edit-data li input[type=checkbox]:checked {
-  color: #ffffff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
-}
-.modal.edit-data li input[type=checkbox]:checked:hover,
-.modal.edit-data li input[type=checkbox]:checked:focus,
-.modal.edit-data li input[type=checkbox]:checked:active,
-.modal.edit-data li input[type=checkbox]:checked.active,
-.open > .dropdown-toggle.modal.edit-data li input[type=checkbox]:checked {
-  color: #ffffff;
-  background-color: #449d44;
-  border-color: #398439;
-}
-.modal.edit-data li input[type=checkbox]:checked:active,
-.modal.edit-data li input[type=checkbox]:checked.active,
-.open > .dropdown-toggle.modal.edit-data li input[type=checkbox]:checked {
-  background-image: none;
-}
-.modal.edit-data li input[type=checkbox]:checked.disabled,
-.modal.edit-data li input[type=checkbox]:checked[disabled],
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:checked,
-.modal.edit-data li input[type=checkbox]:checked.disabled:hover,
-.modal.edit-data li input[type=checkbox]:checked[disabled]:hover,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:checked:hover,
-.modal.edit-data li input[type=checkbox]:checked.disabled:focus,
-.modal.edit-data li input[type=checkbox]:checked[disabled]:focus,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:checked:focus,
-.modal.edit-data li input[type=checkbox]:checked.disabled:active,
-.modal.edit-data li input[type=checkbox]:checked[disabled]:active,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:checked:active,
-.modal.edit-data li input[type=checkbox]:checked.disabled.active,
-.modal.edit-data li input[type=checkbox]:checked[disabled].active,
-fieldset[disabled] .modal.edit-data li input[type=checkbox]:checked.active {
-  background-color: #5cb85c;
-  border-color: #4cae4c;
-}
-.modal.edit-data li input[type=checkbox]:checked .badge {
-  color: #5cb85c;
-  background-color: #ffffff;
-}
-.modal.edit-data li input[type=checkbox]:checked:before {
-  content: "On";
 }
 .blocks #addBlockModel input {
   margin: 10px 0px;

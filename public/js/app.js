@@ -147,7 +147,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
   socket.on('backend-data-change', function(data) {
     thingService.getAllThings(function(data) {
-      if ( $(':focus').length == 0 ) { // || _.contains(["checkbox", "button"], $(':focus').attr("type"))
+      if ( $(':focus').length == 0 || _.contains(["checkbox", "button"], $(':focus').attr("type"))) {
         // if a new item was added, hide the modal
         if (root.things.length !== data.length) {
           $("#addThingModal").modal('hide');

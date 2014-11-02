@@ -1,0 +1,49 @@
+// main: index.less
+
+// styling of the data editor list
+ul.edit-data {
+  padding-left: 0px;
+
+  li {
+    padding: 8px 0px;
+    list-style-type: none;
+
+    // label for each data item
+    label {
+      font-weight: normal;
+      font-size: @font-size-large * .9;
+      display: inline-block;
+      margin-top: 10px;
+
+      &:after { content: ":"; }
+    }
+
+    input {
+      .pull-right;
+      display: inline-block;
+      margin: @padding-small-vertical 0px;
+
+      &[type=text], &[type=number], &[type=time], &[type=checkbox]{
+        .form-control;
+        width: 300px;
+        display: inline-block;
+      }
+
+      // checkboxes should be shown as buttons
+      &[type=checkbox] {
+        appearance: none;
+        -webkit-appearance: none;
+        .btn;
+        .btn-primary;
+
+        &:before { content: "Off"; }
+
+        &:checked {
+          .btn-success;
+          &:before { content: "On"; }
+        }
+
+      }
+    }
+  }
+}
