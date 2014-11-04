@@ -6652,6 +6652,9 @@ ul.list-group li.list-group-item button.pull-right {
 .blocks li {
   min-height: 74px;
 }
+.blocks li .modal a.help-link {
+  float: right !important;
+}
 .blocks li .modal textarea {
   display: block;
   height: 34px;
