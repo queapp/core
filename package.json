@@ -42,5 +42,8 @@
   "bugs": {
     "url": "https://github.com/1egoman/que-iot/issues"
   },
-  "homepage": "https://github.com/1egoman/que-iot"
+  "homepage": "https://github.com/1egoman/que-iot",
+  "engines": {
+    "node": "0.10.x"
+  }
 }
