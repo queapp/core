@@ -31,3 +31,11 @@ dashboard. **Don't spam the user with unneccisary notifications**
 ```javascript
 que.notify("message contents", "Notification title");
 ```
+
+**whenTime(h, m, s, callback)** - if the time is what has been specified, then run the callback.
+Time is specified in 24-hour clock, starting with hours, minutes, then seconds.
+```javascript
+que.whenTime(12, 0, 0, function() {
+  que.log("It's Noon!");
+});
+```

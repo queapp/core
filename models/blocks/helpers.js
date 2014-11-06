@@ -63,6 +63,14 @@ module.exports = function(socket, things, services, notifys, item) {
     // send a notification to the user
     notify: function(msg, title) {
       notifys.createNotify(msg, title);
+    },
+
+    // if the time is what has been specified
+    whenTime: function(h, m, s, callback) {
+      d = new Date();
+      if (d.getHours() == h && d.getMinutes() == m && d.getSeconds() == s) {
+        callback();
+      }
     }
 
 
