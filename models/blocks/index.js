@@ -175,10 +175,15 @@ module.exports = function(things, services, notify) {
       // passed in an array
 
       // minify the code
-      var ast = jsp.parse( code.join("\n") ); // parse code and get the initial AST
-      ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
-      mincode = pro.gen_code(ast); // compressed code here
-      // console.log(mincode);
+      var mincode;
+      try {
+        var ast = jsp.parse( code.join("\n") ); // parse code and get the initial AST
+        ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
+        mincode = pro.gen_code(ast); // compressed code here
+      } catch(err) {
+        // a minification error
+        callback(null, err);
+      }
 
       // now, try and compile the code
       var args = [null].concat([mincode]);
@@ -211,7 +216,7 @@ module.exports = function(things, services, notify) {
       async.map(data, function(item, callback) {
 
         // convert the code from an array to an executable function
-        item.disable === false && item.code.length && root.convertCode(item, function(code) {
+        item.disable === false && item.code.length && root.convertCode(item, function(code, err) {
           if (typeof code == "function") {
 
             // create helpers
@@ -234,6 +239,13 @@ module.exports = function(things, services, notify) {
             }
 
 
+          } else if (code === null && err) {
+            // error
+            root.socket && root.socket.emit("block-log", {
+              id: item.id,
+              type: "error",
+              msg: "Error: " + err.message + " on line " + (err.line-1) + "; col " + err.col
+            });
           };
         });
 
