@@ -3,6 +3,8 @@ var ServiceServer = require("../models/services");
 var BlockServer = require("../models/blocks");
 var notify = require("../models/notify");
 
+var pjson = require('../package.json');
+
 // create all of the routes for the application
 module.exports = function(app, server, argv) {
 
@@ -25,6 +27,9 @@ module.exports = function(app, server, argv) {
       res.send('var host = "http://127.0.0.1:8000";');
     }
   });
+
+  // que version route
+  app.get("/version", function(req, res) { res.json({version: pjson.version}); });
 
   // create thing server and service server
   var things = new ThingServer();

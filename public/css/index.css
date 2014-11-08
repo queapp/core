@@ -6268,8 +6268,8 @@ button.close {
   background: #FFF;
 }
 .navbar-que .navbar-brand img {
-  height: 64px;
-  margin-top: -16px;
+  margin-top: -8px;
+  width: 48px;
 }
 .navbar-que .navbar-brand {
   color: #FFF;

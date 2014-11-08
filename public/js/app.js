@@ -7,10 +7,19 @@ var navColorBlue = "#4BA9FC";
 var navColorGreen = "#42BF3F";
 var navColorBrown = "#B7521E";
 
-app.controller("navController", function($scope) {
+app.controller("navController", function($scope, $http) {
   var root = this;
 
   this.pageId = 1;
+  this.version = "";
+
+  // get version from backend
+  $http({
+    method: "get",
+    url: "/version"
+  }).success(function(data) {
+    root.version = "v"+data.version;
+  });
 
   this.toPage = function(id) {
 
