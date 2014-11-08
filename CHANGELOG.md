@@ -4,3 +4,4 @@ v0.5
 - added changelog
 - added `que.whenTime`
 - errors now logged to the console's of blocks
+- added underscore functions under helpers

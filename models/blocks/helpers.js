@@ -71,7 +71,10 @@ module.exports = function(socket, things, services, notifys, item) {
       if (d.getHours() == h && d.getMinutes() == m && d.getSeconds() == s) {
         callback();
       }
-    }
+    },
+
+    // all underscore functions
+    underscore: _
 
 
   };
