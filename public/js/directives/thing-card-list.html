@@ -76,7 +76,9 @@
               placeholder="{{k}}"
               value="{{tC.isButton(v) &amp;&amp; v.value}}"
               ng-disabled="v.readonly"
+              ng-hide="tC.getTypeFor(v) == 'canvas'"
             />
+            <canvas ng-show="tC.getTypeFor(v) == 'canvas'"></canvas>
           </li>
         </ul>
 

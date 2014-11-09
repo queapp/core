@@ -103,6 +103,10 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
         case "boolean":
           return "checkbox";
           break;
+        case "canvas":
+        case "video":
+          return "canvas";
+          break;
         default:
           return "text";
           break;

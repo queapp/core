@@ -6329,6 +6329,9 @@ ul.edit-data li label {
 ul.edit-data li label:after {
   content: ":";
 }
+ul.edit-data li canvas {
+  vertical-align: top;
+}
 ul.edit-data li input {
   float: right !important;
   display: inline-block;
@@ -6551,7 +6554,7 @@ body {
 ul.card-list {
   list-style-type: none;
   padding: 0px;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 64px 0px;
 }
 ul.card-list div.no-cards {
   height: 400px;
