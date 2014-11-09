@@ -2,7 +2,6 @@ var express = require("express");
 var http = require("http");
 var passport = require('passport');
 var cors = require('cors');
-var cowsay = require("cowsay");
 
 // express middleware
 var bodyParser = require("body-parser");
