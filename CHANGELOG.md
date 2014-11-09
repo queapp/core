@@ -2,7 +2,7 @@ v0.5
 ===
 - New Logo
 - Hovering over the logo shows the version
-
+- `BACKENDPORT` variable
 
 - added api reference link above block code editor
 - added changelog
