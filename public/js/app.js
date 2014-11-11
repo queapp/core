@@ -173,6 +173,82 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     });
   });
 
+
+  socket.on("canvas-update", function(data) {
+    canvas = $(".canvas-"+data.id+"-"+data.key)[0];
+    cxt = canvas.getContext('2d');
+
+    // colors
+    if (data.fillColor) cxt.fillStyle = data.fillColor
+    if (data.strokeColor) cxt.strokeStyle = data.strokeColor
+
+    // what to do?
+    switch (data.action) {
+      case "clear":
+        cxt.clearRect(
+          data.x || 0,
+          data.y || 0,
+          data.w || canvas.width,
+          data.h || canvas.height
+        );
+        break;
+
+      case "line":
+        /*
+        {
+          action: "line",
+          nodes: [
+            [0, 0],
+            [10, 10]
+          ],
+          fillColor: "red",
+          strokeColor: "red",
+          finished: "stroke"
+        }
+        */
+
+        // start drawing line
+        cxt.beginPath();
+        cxt.moveTo(
+          data.nodes[0][0],
+          data.nodes[0][1]
+        );
+
+        // each node
+        _.each(_.rest(data.nodes), function(n) {
+          cxt.lineTo(n[0], n[1]);
+        });
+
+        // finish
+        (data.finished == "fill") && cxt.fill();
+        (data.finished == "stroke") && cxt.stroke();
+        break;
+
+      case "rect":
+        // draw rectangle
+        cxt.fillRect(
+          data.x || 0,
+          data.y || 0,
+          data.w || canvas.width,
+          data.h || canvas.height
+        );
+        break;
+
+      case "text":
+        // draw text
+        cxt.fillText(data.text, data.x || 0, data.y || 0);
+        break;
+
+      case "image":
+        // add image to canvas
+        img = new Image();
+        img.src = data.src;
+        img.onload = function(){
+          cxt.drawImage(img, data.x || 0, data.y || 0);
+        }
+        break;
+    }
+  });
 });
 
 app.controller("ServicesController", function($scope, $http, servicesService, $interval, $document) {

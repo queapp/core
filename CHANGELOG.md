@@ -3,6 +3,9 @@ v0.5
 - New Logo
 - Hovering over the logo shows the version
 - `BACKENDPORT` variable
+- type of 'canvas' in a thing
+  - also, lots of drawing operations
+  - line, rect, clear, text, imageFromUrl
 
 - added api reference link above block code editor
 - added changelog

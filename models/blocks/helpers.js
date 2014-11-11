@@ -73,6 +73,66 @@ module.exports = function(socket, things, services, notifys, item) {
       }
     },
 
+    // canvas drawing functions
+    getCanvas: function(id, key) {
+      if (!socket) return null
+
+
+      return {
+
+        clear: function(x, y, w, h) {
+          socket.emit("canvas-update", {
+            id: id, key: key,
+            action: "clear",
+            x: x, y: y, w: w, h: h
+          });
+        },
+
+        line: function(nodes, fill, stroke, fillorstroke) {
+          socket.emit("canvas-update", {
+            id: id, key: key,
+            action: "line",
+            nodes: nodes,
+            fillColor: fill,
+            strokeColor: stroke,
+            finished: fillorstroke
+          });
+        },
+
+        rect: function(x, y, w, h, fill, stroke) {
+          socket.emit("canvas-update", {
+            id: id, key: key,
+            action: "rect",
+            x: x, y: y, w: w, h: h,
+            fillColor: fill,
+            strokeColor: stroke
+          });
+        },
+
+        imageFromUrl: function(url, x, y) {
+          socket.emit("canvas-update", {
+            id: id, key: key,
+            action: "image",
+            src: url,
+            x: x, y: y
+          });
+        },
+
+        text: function(text, x, y) {
+          socket.emit("canvas-update", {
+            id: id, key: key,
+            action: "text",
+            text: text,
+            x: x, y: y,
+            fillColor: fill,
+            strokeColor: stroke
+          });
+        }
+      }
+
+
+    },
+
     // all underscore functions
     underscore: _
 

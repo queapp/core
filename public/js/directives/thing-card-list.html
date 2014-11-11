@@ -78,7 +78,7 @@
               ng-disabled="v.readonly"
               ng-hide="tC.getTypeFor(v) == 'canvas'"
             />
-            <canvas ng-show="tC.getTypeFor(v) == 'canvas'"></canvas>
+            <canvas ng-show="tC.getTypeFor(v) == 'canvas'" class="canvas-{{thing.id}}-{{k}}" style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};"></canvas>
           </li>
         </ul>
 
