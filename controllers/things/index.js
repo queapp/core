@@ -4,6 +4,8 @@ var path = require("path");
 var async = require("async");
 var db = require("../persistant/provider");
 
+var Thing = require("../../models/things");
+
 
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
@@ -114,7 +116,10 @@ module.exports = function(thedb) {
       item = _.extend(root.defaultThing, data);
       item.id = ++maxId;
 
-      db.addThing(item, function(err, d) {
+      // save thing in db
+      item.type = "thing";
+      var thing = new Thing(item);
+      thing.save(function(err, d) {
         // tell the frontend it needs to pull in a new thing
         root.socket && root.socket.emit("backend-data-change", data);
 
@@ -143,48 +148,27 @@ module.exports = function(thedb) {
   this.get = function(id, done) {
 
     // get from persistant data store
-    db.findAllThings(function(err, records) {
+    Thing.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
+
       // search for id
       if (id !== null) {
-        records = _.find(records, function(i) {
+        ret = _.find(ret, function(i) {
           return i.id == id || undefined;
         });
       }
 
-      done(records);
+      done(ret);
     });
-  };
-
-  /**
-    Update the whole list of things
-  */
-  this.put = function(data, done) {
-
-    // write to cache
-    root.cache = data;
-    // p.write(this.underName, data);
-
-    // write to mongodb
-    async.map(data, function(data, callback) {
-      db.updateThingById(data.id, data, function(err, d) {
-        if (d == 0) {
-          // instead, add it
-          db.addThing(data, function(err, d) {
-            callback();
-          });
-        } else {
-          callback();
-        }
-      });
-    }, function(err, results) {
-
-      // tell other clients it's time to fetch new data
-      root.socket && root.socket.emit("backend-data-change", data);
-
-      // callback
-      done && done();
-    });
-
   };
 
   /**
@@ -204,53 +188,20 @@ module.exports = function(thedb) {
 
       // update record's data
       if (record) {
-        // _.each(record.data, function(value, key) {
-        //   console.log(key, )
-        //   if (changes[key]) {
-        //     record.data[key] = _.extend({}, record.data, changes[key]);
-        //   };
-        // });
-        //
-        // console.log("-----------------");
 
+        // apply the updates
         record.data = Object.deepExtend(record.data, changes || {});
-        // record.data = _.extend({}, record.data, changes || {});
 
-        // recompile the record
-        // var all = data;
-        // all[listIndex] = record;
-        // root.put(all);
-
-        db.updateThingById(id, record, function(err) {
+        // update thing
+        Thing.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update
           root.socket && root.socket.emit("backend-data-change", data);
 
           // callback
           done && done();
         });
-        
+
       }
-    });
-  }
-
-  this.reorder = function(id, newLocation, callback) {
-    this.get(null, function(data) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(data, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      // shift it around
-      tempData = data[listIndex];
-      data.splice(listIndex, 1);
-      data.splice(newLocation, 0, tempData);
-
-      // save it
-      root.put(data);
-      callback(data);
     });
   }
 

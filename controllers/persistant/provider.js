@@ -2,19 +2,19 @@ var mongoose = require('mongoose');
 var _ = require("underscore");
 
 // schema for a service
-var thingSchema = mongoose.Schema({
-  "name": String,
-  "desc": String,
-  "type": String,
-  "id": Number,
-  "image": String,
-  "tags": Array,
-  "ip": {
-    "host": String,
-    "port": Number
-  },
-  "data": Object
-});
+// var thingSchema = mongoose.Schema({
+//   "name": String,
+//   "desc": String,
+//   "type": String,
+//   "id": Number,
+//   "image": String,
+//   "tags": Array,
+//   "ip": {
+//     "host": String,
+//     "port": Number
+//   },
+//   "data": Object
+// });
 
 // schema for a thing
 var serviceSchema = mongoose.Schema({
@@ -58,7 +58,8 @@ var notifySchema = mongoose.Schema({
 // the models
 
 // The three user-creatable items
-var Thing = mongoose.model('Thing', thingSchema);
+// var Thing = mongoose.model('Thing', thingSchema);
+var Thing = null;
 var Service = mongoose.model('Service', serviceSchema);
 var Block = mongoose.model('Block', blockSchema);
 
@@ -85,50 +86,6 @@ var db = module.exports = {
       root.isOpen = true;
       console.log("Connected To Mongo instance:", host);
     });
-  },
-
-  addThing: function(data, callback) {
-    data.type = "thing";
-    var thing = new Thing(data);
-    thing.save(callback);
-  },
-
-  deleteThing: function(id, callback) {
-    Thing.remove({id: id}, function(err, docs) {
-      callback(err);
-    });
-  },
-
-  findAllThings: function(callback) {
-    Thing.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
-
-        // convert to object from model
-        ob = doc.toObject();
-        delete ob._id;
-
-        // add to array
-        ret.push(ob);
-      });
-
-      callback(err, ret);
-    });
-  },
-
-  findThingById: function(id, callback) {
-    Thing.findOne({id: id}, function(err, doc) {
-      // convert to object from model
-      ob = doc.toObject();
-      delete ob._id;
-
-      // callback
-      callback(err, ob);
-    });
-  },
-
-  updateThingById: function(id, data, callback) {
-    Thing.update({id: id}, data, {}, callback);
   },
 
   setThingAuthKey: function(akey) {
