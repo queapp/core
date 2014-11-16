@@ -32,14 +32,14 @@ var serviceSchema = mongoose.Schema({
 });
 
 // schema for a block
-var blockSchema = mongoose.Schema({
-  "name": String,
-  "desc": String,
-  "id": Number,
-  "tags": Array,
-  "code": Array,
-  "disable": Boolean
-});
+// var blockSchema = mongoose.Schema({
+//   "name": String,
+//   "desc": String,
+//   "id": Number,
+//   "tags": Array,
+//   "code": Array,
+//   "disable": Boolean
+// });
 
 // schema for an authkey
 var authKeySchema = mongoose.Schema({
@@ -61,7 +61,7 @@ var notifySchema = mongoose.Schema({
 // var Thing = mongoose.model('Thing', thingSchema);
 var Thing = null;
 var Service = mongoose.model('Service', serviceSchema);
-var Block = mongoose.model('Block', blockSchema);
+var Block = null;
 
 // others
 var Authkey = mongoose.model('Authkey', authKeySchema);
@@ -182,52 +182,6 @@ var db = module.exports = {
 
   updateServiceById: function(id, data, callback) {
     Service.update({id: id}, data, {}, callback);
-  },
-
-
-  // blocks
-  addBlock: function(data, callback) {
-    var block = new Block(data);
-    block.disable = false;
-    block.save(callback);
-  },
-
-  deleteBlock: function(id, callback) {
-    Block.remove({id: id}, function(err, docs) {
-      callback(err);
-    });
-  },
-
-  findAllBlocks: function(callback) {
-    Block.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
-
-        // convert to object from model
-        ob = doc.toObject();
-        delete ob._id;
-
-        // add to array
-        ret.push(ob);
-      });
-
-      callback(err, ret);
-    });
-  },
-
-  findBlockById: function(id, callback) {
-    Block.findOne({id: id}, function(err, doc) {
-      // convert to object from model
-      ob = doc.toObject();
-      delete ob._id;
-
-      // callback
-      callback(err, ob);
-    });
-  },
-
-  updateBlockById: function(id, data, callback) {
-    Block.update({id: id}, data, {}, callback);
   },
 
 

@@ -7,6 +7,9 @@ var helperConstructor = require("./helpers");
 var jsp = require("uglify-js").parser;
 var pro = require("uglify-js").uglify;
 
+// the model
+var Block = require("../../models/blocks");
+
 module.exports = function(things, services, notify) {
   var root = this;
 
@@ -40,7 +43,10 @@ module.exports = function(things, services, notify) {
       item = Object.deepExtend(root.defaultBlock, data);
       item.id = ++maxId;
 
-      db.addBlock(item, function(err, d) {
+      // save block
+      var block = new Block(item);
+      block.disable = false;
+      block.save(function(err, d) {
         // callback
         done && done(item.id);
       });
@@ -62,12 +68,11 @@ module.exports = function(things, services, notify) {
       });
 
       all.splice(listIndex, 1);
-      db.deleteBlock(id, function(err) {
-        done();
-      });
-      // root.put(all);
 
-      // callback
+      // remove the block
+      Block.remove({id: id}, function(err, docs) {
+        done(err);
+      });
     });
   }
 
@@ -77,48 +82,27 @@ module.exports = function(things, services, notify) {
   this.get = function(id, done) {
 
     // get from persistant data store
-    db.findAllBlocks(function(err, records) {
+    Block.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
+
       // search for id
       if (id !== null) {
-        records = _.find(records, function(i) {
+        ret = _.find(ret, function(i) {
           return i.id == id || undefined;
         });
       }
 
-      done(records);
+      done(ret);
     });
-  };
-
-  /**
-    Update the whole list of things
-  */
-  this.put = function(data, done) {
-
-    // write to cache
-    root.cache = data;
-    // p.write(this.underName, data);
-
-    // write to mongodb
-    async.map(data, function(data, callback) {
-      db.updateBlockById(data.id, data, function(err, d) {
-        if (d == 0) {
-          // instead, add it
-          db.addBlock(data, function(err, d) {
-            callback();
-          });
-        } else {
-          callback();
-        }
-      });
-    }, function(err, results) {
-
-      // tell other clients it's time to fetch new data
-      root.socket && root.socket.emit("backend-data-change", data);
-
-      // callback
-      done && done();
-    });
-
   };
 
   /**
@@ -138,18 +122,11 @@ module.exports = function(things, services, notify) {
 
       // update record's data
       if (record) {
-        // _.each(record.data, function(value, key) {
-        //   console.log(key, )
-        //   if (changes[key]) {
-        //     record.data[key] = _.extend({}, record.data, changes[key]);
-        //   };
-        // });
-        //
-        // console.log("-----------------");
-
+        // apply any changes
         record = Object.deepExtend(record, changes || {});
 
-        db.updateBlockById(record.id, record, function(err, d) {
+        // update block
+        Block.update({id: record.id}, record, {}, function(err, d) {
           // callback
           done && done(d);
         });
