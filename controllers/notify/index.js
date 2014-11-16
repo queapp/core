@@ -1,4 +1,3 @@
-var db = require("../persistant/provider");
 var _ = require("underscore");
 
 var Notify = require("../../models/notify");

@@ -1,5 +1,4 @@
 var async = require("async");
-var db = require("../persistant/provider");
 var _ = require("underscore");
 var helperConstructor = require("./helpers");
 
