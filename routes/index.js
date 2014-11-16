@@ -1,7 +1,7 @@
-var ThingServer = require("../models/things");
-var ServiceServer = require("../models/services");
-var BlockServer = require("../models/blocks");
-var notify = require("../models/notify");
+var ThingServer = require("../controllers/things");
+var ServiceServer = require("../controllers/services");
+var BlockServer = require("../controllers/blocks");
+var notify = require("../controllers/notify");
 
 var pjson = require('../package.json');
 

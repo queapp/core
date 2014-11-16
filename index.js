@@ -13,14 +13,14 @@ var argv = require('minimist')(process.argv.slice(2));
 
 
 // connect to database
-var db = require("./models/persistant/provider");
+var db = require("./controllers/persistant/provider");
 if (process.env.MONGOURI || argv.db) {
   db.connect(process.env.MONGOURI || argv.db);
 } else {
   throw new Error("Please set the MONGOURI environment variable to the uri of your mongodb instance.");
 }
 
-require("./models/logger")(argv, function(logger) {
+require("./controllers/logger")(argv, function(logger) {
   var routes = require("./routes");
 
   var app = express();
