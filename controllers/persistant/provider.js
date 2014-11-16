@@ -48,12 +48,12 @@ var serviceSchema = mongoose.Schema({
 // });
 
 // schema for a notification
-var notifySchema = mongoose.Schema({
-  "id": Number,
-  "title": String,
-  "body": String,
-  "icon": String
-});
+// var notifySchema = mongoose.Schema({
+//   "id": Number,
+//   "title": String,
+//   "body": String,
+//   "icon": String
+// });
 
 // the models
 
@@ -65,7 +65,7 @@ var Block = null;
 
 // others
 var Authkey = null
-var Notify = mongoose.model('Notify', notifySchema);
+var Notify = null//mongoose.model('Notify', notifySchema);
 
 
 
@@ -134,45 +134,6 @@ var db = module.exports = {
   },
 
 
-  // notifys
-  addNotify: function(data, callback) {
-    var notify = new Notify(data);
-    notify.save(callback);
-  },
-
-  deleteNotify: function(id, callback) {
-    Notify.remove({id: id}, function(err, docs) {
-      callback(err);
-    });
-  },
-
-  findAllNotifys: function(callback) {
-    Notify.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
-
-        // convert to object from model
-        ob = doc.toObject();
-        delete ob._id;
-
-        // add to array
-        ret.push(ob);
-      });
-
-      callback(err, ret);
-    });
-  },
-
-  findNotifyById: function(id, callback) {
-    Notify.findOne({id: id}, function(err, doc) {
-      // convert to object from model
-      ob = doc.toObject();
-      delete ob._id;
-
-      // callback
-      callback(err, ob);
-    });
-  }
 
 };
 

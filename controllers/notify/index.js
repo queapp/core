@@ -1,6 +1,8 @@
 var db = require("../persistant/provider");
 var _ = require("underscore");
 
+var Notify = require("../../models/notify");
+
 module.exports = {
   socket: null, // the websocket
 
@@ -8,10 +10,20 @@ module.exports = {
   createNotify: function(body, title, done) {
     var root = this;
 
-    db.findAllNotifys(function(err, all) {
+    Notify.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
 
       // get max id
-      maxId = _.max(all, function(i) {
+      maxId = _.max(ret, function(i) {
         return i.id;
       }).id || 0;
 
@@ -23,7 +35,9 @@ module.exports = {
         "icon": null
       };
 
-      db.addNotify(item, function(err, d) {
+      // add notify
+      var notify = new Notify(item);
+      notify.save(function(err, d) {
         // tell the frontend it needs to pull in a new notify
         root.socket && root.socket.emit("backend-data-change", "notify");
 
@@ -36,13 +50,26 @@ module.exports = {
 
   // dismiss (delete) a notify
   dismissNotify: function(id, done) {
-    db.deleteNotify(id, function(err) {
+    Notify.remove({id: id}, function(err) {
       done && done(err);
     });
   },
 
   get: function(done) {
-    db.findAllNotifys(done);
+    Notify.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
+
+      done(err, ret);
+    });
   },
 
   createResponsePacket: function(status, data) {

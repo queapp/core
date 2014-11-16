@@ -157,7 +157,7 @@ module.exports = function(thedb) {
   this.delete = function(id, done) {
      Thing.remove({id: id}, function(err) {
        // tell the frontend it's time to update
-       root.socket && root.socket.emit("backend-data-change", data);
+       root.socket && root.socket.emit("backend-data-change", {});
 
        // callback
        done && done();
