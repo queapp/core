@@ -3,6 +3,7 @@ var _ = require("underscore");
 var path = require("path");
 var async = require("async");
 var db = require("../persistant/provider");
+var Authkey = require("../../models/authkey");
 
 // a service container
 module.exports = function(thedb) {
@@ -27,8 +28,30 @@ module.exports = function(thedb) {
   this.socket = null;
 
   // setting and retreiving auth keys
-  this.setAuthKey = db.setServiceAuthKey;
-  this.getAuthKey = db.getServiceAuthKey;
+  this.setAuthKey = function(akey) {
+    // remove all current authkeys (there can only be one!)
+    Authkey.remove({type: "service"}, function(err) {
+
+      // add our new one
+      var authkey = new Authkey();
+      authkey.type = "service";
+      authkey.key = akey;
+      authkey.save();
+
+    });
+  };
+  
+  this.getAuthKey = function(callback) {
+    // get the current thing authkey
+    Authkey.findOne({type: "service"}, function(err, doc) {
+      // convert to object from model
+      ob = doc.toObject();
+      delete ob._id;
+
+      // callback
+      callback(err, ob.key);
+    });
+  };
 
   /**
     Create a new auth key for adding a thing

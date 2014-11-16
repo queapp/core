@@ -2,9 +2,9 @@ var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
 var async = require("async");
-var db = require("../persistant/provider");
 
 var Thing = require("../../models/things");
+var Authkey = require("../../models/authkey");
 
 
 Object.deepExtend = function(destination, source) {
@@ -48,8 +48,30 @@ module.exports = function(thedb) {
   this.socket = null;
 
   // setting and retreiving auth keys
-  this.setAuthKey = db.setThingAuthKey;
-  this.getAuthKey = db.getThingAuthKey;
+  this.setAuthKey = function(akey) {
+    // remove all current authkeys (there can only be one!)
+    Authkey.remove({type: "thing"}, function(err) {
+
+      // add our new one
+      var authkey = new Authkey();
+      authkey.type = "thing";
+      authkey.key = akey;
+      authkey.save();
+
+    });
+  };
+
+  this.getAuthKey = function(callback) {
+    // get the current thing authkey
+    Authkey.findOne({type: "thing"}, function(err, doc) {
+      // convert to object from model
+      ob = doc.toObject();
+      delete ob._id;
+
+      // callback
+      callback(err, ob.key);
+    });
+  };
 
   /**
     Create a new auth key for adding a thing
@@ -133,13 +155,13 @@ module.exports = function(thedb) {
     Delete a thing from the list of things
   */
   this.delete = function(id, done) {
-    db.deleteThing(id, function(err) {
-      // tell the frontend it's time to update
-      root.socket && root.socket.emit("backend-data-change", data);
+     Thing.remove({id: id}, function(err) {
+       // tell the frontend it's time to update
+       root.socket && root.socket.emit("backend-data-change", data);
 
-      // callback
-      done && done();
-    });
+       // callback
+       done && done();
+     });
   }
 
   /**
