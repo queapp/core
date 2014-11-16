@@ -17,19 +17,19 @@ var _ = require("underscore");
 // });
 
 // schema for a thing
-var serviceSchema = mongoose.Schema({
-  "name": String,
-  "desc": String,
-  "type": String,
-  "id": Number,
-  "image": String,
-  "tags": Array,
-  "ip": {
-    "host": String,
-    "port": Number
-  },
-  "data": Object
-});
+// var serviceSchema = mongoose.Schema({
+//   "name": String,
+//   "desc": String,
+//   "type": String,
+//   "id": Number,
+//   "image": String,
+//   "tags": Array,
+//   "ip": {
+//     "host": String,
+//     "port": Number
+//   },
+//   "data": Object
+// });
 
 // schema for a block
 // var blockSchema = mongoose.Schema({
@@ -60,7 +60,7 @@ var serviceSchema = mongoose.Schema({
 // The three user-creatable items
 // var Thing = mongoose.model('Thing', thingSchema);
 var Thing = null;
-var Service = mongoose.model('Service', serviceSchema);
+var Service = null//mongoose.model('Service', serviceSchema);
 var Block = null;
 
 // others

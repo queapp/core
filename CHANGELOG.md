@@ -6,6 +6,8 @@ v0.5
 - type of 'canvas' in a thing
   - also, lots of drawing operations
   - line, rect, clear, text, imageFromUrl
+- removed reorder
+- reorganisation of controllers/models
 
 - added api reference link above block code editor
 - added changelog

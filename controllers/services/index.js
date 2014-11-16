@@ -3,6 +3,8 @@ var _ = require("underscore");
 var path = require("path");
 var async = require("async");
 var db = require("../persistant/provider");
+
+var Service = require("../../models/services");
 var Authkey = require("../../models/authkey");
 
 // a service container
@@ -40,7 +42,7 @@ module.exports = function(thedb) {
 
     });
   };
-  
+
   this.getAuthKey = function(callback) {
     // get the current thing authkey
     Authkey.findOne({type: "service"}, function(err, doc) {
@@ -83,7 +85,6 @@ module.exports = function(thedb) {
 
     // fetch the auth key
     this.getAuthKey(function(err, authkey) {
-      console.log(authkey)
       // only if auth key exists
       if (typeof authkey !== "string" || typeof userKey !== "string") {
         done(null);
@@ -118,7 +119,9 @@ module.exports = function(thedb) {
       item = _.extend(root.defaultService, data);
       item.id = ++maxId;
 
-      db.addService(item, function(err, d) {
+      item.type = "service";
+      var thing = new Service(item);
+      thing.save(function(err, d) {
         // tell the frontend it needs to pull in a new thing
         root.socket && root.socket.emit("backend-data-change", data);
 
@@ -132,7 +135,7 @@ module.exports = function(thedb) {
     Delete a thing from the list of things
   */
   this.delete = function(id, done) {
-    db.deleteService(id, function(err) {
+    Service.remove({id: id}, function(err) {
       // tell the frontend it's time to update
       root.socket && root.socket.emit("backend-data-change", data);
 
@@ -147,48 +150,27 @@ module.exports = function(thedb) {
   this.get = function(id, done) {
 
     // get from persistant data store
-    db.findAllServices(function(err, records) {
+    Service.find(function(err, docs) {
+      ret = [];
+      _.each(docs, function(doc) {
+
+        // convert to object from model
+        ob = doc.toObject();
+        delete ob._id;
+
+        // add to array
+        ret.push(ob);
+      });
+
       // search for id
       if (id !== null) {
-        records = _.find(records, function(i) {
+        ret = _.find(ret, function(i) {
           return i.id == id || undefined;
         });
       }
 
-      done(records);
+      done(ret);
     });
-  };
-
-  /**
-    Update the whole list of things
-  */
-  this.put = function(data, done) {
-
-    // write to cache
-    root.cache = data;
-    // p.write(this.underName, data);
-
-    // write to mongodb
-    async.map(data, function(data, callback) {
-      db.updateServiceById(data.id, data, function(err, d) {
-        if (d == 0) {
-          // instead, add it
-          db.addThing(data, function(err, d) {
-            callback();
-          });
-        } else {
-          callback();
-        }
-      });
-    }, function(err, results) {
-
-      // tell other clients it's time to fetch new data
-      root.socket && root.socket.emit("backend-data-change", data);
-
-      // callback
-      done && done();
-    });
-
   };
 
   /**
@@ -211,7 +193,7 @@ module.exports = function(thedb) {
         // add in the new attributes, and save
         record.data = Object.deepExtend(record.data, changes || {});
 
-        db.updateServiceById(id, record, function(err) {
+        Service.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update
           root.socket && root.socket.emit("backend-data-change", data);
 
@@ -220,27 +202,6 @@ module.exports = function(thedb) {
         });
 
       }
-    });
-  }
-
-  this.reorder = function(id, newLocation, callback) {
-    this.get(null, function(data) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(data, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      // shift it around
-      tempData = data[listIndex];
-      data.splice(listIndex, 1);
-      data.splice(newLocation, 0, tempData);
-
-      // save it
-      root.put(data);
-      callback(data);
     });
   }
 
