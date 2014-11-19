@@ -1,5 +1,7 @@
 v0.5
 ===
+- refactored client-side js
+
 - New Logo
 - Hovering over the logo shows the version
 - `BACKENDPORT` variable
