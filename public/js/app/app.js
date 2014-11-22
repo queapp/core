@@ -5,7 +5,7 @@ var navColorYellow = "#FCBD4B";
 var navColorRed = "#FC4B4B";
 var navColorBlue = "#4BA9FC";
 var navColorGreen = "#42BF3F";
-var navColorBrown = "#B7521E";
+var navColorBrown = "#D481DC";
 
 app.controller("navController", function($scope, $http) {
   var root = this;
