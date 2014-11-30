@@ -39,8 +39,19 @@
             <!-- choose type -->
             <div class="thing-add page-1" ng-show="tC.newThing.dialogPage == 0">
               <p>
-                <h3>New Thing Name</h3>
-                <input type="text" class="form-control" placeholder="Thing Name" ng-model="tC.newThing.name"/>
+                <h3>Thing Information</h3>
+                <div class="form-group">
+                  <label>Name: </label>
+                  <input type="text" class="form-control" placeholder="Thing Name" ng-model="tC.newThing.name"/>
+                </div>
+                <div class="form-group">
+                  <label>Desc: </label>
+                  <input type="text" class="form-control" placeholder="Thing Description" ng-model="tC.newThing.desc"/>
+                </div>
+                <div class="form-group">
+                  <label>Tags: </label>
+                  <input type="text" class="form-control" placeholder="Thing Tags" ng-model="tC.newThing.tags"/>
+                </div>
               </p>
               <p>
                 <h3>What is the type of the new thing?</h3>
@@ -130,11 +141,20 @@
           <small>{{thing.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)">Delete</button>
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode">
+          Edit
+        </button>
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode">
+          Done
+        </button>
+        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)" ng-init="tC.editMode = false" ng-show="tC.editMode">
+          Delete
+        </button>
+
 
         <!-- list of toggleable attributes -->
         <ul class="card-form clearfix edit-data">
-          <li ng-repeat="(k, v) in thing.data">
+          <li class="control" ng-repeat="(k, v) in thing.data">
             <label
               tooltip
               data-toggle="tooltip"
@@ -155,6 +175,20 @@
             />
             <canvas ng-show="tC.getTypeFor(v) == 'canvas'" class="canvas-{{thing.id}}-{{k}}" style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};"></canvas>
           </li>
+
+          <!-- new control -->
+          <li class="new-control row" ng-show="tC.editMode">
+            <div class="col-md-6">
+              <input type="text" class="col-md-6" placeholder="Name" ng-model="tC.newControl.name"/>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" disabled>
+                <option value="true">String</option>
+              </select>
+            </div>
+            <button class="col-md-2" ng-click="tC.addControl(thing.id)">Add</button>
+          </li>
+
         </ul>
 
       </li>

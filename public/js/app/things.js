@@ -5,12 +5,14 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   var root = this;
 
   this.selectedThing = null;
+  this.editMode = false;
 
   // thing authentication key
   this.authKey = null;
 
   // new thing to be added
   this.newThing = null;
+  this.newControl = {};
 
   // go to next page of add dialog
   this.addNextPage = function() {
@@ -25,7 +27,9 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   this.addFinish = function() {
     thing = {
       actions: [],
-      name: root.newThing.name
+      name: root.newThing.name,
+      desc: root.newThing.desc,
+      tags: root.newThing.tags.split(' ')
     };
 
     // preprocessing
@@ -43,12 +47,20 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
               args: pin+",HIGH",
               access_token: "token here"
             }
+          },
+          detrigger: {
+            method: "GET",
+            url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+            params: {
+              args: pin+",LOW",
+              access_token: "token here"
+            }
           }
         });
       });
 
     }
-    
+
     // add the thing
     $http({
       method: "POST",
@@ -150,6 +162,21 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     root.things.splice(index, 1);
     thingService.removeThing(id, function() {});
   }
+
+  // add a new control to the list of them
+  this.addControl = function(id) {
+    thingService.getAllThings(function(things) {
+      // get by id
+      ts = _.filter(things, function(t) {
+        return t.id == id;
+      });
+
+      _.each(ts, function(thing) {
+        // thing.data[root.newControl.name] = root.newControl;
+        root.updateThingData(id, root.newControl.name, root.newControl, function(){});
+      });
+    });
+  };
 
   socket.on('backend-data-change', function(data) {
     thingService.getAllThings(function(data) {

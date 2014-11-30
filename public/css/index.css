@@ -6316,31 +6316,167 @@ button.close {
 ul.edit-data {
   padding-left: 0px;
 }
-ul.edit-data li {
+ul.edit-data li.new-control {
+  list-style-type: none;
+}
+ul.edit-data li.new-control input[type=text] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+ul.edit-data li.new-control input[type=text]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+ul.edit-data li.new-control input[type=text]::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+ul.edit-data li.new-control input[type=text]:-ms-input-placeholder {
+  color: #777777;
+}
+ul.edit-data li.new-control input[type=text]::-webkit-input-placeholder {
+  color: #777777;
+}
+ul.edit-data li.new-control input[type=text][disabled],
+ul.edit-data li.new-control input[type=text][readonly],
+fieldset[disabled] ul.edit-data li.new-control input[type=text] {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textareaul.edit-data li.new-control input[type=text] {
+  height: auto;
+}
+ul.edit-data li.new-control button {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  width: 100px;
+  margin-left: 10px;
+}
+ul.edit-data li.new-control button:focus,
+ul.edit-data li.new-control button:active:focus,
+ul.edit-data li.new-control button.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+ul.edit-data li.new-control button:hover,
+ul.edit-data li.new-control button:focus {
+  color: #333333;
+  text-decoration: none;
+}
+ul.edit-data li.new-control button:active,
+ul.edit-data li.new-control button.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+ul.edit-data li.new-control button.disabled,
+ul.edit-data li.new-control button[disabled],
+fieldset[disabled] ul.edit-data li.new-control button {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+ul.edit-data li.new-control button:hover,
+ul.edit-data li.new-control button:focus,
+ul.edit-data li.new-control button:active,
+ul.edit-data li.new-control button.active,
+.open > .dropdown-toggleul.edit-data li.new-control button {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+ul.edit-data li.new-control button:active,
+ul.edit-data li.new-control button.active,
+.open > .dropdown-toggleul.edit-data li.new-control button {
+  background-image: none;
+}
+ul.edit-data li.new-control button.disabled,
+ul.edit-data li.new-control button[disabled],
+fieldset[disabled] ul.edit-data li.new-control button,
+ul.edit-data li.new-control button.disabled:hover,
+ul.edit-data li.new-control button[disabled]:hover,
+fieldset[disabled] ul.edit-data li.new-control button:hover,
+ul.edit-data li.new-control button.disabled:focus,
+ul.edit-data li.new-control button[disabled]:focus,
+fieldset[disabled] ul.edit-data li.new-control button:focus,
+ul.edit-data li.new-control button.disabled:active,
+ul.edit-data li.new-control button[disabled]:active,
+fieldset[disabled] ul.edit-data li.new-control button:active,
+ul.edit-data li.new-control button.disabled.active,
+ul.edit-data li.new-control button[disabled].active,
+fieldset[disabled] ul.edit-data li.new-control button.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+ul.edit-data li.new-control button .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+ul.edit-data li.control {
   padding: 8px 0px;
   list-style-type: none;
 }
-ul.edit-data li label {
+ul.edit-data li.control label {
   font-weight: normal;
   font-size: 16.2px;
   display: inline-block;
   margin-top: 10px;
 }
-ul.edit-data li label:after {
+ul.edit-data li.control label:after {
   content: ":";
 }
-ul.edit-data li canvas {
+ul.edit-data li.control canvas {
   vertical-align: top;
 }
-ul.edit-data li input {
+ul.edit-data li.control input {
   float: right !important;
   display: inline-block;
   margin: 5px 0px;
 }
-ul.edit-data li input[type=text],
-ul.edit-data li input[type=number],
-ul.edit-data li input[type=time],
-ul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=text],
+ul.edit-data li.control input[type=number],
+ul.edit-data li.control input[type=time],
+ul.edit-data li.control input[type=checkbox] {
   display: block;
   width: 100%;
   height: 34px;
@@ -6360,57 +6496,57 @@ ul.edit-data li input[type=checkbox] {
   width: 300px;
   display: inline-block;
 }
-ul.edit-data li input[type=text]:focus,
-ul.edit-data li input[type=number]:focus,
-ul.edit-data li input[type=time]:focus,
-ul.edit-data li input[type=checkbox]:focus {
+ul.edit-data li.control input[type=text]:focus,
+ul.edit-data li.control input[type=number]:focus,
+ul.edit-data li.control input[type=time]:focus,
+ul.edit-data li.control input[type=checkbox]:focus {
   border-color: #66afe9;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
-ul.edit-data li input[type=text]::-moz-placeholder,
-ul.edit-data li input[type=number]::-moz-placeholder,
-ul.edit-data li input[type=time]::-moz-placeholder,
-ul.edit-data li input[type=checkbox]::-moz-placeholder {
+ul.edit-data li.control input[type=text]::-moz-placeholder,
+ul.edit-data li.control input[type=number]::-moz-placeholder,
+ul.edit-data li.control input[type=time]::-moz-placeholder,
+ul.edit-data li.control input[type=checkbox]::-moz-placeholder {
   color: #777777;
   opacity: 1;
 }
-ul.edit-data li input[type=text]:-ms-input-placeholder,
-ul.edit-data li input[type=number]:-ms-input-placeholder,
-ul.edit-data li input[type=time]:-ms-input-placeholder,
-ul.edit-data li input[type=checkbox]:-ms-input-placeholder {
+ul.edit-data li.control input[type=text]:-ms-input-placeholder,
+ul.edit-data li.control input[type=number]:-ms-input-placeholder,
+ul.edit-data li.control input[type=time]:-ms-input-placeholder,
+ul.edit-data li.control input[type=checkbox]:-ms-input-placeholder {
   color: #777777;
 }
-ul.edit-data li input[type=text]::-webkit-input-placeholder,
-ul.edit-data li input[type=number]::-webkit-input-placeholder,
-ul.edit-data li input[type=time]::-webkit-input-placeholder,
-ul.edit-data li input[type=checkbox]::-webkit-input-placeholder {
+ul.edit-data li.control input[type=text]::-webkit-input-placeholder,
+ul.edit-data li.control input[type=number]::-webkit-input-placeholder,
+ul.edit-data li.control input[type=time]::-webkit-input-placeholder,
+ul.edit-data li.control input[type=checkbox]::-webkit-input-placeholder {
   color: #777777;
 }
-ul.edit-data li input[type=text][disabled],
-ul.edit-data li input[type=number][disabled],
-ul.edit-data li input[type=time][disabled],
-ul.edit-data li input[type=checkbox][disabled],
-ul.edit-data li input[type=text][readonly],
-ul.edit-data li input[type=number][readonly],
-ul.edit-data li input[type=time][readonly],
-ul.edit-data li input[type=checkbox][readonly],
-fieldset[disabled] ul.edit-data li input[type=text],
-fieldset[disabled] ul.edit-data li input[type=number],
-fieldset[disabled] ul.edit-data li input[type=time],
-fieldset[disabled] ul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=text][disabled],
+ul.edit-data li.control input[type=number][disabled],
+ul.edit-data li.control input[type=time][disabled],
+ul.edit-data li.control input[type=checkbox][disabled],
+ul.edit-data li.control input[type=text][readonly],
+ul.edit-data li.control input[type=number][readonly],
+ul.edit-data li.control input[type=time][readonly],
+ul.edit-data li.control input[type=checkbox][readonly],
+fieldset[disabled] ul.edit-data li.control input[type=text],
+fieldset[disabled] ul.edit-data li.control input[type=number],
+fieldset[disabled] ul.edit-data li.control input[type=time],
+fieldset[disabled] ul.edit-data li.control input[type=checkbox] {
   cursor: not-allowed;
   background-color: #eeeeee;
   opacity: 1;
 }
-textareaul.edit-data li input[type=text],
-textareaul.edit-data li input[type=number],
-textareaul.edit-data li input[type=time],
-textareaul.edit-data li input[type=checkbox] {
+textareaul.edit-data li.control input[type=text],
+textareaul.edit-data li.control input[type=number],
+textareaul.edit-data li.control input[type=time],
+textareaul.edit-data li.control input[type=checkbox] {
   height: auto;
 }
-ul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=checkbox] {
   appearance: none;
   -webkit-appearance: none;
   display: inline-block;
@@ -6434,28 +6570,28 @@ ul.edit-data li input[type=checkbox] {
   background-color: #4ba9fc;
   border-color: #329dfc;
 }
-ul.edit-data li input[type=checkbox]:focus,
-ul.edit-data li input[type=checkbox]:active:focus,
-ul.edit-data li input[type=checkbox].active:focus {
+ul.edit-data li.control input[type=checkbox]:focus,
+ul.edit-data li.control input[type=checkbox]:active:focus,
+ul.edit-data li.control input[type=checkbox].active:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-ul.edit-data li input[type=checkbox]:hover,
-ul.edit-data li input[type=checkbox]:focus {
+ul.edit-data li.control input[type=checkbox]:hover,
+ul.edit-data li.control input[type=checkbox]:focus {
   color: #333333;
   text-decoration: none;
 }
-ul.edit-data li input[type=checkbox]:active,
-ul.edit-data li input[type=checkbox].active {
+ul.edit-data li.control input[type=checkbox]:active,
+ul.edit-data li.control input[type=checkbox].active {
   outline: 0;
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-ul.edit-data li input[type=checkbox].disabled,
-ul.edit-data li input[type=checkbox][disabled],
-fieldset[disabled] ul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=checkbox].disabled,
+ul.edit-data li.control input[type=checkbox][disabled],
+fieldset[disabled] ul.edit-data li.control input[type=checkbox] {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.65;
@@ -6463,87 +6599,87 @@ fieldset[disabled] ul.edit-data li input[type=checkbox] {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-ul.edit-data li input[type=checkbox]:hover,
-ul.edit-data li input[type=checkbox]:focus,
-ul.edit-data li input[type=checkbox]:active,
-ul.edit-data li input[type=checkbox].active,
-.open > .dropdown-toggleul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=checkbox]:hover,
+ul.edit-data li.control input[type=checkbox]:focus,
+ul.edit-data li.control input[type=checkbox]:active,
+ul.edit-data li.control input[type=checkbox].active,
+.open > .dropdown-toggleul.edit-data li.control input[type=checkbox] {
   color: #ffffff;
   background-color: #1991fb;
   border-color: #047fec;
 }
-ul.edit-data li input[type=checkbox]:active,
-ul.edit-data li input[type=checkbox].active,
-.open > .dropdown-toggleul.edit-data li input[type=checkbox] {
+ul.edit-data li.control input[type=checkbox]:active,
+ul.edit-data li.control input[type=checkbox].active,
+.open > .dropdown-toggleul.edit-data li.control input[type=checkbox] {
   background-image: none;
 }
-ul.edit-data li input[type=checkbox].disabled,
-ul.edit-data li input[type=checkbox][disabled],
-fieldset[disabled] ul.edit-data li input[type=checkbox],
-ul.edit-data li input[type=checkbox].disabled:hover,
-ul.edit-data li input[type=checkbox][disabled]:hover,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:hover,
-ul.edit-data li input[type=checkbox].disabled:focus,
-ul.edit-data li input[type=checkbox][disabled]:focus,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:focus,
-ul.edit-data li input[type=checkbox].disabled:active,
-ul.edit-data li input[type=checkbox][disabled]:active,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:active,
-ul.edit-data li input[type=checkbox].disabled.active,
-ul.edit-data li input[type=checkbox][disabled].active,
-fieldset[disabled] ul.edit-data li input[type=checkbox].active {
+ul.edit-data li.control input[type=checkbox].disabled,
+ul.edit-data li.control input[type=checkbox][disabled],
+fieldset[disabled] ul.edit-data li.control input[type=checkbox],
+ul.edit-data li.control input[type=checkbox].disabled:hover,
+ul.edit-data li.control input[type=checkbox][disabled]:hover,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:hover,
+ul.edit-data li.control input[type=checkbox].disabled:focus,
+ul.edit-data li.control input[type=checkbox][disabled]:focus,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:focus,
+ul.edit-data li.control input[type=checkbox].disabled:active,
+ul.edit-data li.control input[type=checkbox][disabled]:active,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:active,
+ul.edit-data li.control input[type=checkbox].disabled.active,
+ul.edit-data li.control input[type=checkbox][disabled].active,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox].active {
   background-color: #4ba9fc;
   border-color: #329dfc;
 }
-ul.edit-data li input[type=checkbox] .badge {
+ul.edit-data li.control input[type=checkbox] .badge {
   color: #4ba9fc;
   background-color: #ffffff;
 }
-ul.edit-data li input[type=checkbox]:before {
+ul.edit-data li.control input[type=checkbox]:before {
   content: "Off";
 }
-ul.edit-data li input[type=checkbox]:checked {
+ul.edit-data li.control input[type=checkbox]:checked {
   color: #ffffff;
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
-ul.edit-data li input[type=checkbox]:checked:hover,
-ul.edit-data li input[type=checkbox]:checked:focus,
-ul.edit-data li input[type=checkbox]:checked:active,
-ul.edit-data li input[type=checkbox]:checked.active,
-.open > .dropdown-toggleul.edit-data li input[type=checkbox]:checked {
+ul.edit-data li.control input[type=checkbox]:checked:hover,
+ul.edit-data li.control input[type=checkbox]:checked:focus,
+ul.edit-data li.control input[type=checkbox]:checked:active,
+ul.edit-data li.control input[type=checkbox]:checked.active,
+.open > .dropdown-toggleul.edit-data li.control input[type=checkbox]:checked {
   color: #ffffff;
   background-color: #449d44;
   border-color: #398439;
 }
-ul.edit-data li input[type=checkbox]:checked:active,
-ul.edit-data li input[type=checkbox]:checked.active,
-.open > .dropdown-toggleul.edit-data li input[type=checkbox]:checked {
+ul.edit-data li.control input[type=checkbox]:checked:active,
+ul.edit-data li.control input[type=checkbox]:checked.active,
+.open > .dropdown-toggleul.edit-data li.control input[type=checkbox]:checked {
   background-image: none;
 }
-ul.edit-data li input[type=checkbox]:checked.disabled,
-ul.edit-data li input[type=checkbox]:checked[disabled],
-fieldset[disabled] ul.edit-data li input[type=checkbox]:checked,
-ul.edit-data li input[type=checkbox]:checked.disabled:hover,
-ul.edit-data li input[type=checkbox]:checked[disabled]:hover,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:hover,
-ul.edit-data li input[type=checkbox]:checked.disabled:focus,
-ul.edit-data li input[type=checkbox]:checked[disabled]:focus,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:focus,
-ul.edit-data li input[type=checkbox]:checked.disabled:active,
-ul.edit-data li input[type=checkbox]:checked[disabled]:active,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:checked:active,
-ul.edit-data li input[type=checkbox]:checked.disabled.active,
-ul.edit-data li input[type=checkbox]:checked[disabled].active,
-fieldset[disabled] ul.edit-data li input[type=checkbox]:checked.active {
+ul.edit-data li.control input[type=checkbox]:checked.disabled,
+ul.edit-data li.control input[type=checkbox]:checked[disabled],
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:checked,
+ul.edit-data li.control input[type=checkbox]:checked.disabled:hover,
+ul.edit-data li.control input[type=checkbox]:checked[disabled]:hover,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:checked:hover,
+ul.edit-data li.control input[type=checkbox]:checked.disabled:focus,
+ul.edit-data li.control input[type=checkbox]:checked[disabled]:focus,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:checked:focus,
+ul.edit-data li.control input[type=checkbox]:checked.disabled:active,
+ul.edit-data li.control input[type=checkbox]:checked[disabled]:active,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:checked:active,
+ul.edit-data li.control input[type=checkbox]:checked.disabled.active,
+ul.edit-data li.control input[type=checkbox]:checked[disabled].active,
+fieldset[disabled] ul.edit-data li.control input[type=checkbox]:checked.active {
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
-ul.edit-data li input[type=checkbox]:checked .badge {
+ul.edit-data li.control input[type=checkbox]:checked .badge {
   color: #5cb85c;
   background-color: #ffffff;
 }
-ul.edit-data li input[type=checkbox]:checked:before {
+ul.edit-data li.control input[type=checkbox]:checked:before {
   content: "On";
 }
 .modal-dialog .modal-content {

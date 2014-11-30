@@ -47,7 +47,6 @@ module.exports = function(app, things) {
   });
 
   app.post("/things/add", function(req, res, next) {
-    console.log(req.body)
     things.add(req.body, function(id) {
       if (id) {
         res.send( things.createResponsePacket("OK", {id: id}) );

@@ -214,7 +214,7 @@ module.exports = function(thedb) {
       if (record) {
 
         // apply the updates
-        record.data = Object.deepExtend(record.data, changes || {});
+        record.data = Object.deepExtend(record.data || {}, changes || {});
 
         // update thing
         Thing.update({id: id}, record, {}, function(err) {

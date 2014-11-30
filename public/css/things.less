@@ -4,7 +4,20 @@
 ul.edit-data {
   padding-left: 0px;
 
-  li {
+  li.new-control {
+    list-style-type: none;
+    input[type=text] {
+      .form-control;
+    }
+    button {
+      .btn;
+      .btn-success;
+      width: 100px;
+      margin-left: 10px;
+    }
+  }
+
+  li.control {
     padding: 8px 0px;
     list-style-type: none;
 

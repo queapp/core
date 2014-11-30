@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var request = require("request");
 
 // some small helper apis to make outside interaction
 // possible inside of a code block
@@ -49,6 +50,28 @@ module.exports = function(socket, things, services, notifys, item) {
     },
 
 
+    getActions: function(thing) {
+      actions = {}
+      // format
+      thing.actions.forEach(function(action) {
+        actions[action.name] = {
+          trigger: function(cb) {
+            request(action.trigger, function(err, resp, body) {
+              cb && cb(err, resp, body);
+            });
+          },
+          detrigger: function(cb) {
+            request(action.detrigger, function(err, resp, body) {
+              cb && cb(err, resp, body);
+            });
+          }
+        }
+      });
+
+      return actions;
+    },
+
+
 
 
     // log to console underneath the block
@@ -56,7 +79,7 @@ module.exports = function(socket, things, services, notifys, item) {
       socket && socket.emit("block-log", {
         id: item.id,
         type: "info",
-        msg: msg.toString()
+        msg: msg && msg.toString() || msg
       });
     },
 
