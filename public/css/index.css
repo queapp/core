@@ -6557,6 +6557,91 @@ ul.edit-data li input[type=checkbox]:checked:before {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.thing-add.page-3.page-spark {
+  position: relative;
+  background-image: url("../img/thingpins.svg");
+  background-repeat: no-repeat;
+  background-size: 348px;
+  background-position: center 72px;
+  min-height: 436px;
+}
+.thing-add.page-3.page-spark p {
+  background: #FFF;
+}
+.thing-add.page-3.page-spark img {
+  width: 348px;
+  margin: 0px auto;
+  display: block;
+}
+.thing-add.page-3.page-spark ul {
+  list-style-type: none;
+}
+.thing-add.page-3.page-spark ul li {
+  padding: 1px;
+}
+.thing-add.page-3.page-spark ul li input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  padding: 0px 12px;
+  height: 28px;
+  width: 108px;
+}
+.thing-add.page-3.page-spark ul li input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.thing-add.page-3.page-spark ul li input::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.thing-add.page-3.page-spark ul li input:-ms-input-placeholder {
+  color: #777777;
+}
+.thing-add.page-3.page-spark ul li input::-webkit-input-placeholder {
+  color: #777777;
+}
+.thing-add.page-3.page-spark ul li input[disabled],
+.thing-add.page-3.page-spark ul li input[readonly],
+fieldset[disabled] .thing-add.page-3.page-spark ul li input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.thing-add.page-3.page-spark ul li input {
+  height: auto;
+}
+.thing-add.page-3.page-spark ul li input.ng-pristine {
+  opacity: 0.5;
+}
+.thing-add.page-3.page-spark ul li input:focus {
+  opacity: 1;
+}
+.thing-add.page-3.page-spark ul.left {
+  position: absolute;
+  left: -36px;
+  bottom: 15px;
+}
+.thing-add.page-3.page-spark ul.right {
+  position: absolute;
+  right: 0px;
+  bottom: 15px;
+}
 body {
   height: 100%;
   background: #e9edf0;

@@ -13,7 +13,8 @@ var thingSchema = mongoose.Schema({
     "host": String,
     "port": Number
   },
-  "data": Object
+  "data": Object,
+  "actions": Array
 });
 
 module.exports = mongoose.model('Thing', thingSchema);

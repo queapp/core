@@ -138,6 +138,8 @@ module.exports = function(thedb) {
       item = _.extend(root.defaultThing, data);
       item.id = ++maxId;
 
+      console.log(data);
+
       // save thing in db
       item.type = "thing";
       var thing = new Thing(item);

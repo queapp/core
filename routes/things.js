@@ -46,10 +46,28 @@ module.exports = function(app, things) {
     });
   });
 
+  app.post("/things/add", function(req, res, next) {
+    console.log(req.body)
+    things.add(req.body, function(id) {
+      if (id) {
+        res.send( things.createResponsePacket("OK", {id: id}) );
+      } else {
+        res.send( things.createResponsePacket("AUTHFAIL") );
+      }
+    });
+  });
+
   // list a specific thing's data
   app.get("/things/:id/data", function(req, res, next) {
     things.get(parseInt(req.param("id")), function(data) {
       res.send( data && data.data || things.createResponsePacket("NOHIT") );
+    });
+  });
+
+  // list a specific thing's actions
+  app.get("/things/:id/actions", function(req, res, next) {
+    things.get(parseInt(req.param("id")), function(data) {
+      res.send( data && data.actions || things.createResponsePacket("NOHIT") );
     });
   });
 

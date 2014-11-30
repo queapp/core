@@ -9,6 +9,76 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   // thing authentication key
   this.authKey = null;
 
+  // new thing to be added
+  this.newThing = null;
+
+  // go to next page of add dialog
+  this.addNextPage = function() {
+    this.newThing.dialogPage++;
+  }
+
+  // previous page
+  this.addPrevPage = function() {
+    this.newThing.dialogPage--;
+  }
+
+  this.addFinish = function() {
+    thing = {
+      actions: [],
+      name: root.newThing.name
+    };
+
+    // preprocessing
+    if (root.newThing.type == "spark") {
+      root.newThing.actions = [];
+
+      // add each pin to the list
+      _.each(root.newThing.pins, function(pinv, pin) {
+        thing.actions.push({
+          name: pinv,
+          trigger: {
+            method: "GET",
+            url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+            params: {
+              args: pin+",HIGH",
+              access_token: "token here"
+            }
+          }
+        });
+      });
+
+    }
+    
+    // add the thing
+    $http({
+      method: "POST",
+      url: "/things/add",
+      data: JSON.stringify(thing)
+    });
+  }
+
+  // initialize the newThing object on cancel (or on start)
+  this.addCancel = function() {
+    root.newThing = {
+      dialogPage: 0,
+      pageCt: 2,
+      idClaimed: false,
+      type: "",
+      pins: {},
+      actions: {},
+      finished: false
+    }
+  }
+
+  // run this now
+  this.addCancel();
+
+  // also, bind it to modal close
+  $('#addThingModal').on('hidden.bs.modal', function(){
+    root.addCancel();
+    $scope.$apply();
+  });
+
   // get all data from server
   thingService.getAllThings(function(data) {
     root.things = data;

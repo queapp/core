@@ -6,7 +6,7 @@ var notify = require("../controllers/notify");
 var pjson = require('../package.json');
 
 // create all of the routes for the application
-module.exports = function(app, server, argv) {
+module.exports = function(app, server, argv, manager) {
 
   // root route (haha that sounds funny)
   app.get("/", function(req, res, next) {
@@ -47,6 +47,9 @@ module.exports = function(app, server, argv) {
   require("./services")(app, services);
   require("./blocks")(app, blocks);
   require("./notify")(app, notify);
+  require("./sparkthings")(app, manager);
+
+  return io;
 }
 
 // route middleware to make sure a user is logged in

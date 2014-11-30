@@ -35,14 +35,89 @@
             <h4 class="modal-title">Add New Thing</h4>
           </div>
           <div class="modal-body">
-            <p>
-              Enter this Authentication key below into the new thing:
-              <pre class="big">{{tC.authKey}}</pre>
-            </p>
+
+            <!-- choose type -->
+            <div class="thing-add page-1" ng-show="tC.newThing.dialogPage == 0">
+              <p>
+                <h3>New Thing Name</h3>
+                <input type="text" class="form-control" placeholder="Thing Name" ng-model="tC.newThing.name"/>
+              </p>
+              <p>
+                <h3>What is the type of the new thing?</h3>
+                <select class="form-control" ng-model="tC.newThing.type">
+                  <option value="spark">Spark</option>
+                  <option value="manual">Custom...</option>
+                </select>
+              </p>
+            </div>
+
+            <!-- spark options -->
+            <div class="thing-add page-2 page-spark" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'spark'">
+              <p>
+                <h3>What is the spark's id?</h3>
+                <input type="text" class="form-control" placeholder="Spark ID" ng-model="tC.newThing.id"/>
+              </p>
+            </div>
+
+            <div class="thing-add page-3 page-spark" ng-show="tC.newThing.dialogPage == 2 && tC.newThing.type == 'spark'">
+              <h3>What does each pin control?</h3>
+              <p>
+                Each pin can be mapped to one function. Please put its name into the corresponding box.
+                Use a format like <code>cool-thing</code> or <code>coolThing</code>, but don't use <code>cool thing</code>.
+              </p>
+
+              <ul class="right">
+                <li><input type="text" placeholder="Pin D7" ng-model="tC.newThing.pins.D7"/></li>
+                <li><input type="text" placeholder="Pin D6" ng-model="tC.newThing.pins.D6"/></li>
+                <li><input type="text" placeholder="Pin D5" ng-model="tC.newThing.pins.D5"/></li>
+                <li><input type="text" placeholder="Pin D4" ng-model="tC.newThing.pins.D4"/></li>
+                <li><input type="text" placeholder="Pin D3" ng-model="tC.newThing.pins.D3"/></li>
+                <li><input type="text" placeholder="Pin D2" ng-model="tC.newThing.pins.D2"/></li>
+                <li><input type="text" placeholder="Pin D1" ng-model="tC.newThing.pins.D1"/></li>
+                <li><input type="text" placeholder="Pin D0" ng-model="tC.newThing.pins.D0"/></li>
+              </ul>
+
+              <ul class="left">
+                <li><input type="text" placeholder="Pin A5" ng-model="tC.newThing.pins.A5"/></li>
+                <li><input type="text" placeholder="Pin A4" ng-model="tC.newThing.pins.A4"/></li>
+                <li><input type="text" placeholder="Pin A3" ng-model="tC.newThing.pins.A3"/></li>
+                <li><input type="text" placeholder="Pin A2" ng-model="tC.newThing.pins.A2"/></li>
+                <li><input type="text" placeholder="Pin A1" ng-model="tC.newThing.pins.A1"/></li>
+                <li><input type="text" placeholder="Pin A0" ng-model="tC.newThing.pins.A0"/></li>
+              </ul>
+            </div>
+
+
+
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" ng-click="tC.generateAuthKey()">Generate New Key</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-hide="tC.newThing.dialogPage == 0"
+              ng-click="tC.addPrevPage()">
+              <span class="glyphicon glyphicon-chevron-left"><span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              ng-hide="tC.newThing.dialogPage == tC.newThing.pageCt"
+              ng-disabled="!tC.newThing.type"
+              ng-click="tC.addNextPage()">
+              Next
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              ng-show="tC.newThing.dialogPage == tC.newThing.pageCt"
+              ng-click="tC.addFinish()">
+              Finish
+            </button>
+
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
