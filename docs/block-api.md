@@ -3,6 +3,16 @@ Blocks Api
 
 ###@0.5
 
+- **getActions(thing)** - returns an object containing each action name of the thing as
+keys and convenient `.trigger` and `.detrigger` methods to trigger the action.
+```javascript
+que.getThingByTag("spark", function(thing, n) {
+  que.getActions(thing).ACTION.trigger(function() {
+    que.log("Triggered action named ACTION on all things with a tag of spark");
+  });
+});
+```
+
 - **whenTime(h, m, s, callback)** - if the time is what has been specified, then run the callback.
 Time is specified in 24-hour clock, starting with hours, minutes, then seconds.
 ```javascript
