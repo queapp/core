@@ -8,9 +8,6 @@ var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
-// thing cloud
-var thingManager = require("./controllers/sparkthing");
-
 // parse arguments
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -40,11 +37,8 @@ require("./controllers/logger")(argv, function(logger) {
   // create http Server
   var server = http.Server(app);
 
-  // initalize the thing manager
-  var manager = new thingManager(argv.sparktoken || argv.token || argv.t);
-
   // create all of the routes
-  var io = routes(app, server, argv, manager);
+  var io = routes(app, server, argv);
 
   // run server
   server.listen(process.env.PORT || 8000, function() {

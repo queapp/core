@@ -49,7 +49,7 @@ module.exports = function(socket, things, services, notifys, item) {
       return true;
     },
 
-
+    // get all actions
     getActions: function(thing) {
       actions = {}
       // format
