@@ -167,7 +167,7 @@ module.exports = function(things, services, notify) {
       try {
         var comp = new factoryFunction();
       } catch(err) {
-        callback(err);
+        callback(null, err);
       }
 
       // and, done!
@@ -198,20 +198,34 @@ module.exports = function(things, services, notify) {
             // create helpers
             helpers = helperConstructor(root.socket, things, services, notify, item);
 
-            // try and run the block
-            function container() {
-              // console.log = function(){};
-              code(helpers);
-            }
-            try {
-              container();
-            } catch(err) {
-              // send the error to the frontend
-              root.socket && root.socket.emit("block-log", {
+            // check for an error
+            if (err && root.socket) {
+              root.socket.emit("block-log", {
                 id: item.id,
                 type: "error",
                 msg: err.stack
               });
+              // and callback
+              callback();
+            } else {
+
+              // try and run the block
+              function container() {
+                // console.log = function(){};
+                code(helpers);
+              }
+              try {
+                container();
+              } catch(err) {
+                console.log(err);
+                // send the error to the frontend
+                root.socket && root.socket.emit("block-log", {
+                  id: item.id,
+                  type: "error",
+                  msg: err.stack
+                });
+              }
+
             }
 
 
