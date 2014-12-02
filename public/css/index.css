@@ -6889,6 +6889,7 @@ ul.list-group li.list-group-item button.pull-right {
 }
 .blocks li .modal a.help-link {
   float: right !important;
+  padding: 0px 4px;
 }
 .blocks li .modal textarea {
   display: block;
