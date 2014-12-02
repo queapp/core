@@ -54,6 +54,14 @@ que.getThingByTag("sample", function(thing, n) {
 });
 ```
 
+  - **NOTE** - the thing object above contains some helpful atributes:
+    - `thing.data` is an object with a thing's controls within it.
+    `thing.data.CONTROL.value` will give you the contents.
+    - `thing.name` and `thing.desc` contain the thing's name and
+    description, respectively.
+    - `thing.tags` is an array of tags for the thing.
+
+
 - **setThingValue(id, key, value, callback)** - Set a thing's data value. Must specify
 an id of a thing, the key to change, and the new perspective value. Optional callback -
 if the first argument is true the operation succeeded.
