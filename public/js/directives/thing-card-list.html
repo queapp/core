@@ -177,7 +177,7 @@
           </li>
 
           <!-- new control -->
-          <li class="new-control row" ng-show="tC.editMode">
+          <li class="new-control row" ng-show="tC.editMode === thing.id">
             <div class="col-md-6">
               <input type="text" class="col-md-6" placeholder="Name" ng-model="tC.newControl.name"/>
             </div>
