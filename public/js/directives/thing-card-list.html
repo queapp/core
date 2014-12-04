@@ -57,7 +57,7 @@
                 <h3>What is the type of the new thing?</h3>
                 <select class="form-control" ng-model="tC.newThing.type">
                   <option value="spark">Spark</option>
-                  <option value="manual" disabled>Custom...</option>
+                  <option value="manual">Custom...</option>
                 </select>
               </p>
             </div>
@@ -98,7 +98,13 @@
               </ul>
             </div>
 
-
+            <!-- spark options -->
+            <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'manual'">
+              <p>
+                <h3>Enter the custom thing json</h3>
+                <textarea class="form-control" placeholder="Spark ID" ng-model="tC.customThing"></textarea>
+              </p>
+            </div>
 
 
           </div>

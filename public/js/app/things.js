@@ -14,9 +14,22 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   this.newThing = null;
   this.newControl = {};
 
+  // custom thing
+  this.customThing = {};
+
   // go to next page of add dialog
   this.addNextPage = function() {
     this.newThing.dialogPage++;
+
+    // change page count
+    switch (root.newThing.type) {
+      case "spark":
+        root.newThing.pageCt = 2;
+        break;
+      default:
+        root.newThing.pageCt = 1;
+        break;
+    } 
   }
 
   // previous page
@@ -25,15 +38,21 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
   }
 
   this.addFinish = function() {
+    // initialize thing
     thing = {
       actions: [],
+      data: [],
       name: root.newThing.name,
       desc: root.newThing.desc,
       tags: root.newThing.tags.split(' ')
     };
 
-    // preprocessing
-    if (root.newThing.type == "spark") {
+    // is this a custom thing?
+    if (root.newThing.type == "custom") {
+      thing = _.extend(thing, JSON.parse(root.customThing));
+
+    // preprocessing for spark
+    } else if (root.newThing.type == "spark") {
       root.newThing.actions = [];
 
       // add each pin to the list
@@ -60,6 +79,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
       });
 
     }
+    console.log(thing, JSON.parse(root.customThing))
 
     // add the thing
     $http({
@@ -67,19 +87,25 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
       url: "/things/add",
       data: JSON.stringify(thing)
     });
+
   }
 
   // initialize the newThing object on cancel (or on start)
+  // and the customThing JSON string if the user is adding a custom thing
   this.addCancel = function() {
     root.newThing = {
       dialogPage: 0,
-      pageCt: 2,
+      pageCt: 1,
       idClaimed: false,
       type: "",
       pins: {},
       actions: {},
       finished: false
     }
+    root.customThing = JSON.stringify({
+      actions: [],
+      data: []
+    }, null, 2);
   }
 
   // run this now
