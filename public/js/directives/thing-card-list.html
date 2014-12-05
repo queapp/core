@@ -147,13 +147,13 @@
           <small>{{thing.desc}}</small>
         </h3>
 
-        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode">
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode === thing.id">
           Edit
         </button>
-        <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode">
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode === thing.id">
           Done
         </button>
-        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)" ng-init="tC.editMode = false" ng-show="tC.editMode">
+        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)" ng-init="tC.editMode = false" ng-show="tC.editMode === thing.id">
           Delete
         </button>
 

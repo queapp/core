@@ -29,7 +29,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
       default:
         root.newThing.pageCt = 1;
         break;
-    } 
+    }
   }
 
   // previous page
@@ -48,40 +48,42 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     };
 
     // is this a custom thing?
-    if (root.newThing.type == "custom") {
-      thing = _.extend(thing, JSON.parse(root.customThing));
+    switch(root.newThing.type) {
+      case "manual":
+        thing = _.extend(thing, JSON.parse(root.customThing));
+        break;
 
-    // preprocessing for spark
-    } else if (root.newThing.type == "spark") {
-      root.newThing.actions = [];
+      // preprocessing for spark
+      case "spark":
+        root.newThing.actions = [];
 
-      // add each pin to the list
-      _.each(root.newThing.pins, function(pinv, pin) {
-        thing.actions.push({
-          name: pinv,
-          trigger: {
-            method: "GET",
-            url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-            params: {
-              args: pin+",HIGH",
-              access_token: "token here"
+        // add each pin to the list
+        _.each(root.newThing.pins, function(pinv, pin) {
+          thing.actions.push({
+            name: pinv,
+            trigger: {
+              method: "GET",
+              url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+              params: {
+                args: pin+",HIGH",
+                access_token: "token here"
+              }
+            },
+            detrigger: {
+              method: "GET",
+              url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+              params: {
+                args: pin+",LOW",
+                access_token: "token here"
+              }
             }
-          },
-          detrigger: {
-            method: "GET",
-            url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-            params: {
-              args: pin+",LOW",
-              access_token: "token here"
-            }
-          }
+          });
         });
-      });
 
+        break;
     }
-    console.log(thing, JSON.parse(root.customThing))
 
-    // add the thing
+    // add the thing to the database serverside
     $http({
       method: "POST",
       url: "/things/add",
