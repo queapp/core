@@ -222,6 +222,24 @@ app.factory("thingService", function($http) {
     return thingservice;
  });
 
+app.factory("tokenService", function($http) {
+  tokenService = {
+    tokens: {},
+    get: function(callback) {
+      var r = this;
+      $http({
+        method: "get",
+        url: host + "/tokens",
+      }).success(function(data) {
+        r.tokens = data;
+        callback && callback(data);
+      });
+    }
+  };
+
+  tokenService.get();
+  return tokenService;
+});
 
 app.factory("servicesService", function($http) {
     serviceservice = {

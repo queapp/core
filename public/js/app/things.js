@@ -1,7 +1,7 @@
 var app = angular.module("QueGui");
 
 // controller for things list
-app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
+app.controller("ThingsController", function($scope, $http, thingService, $interval, $document, tokenService) {
   var root = this;
 
   this.selectedThing = null;
@@ -41,7 +41,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     // initialize thing
     thing = {
       actions: [],
-      data: [],
+      data: {},
       name: root.newThing.name,
       desc: root.newThing.desc,
       tags: (root.newThing.tags || "").split(' ')
@@ -66,7 +66,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
               url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
               params: {
                 args: pin+",HIGH",
-                access_token: "token here"
+                access_token: tokenService.tokens.sparktoken
               }
             },
             detrigger: {
@@ -74,7 +74,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
               url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
               params: {
                 args: pin+",LOW",
-                access_token: "token here"
+                access_token: tokenService.tokens.sparktoken
               }
             }
           });
@@ -252,7 +252,6 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
         // update the data
         root.things = data;
-        console.log(data)
       }
     });
   }
