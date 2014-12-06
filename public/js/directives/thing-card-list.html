@@ -161,6 +161,9 @@
         <!-- list of toggleable attributes -->
         <ul class="card-form clearfix edit-data">
           <li class="control" ng-repeat="(k, v) in thing.data">
+            <button class="btn btn-danger delete-control" ng-click="tC.deleteControl(thing.id, k)" ng-show="tC.editMode === thing.id">
+              Delete
+            </button>
             <label
               tooltip
               data-toggle="tooltip"
@@ -188,11 +191,13 @@
               <input type="text" class="col-md-6" placeholder="Name" ng-model="tC.newControl.name"/>
             </div>
             <div class="col-md-4">
-              <select class="form-control" disabled>
-                <option value="true">String</option>
+              <select class="form-control" ng-model="tC.newControl.type">
+                <option value="string" selected>String</option>
+                <option value="bool">Button</option>
+                <option value="number">Number</option>
               </select>
             </div>
-            <button class="col-md-2" ng-click="tC.addControl(thing.id)">Add</button>
+            <button class="col-md-2" ng-disabled="(!tC.newControl.type || !tC.newControl.name)" ng-click="tC.addControl(thing.id)">Add</button>
           </li>
 
         </ul>

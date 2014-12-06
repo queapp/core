@@ -216,6 +216,13 @@ module.exports = function(thedb) {
         // apply the updates
         record.data = Object.deepExtend(record.data || {}, changes || {});
 
+        // check for deletions
+        _.each(changes, function(c, k) {
+          if (c == null) {
+            delete record.data[k];
+          }
+        });
+
         // update thing
         Thing.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update

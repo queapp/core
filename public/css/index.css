@@ -6318,6 +6318,7 @@ ul.edit-data {
 }
 ul.edit-data li.new-control {
   list-style-type: none;
+  padding: 6px 0px;
 }
 ul.edit-data li.new-control input[type=text] {
   display: block;
@@ -6681,6 +6682,10 @@ ul.edit-data li.control input[type=checkbox]:checked .badge {
 }
 ul.edit-data li.control input[type=checkbox]:checked:before {
   content: "On";
+}
+ul.edit-data li.control .delete-control {
+  float: right !important;
+  margin: 4px 0px 4px 10px;
 }
 .modal-dialog .modal-content {
   background: #FFF;

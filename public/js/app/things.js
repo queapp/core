@@ -199,6 +199,23 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
         return t.id == id;
       });
 
+      // calculate value
+      switch (root.newControl.type) {
+        case "bool":
+        case "button":
+          root.newControl.value = false;
+          break;
+        case "number":
+          root.newControl.value = 0;
+          break;
+        default:
+          root.newControl.value = "";
+      };
+
+      // get rid of the type, its served its purpose
+      delete root.newControl.type;
+
+      // add each control to the thing
       _.each(ts, function(thing) {
         // thing.data[root.newControl.name] = root.newControl;
         root.updateThingData(id, root.newControl.name, root.newControl, function(){});
@@ -206,7 +223,25 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     });
   };
 
-  socket.on('backend-data-change', function(data) {
+  this.deleteControl = function(id, cname, callback) {
+    console.log(1)
+    thingService.getAllThings(function(things) {
+
+      // get all matching things
+      things.filter(function(i) {
+        return i.id == id;
+      }).forEach(function(thing) {
+        console.log(2)
+        thing.data[cname] = null;
+        thingService.updateThingData(id, thing.data, function() {
+          callback && callback();
+        });
+      });
+
+    });
+  }
+
+  this.refresh = function() {
     thingService.getAllThings(function(data) {
       if ( $(':focus').length == 0 || _.contains(["checkbox", "button"], $(':focus').attr("type"))) {
         // if a new item was added, hide the modal
@@ -217,8 +252,13 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
         // update the data
         root.things = data;
+        console.log(data)
       }
     });
+  }
+
+  socket.on('backend-data-change', function() {
+    root.refresh();
   });
 
 
