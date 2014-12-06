@@ -44,7 +44,7 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
       data: [],
       name: root.newThing.name,
       desc: root.newThing.desc,
-      tags: root.newThing.tags.split(' ')
+      tags: (root.newThing.tags || "").split(' ')
     };
 
     // is this a custom thing?
