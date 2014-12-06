@@ -4,7 +4,22 @@
 ul.edit-data {
   padding-left: 0px;
 
-  li {
+  li.new-control {
+    list-style-type: none;
+    padding: 6px 0px;
+
+    input[type=text] {
+      .form-control;
+    }
+    button {
+      .btn;
+      .btn-success;
+      width: 100px;
+      margin-left: 10px;
+    }
+  }
+
+  li.control {
     padding: 8px 0px;
     list-style-type: none;
 
@@ -16,6 +31,10 @@ ul.edit-data {
       margin-top: 10px;
 
       &:after { content: ":"; }
+    }
+
+    canvas {
+      vertical-align: top;
     }
 
     input {
@@ -44,6 +63,11 @@ ul.edit-data {
         }
 
       }
+    }
+
+    .delete-control {
+      .pull-right;
+      margin: 4px 0px 4px 10px;
     }
   }
 }

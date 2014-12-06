@@ -1,7 +1,10 @@
-var ThingServer = require("../models/things");
-var ServiceServer = require("../models/services");
-var BlockServer = require("../models/blocks");
-var notify = require("../models/notify");
+var ThingServer = require("../controllers/things");
+var ServiceServer = require("../controllers/services");
+var BlockServer = require("../controllers/blocks");
+var notify = require("../controllers/notify");
+var _ = require("underscore");
+
+var pjson = require('../package.json');
 
 // create all of the routes for the application
 module.exports = function(app, server, argv) {
@@ -9,6 +12,23 @@ module.exports = function(app, server, argv) {
   // root route (haha that sounds funny)
   app.get("/", function(req, res, next) {
     res.send("<h1>Que Backend</h1>If you're here, this most likely isn't what you want. This is a backend API; for the fontend interface start a web server in public/");
+  });
+
+  // get all auth tokens to 3rd party services
+  app.get("/tokens", function(req, res) {
+    // get all tokens specified
+    all = _.extend(process.env, argv);
+    matches = {};
+
+    // sort through them, and get all tokens
+    _.each(all, function(v, k) {
+      if (k.indexOf("token") !== -1) {
+        matches[k] = v;
+      }
+    });
+
+    // send matches
+    res.send(matches);
   });
 
   // set host variable (where the backend is)
@@ -19,12 +39,15 @@ module.exports = function(app, server, argv) {
       res.send('var host = "http://que-app-backend.herokuapp.com";');
     } else if (process.env.PORT || argv.port || argv.host || process.env.HOST) {
       hostname = process.env.HOST || argv.host || "127.0.0.1";
-      netport = process.env.PORT || argv.port || 8000;
+      netport = process.env.BACKENDPORT || process.env.PORT || argv.port || 8000;
       res.send('var host = "http://' + hostname + ':' + netport + '";');
     } else {
       res.send('var host = "http://127.0.0.1:8000";');
     }
   });
+
+  // que version route
+  app.get("/version", function(req, res) { res.json({version: pjson.version}); });
 
   // create thing server and service server
   var things = new ThingServer();
@@ -42,6 +65,8 @@ module.exports = function(app, server, argv) {
   require("./services")(app, services);
   require("./blocks")(app, blocks);
   require("./notify")(app, notify);
+
+  return io;
 }
 
 // route middleware to make sure a user is logged in

@@ -5,12 +5,21 @@ var navColorYellow = "#FCBD4B";
 var navColorRed = "#FC4B4B";
 var navColorBlue = "#4BA9FC";
 var navColorGreen = "#42BF3F";
-var navColorBrown = "#B7521E";
+var navColorBrown = "#D481DC";
 
-app.controller("navController", function($scope) {
+app.controller("navController", function($scope, $http) {
   var root = this;
 
   this.pageId = 1;
+  this.version = "";
+
+  // get version from backend
+  $http({
+    method: "get",
+    url: "/version"
+  }).success(function(data) {
+    root.version = "v"+data.version;
+  });
 
   this.toPage = function(id) {
 
@@ -69,210 +78,6 @@ app.controller("navController", function($scope) {
   this.toPage(0); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
-app.controller("ThingsController", function($scope, $http, thingService, $interval, $document) {
-  var root = this;
-
-  this.selectedThing = null;
-
-  // thing authentication key
-  this.authKey = null;
-
-  // get all data from server
-  thingService.getAllThings(function(data) {
-    root.things = data;
-  });
-
-  // given a data type, get the textbox type it would go into
-  this.getTypeFor = function(value) {
-    if (value.type) {
-      return value.type;
-    } else {
-      switch (typeof value.value) {
-        case "number":
-          return "number";
-          break;
-        case "boolean":
-          return "checkbox";
-          break;
-        default:
-          return "text";
-          break;
-      }
-    }
-  }
-
-  // is this control represented as a button?
-  this.isButton = function(v) {
-    return v.type == "button";
-  }
-
-  // update backend on keypress
-  this.updateThingData = function(id, key, value, callback) {
-    data = {}
-    data[key] = value;
-
-    thingService.updateThingData(id, data, callback || function() {});
-  }
-
-  // convert from CamelCase or underscore-format to normal, smaced words
-  this.convertIntoSpaces = function(string) {
-    string = string
-      // insert a space between lower & upper
-  		.replace(/([a-z])([A-Z])/g, '$1 $2')
-  		// space before last upper in a sequence followed by lower
-  		.replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-  		// uppercase the first character
-  		.replace(/^./, function(str){ return str.toUpperCase(); })// insert a space between lower & upper
-  		.replace(/([a-z])([A-Z])/g, '$1 $2')
-  		// space before last upper in a sequence followed by lower
-  		.replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-  		// uppercase the first character
-  		.replace(/^./, function(str){ return str.toUpperCase(); })
-    return string.replace('-', ' ').replace('_', ' ');
-  }
-
-  // generate an authentication key
-  // used for adding a new thing
-  this.generateAuthKey = function() {
-    thingService.genAuthKey(function(data) {
-      root.authKey = data.key || null;
-    });
-  }
-  this.generateAuthKey();
-
-  this.removeThing = function(id, index) {
-    root.things.splice(index, 1);
-    thingService.removeThing(id, function() {});
-  }
-
-  socket.on('backend-data-change', function(data) {
-    thingService.getAllThings(function(data) {
-      if ( $(':focus').length == 0 || _.contains(["checkbox", "button"], $(':focus').attr("type"))) {
-        // if a new item was added, hide the modal
-        if (root.things.length !== data.length) {
-          $("#addThingModal").modal('hide');
-          root.generateAuthKey();
-        }
-
-        // update the data
-        root.things = data;
-      }
-    });
-  });
-
-});
-
-app.controller("ServicesController", function($scope, $http, servicesService, $interval, $document) {
-  var root = this;
-
-  this.selectedThing = null;
-
-  // service authentication key
-  this.authKey = null;
-
-  // get all data from server
-  servicesService.getAllThings(function(data) {
-    root.things = data;
-  });
-
-  // given a data type, get the textbox type it would go into
-  this.getTypeFor = function(value) {
-    if (value.type) {
-      return value.type;
-    } else {
-      switch (typeof value.value) {
-        case "number":
-          return "number";
-          break;
-        case "boolean":
-          return "checkbox";
-          break;
-        default:
-          return "text";
-          break;
-      }
-    }
-  }
-
-  // is this control represented as a button?
-  this.isButton = function(v) {
-    return v.type == "button";
-  }
-
-  // update backend on keypress
-  this.updateThingData = function(id, key, value, callback) {
-    data = {}
-    data[key] = value;
-
-    servicesService.updateThingData(id, data, callback || function() {});
-  }
-
-  // convert from CamelCase or underscore-format to normal, smaced words
-  this.convertIntoSpaces = function(string) {
-    string = string
-      // insert a space between lower & upper
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      // space before last upper in a sequence followed by lower
-      .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-      // uppercase the first character
-      .replace(/^./, function(str){ return str.toUpperCase(); })// insert a space between lower & upper
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      // space before last upper in a sequence followed by lower
-      .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-      // uppercase the first character
-      .replace(/^./, function(str){ return str.toUpperCase(); })
-    return string.replace('-', ' ').replace('_', ' ');
-  }
-
-  this.removeThing = function(id, index) {
-    root.things.splice(index, 1);
-    servicesService.removeThing(id, function() {});
-  }
-
-  // generate an authentication key
-  // used for adding a new service
-  this.generateAuthKey = function() {
-    servicesService.genAuthKey(function(data) {
-      root.authKey = data.key || null;
-    });
-  }
-  this.generateAuthKey();
-
-  // $interval(function(){
-  //   servicesService.getAllThings(function(data) {
-  //
-  //     if ( angular.toJson(root.things) != angular.toJson(data) ) {
-  //
-  //       // if a new item was added, hide the modal
-  //       if (root.things.length !== data.length) {
-  //         $("#addServiceModal").modal('hide');
-  //         root.generateAuthKey();
-  //       }
-  //
-  //       // update the data
-  //       root.things = data;
-  //     }
-  //
-  //   });
-  // }, 1000);
-
-  socket.on('backend-data-change', function(data) {
-    servicesService.getAllThings(function(data) {
-      if ($(':focus').length == 0) {
-        // if a new item was added, hide the modal
-        if (root.things && root.things.length !== data.length) {
-          $("#addServiceModal").modal('hide');
-          root.generateAuthKey();
-        }
-
-        // update the data
-        root.things = data;
-      }
-    });
-  });
-
-});
-
 app.controller("DashboardController", function($scope, servicesService, thingService, notificationService) {
   var root = $scope;
   root.notifications = [];
@@ -319,153 +124,6 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   });
 
   root.refetch();
-});
-
-app.controller("BlockController", function($scope, blockService) {
-  var root = this;
-  this.blocks = [];
-
-  // block information stored here
-  // for new block
-  this.newBlock = {
-    name: "",
-    desc: "",
-    tags: []
-  }
-
-  // fetch all the blocks
-  this.fetchBlocks = function() {
-    blockService.getAllBlocks(function(blocks) {
-      root.blocks = blocks;
-
-      // create devcode (join code together so it can be edited)
-      _.each(blocks, function(block) {
-        block.devCode = block.code.join("\n");
-
-        // also, create space for logs
-        block.log = [];
-      });
-    });
-  }
-  this.fetchBlocks();
-
-  // add a new block
-  this.addBlock = function() {
-
-    // make sure tags are formatted correctly tags
-    if (this.newBlock.tags && this.newBlock.tags.length === undefined) {
-      this.newBlock.tags = this.newBlock.tags.split(" ");
-    }
-
-    // add block
-    blockService.addBlock(this.newBlock, function() {
-      // refetch blocks
-      root.fetchBlocks();
-    });
-
-    // reset the new block form
-    this.newBlock = {
-      name: "",
-      desc: "",
-      tags: []
-    }
-  }
-
-  // delete an old block
-  this.deleteBlock = function(block) {
-
-    blockService.removeBlock(block.id, function() {
-      // refetch blocks
-      root.fetchBlocks();
-    });
-
-  }
-
-  // update the code back on the server inside
-  // the block
-  this.updateBlock = function(block) {
-    // split up code into its transmitable form
-    block.code = block.devCode.split("\n");
-    delete block.log;
-
-    // send it on its way
-    b = angular.fromJson(angular.toJson(block)); // strip out all the angular crap
-    blockService.updateBlockData(block.id, b, function(e){
-      block.log = [];
-    });
-  }
-
-  // format the log (to display better)
-  this.formatLogs = function(block) {
-    return block.log && block.log.length ? "> " + block.log.join("\n> ") : "";
-  }
-
-  // disable a block
-  this.setBlockDisabled = function(block, state) {
-    block.disable = state || !block.disable;
-    this.updateBlock(block);
-  }
-
-  // update block log
-  socket.on('block-log', function(blk) {
-
-    // get the correct id
-    b = _.filter(root.blocks, function(item) {
-      return item.id == blk.id;
-    });
-
-    // append to the log, and update the view
-    if (b.length && b[0].log) {
-      b[0].log.push(blk.msg.toString());
-      $scope.$apply();
-    };
-  });
-
-
-});
-
-app.directive("thingCardList", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/thing-card-list.html"
-  }
-});
-
-app.directive("serviceCardList", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/service-card-list.html"
-  }
-});
-
-app.directive("blockList", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/blocks-list.html"
-  }
-});
-
-app.directive("dashboardOverview", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/dashboard-overview.html"
-  }
-});
-
-// for bootstrap tooltips
-app.directive('tooltip', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs){
-            $(element).hover(function(){
-                // on mouseenter
-                $(element).tooltip('show');
-            }, function(){
-                // on mouseleave
-                $(element).tooltip('hide');
-            });
-        }
-    };
 });
 
 
@@ -564,6 +222,24 @@ app.factory("thingService", function($http) {
     return thingservice;
  });
 
+app.factory("tokenService", function($http) {
+  tokenService = {
+    tokens: {},
+    get: function(callback) {
+      var r = this;
+      $http({
+        method: "get",
+        url: host + "/tokens",
+      }).success(function(data) {
+        r.tokens = data;
+        callback && callback(data);
+      });
+    }
+  };
+
+  tokenService.get();
+  return tokenService;
+});
 
 app.factory("servicesService", function($http) {
     serviceservice = {

@@ -35,14 +35,106 @@
             <h4 class="modal-title">Add New Thing</h4>
           </div>
           <div class="modal-body">
-            <p>
-              Enter this Authentication key below into the new thing:
-              <pre class="big">{{tC.authKey}}</pre>
-            </p>
+
+            <!-- choose type -->
+            <div class="thing-add page-1" ng-show="tC.newThing.dialogPage == 0">
+              <p>
+                <h3>Thing Information</h3>
+                <div class="form-group">
+                  <label>Name: </label>
+                  <input type="text" class="form-control" placeholder="Thing Name" ng-model="tC.newThing.name"/>
+                </div>
+                <div class="form-group">
+                  <label>Desc: </label>
+                  <input type="text" class="form-control" placeholder="Thing Description" ng-model="tC.newThing.desc"/>
+                </div>
+                <div class="form-group">
+                  <label>Tags: </label>
+                  <input type="text" class="form-control" placeholder="Thing Tags" ng-model="tC.newThing.tags"/>
+                </div>
+              </p>
+              <p>
+                <h3>What is the type of the new thing?</h3>
+                <select class="form-control" ng-model="tC.newThing.type">
+                  <option value="spark">Spark</option>
+                  <option value="manual">Custom...</option>
+                </select>
+              </p>
+            </div>
+
+            <!-- spark options -->
+            <div class="thing-add page-2 page-spark" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'spark'">
+              <p>
+                <h3>What is the spark's id?</h3>
+                <input type="text" class="form-control" placeholder="Spark ID" ng-model="tC.newThing.id"/>
+              </p>
+            </div>
+
+            <div class="thing-add page-3 page-spark" ng-show="tC.newThing.dialogPage == 2 && tC.newThing.type == 'spark'">
+              <h3>What does each pin control?</h3>
+              <p>
+                Each pin can be mapped to one function. Please put its name into the corresponding box.
+                Use a format like <code>cool-thing</code> or <code>coolThing</code>, but don't use <code>cool thing</code>.
+              </p>
+
+              <ul class="right">
+                <li><input type="text" placeholder="Pin D7" ng-model="tC.newThing.pins.D7"/></li>
+                <li><input type="text" placeholder="Pin D6" ng-model="tC.newThing.pins.D6"/></li>
+                <li><input type="text" placeholder="Pin D5" ng-model="tC.newThing.pins.D5"/></li>
+                <li><input type="text" placeholder="Pin D4" ng-model="tC.newThing.pins.D4"/></li>
+                <li><input type="text" placeholder="Pin D3" ng-model="tC.newThing.pins.D3"/></li>
+                <li><input type="text" placeholder="Pin D2" ng-model="tC.newThing.pins.D2"/></li>
+                <li><input type="text" placeholder="Pin D1" ng-model="tC.newThing.pins.D1"/></li>
+                <li><input type="text" placeholder="Pin D0" ng-model="tC.newThing.pins.D0"/></li>
+              </ul>
+
+              <ul class="left">
+                <li><input type="text" placeholder="Pin A5" ng-model="tC.newThing.pins.A5"/></li>
+                <li><input type="text" placeholder="Pin A4" ng-model="tC.newThing.pins.A4"/></li>
+                <li><input type="text" placeholder="Pin A3" ng-model="tC.newThing.pins.A3"/></li>
+                <li><input type="text" placeholder="Pin A2" ng-model="tC.newThing.pins.A2"/></li>
+                <li><input type="text" placeholder="Pin A1" ng-model="tC.newThing.pins.A1"/></li>
+                <li><input type="text" placeholder="Pin A0" ng-model="tC.newThing.pins.A0"/></li>
+              </ul>
+            </div>
+
+            <!-- spark options -->
+            <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'manual'">
+              <p>
+                <h3>Enter the custom thing json</h3>
+                <textarea class="form-control" placeholder="Spark ID" ng-model="tC.customThing"></textarea>
+              </p>
+            </div>
+
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" ng-click="tC.generateAuthKey()">Generate New Key</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-hide="tC.newThing.dialogPage == 0"
+              ng-click="tC.addPrevPage()">
+              <span class="glyphicon glyphicon-chevron-left"><span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              ng-hide="tC.newThing.dialogPage == tC.newThing.pageCt"
+              ng-disabled="!tC.newThing.type"
+              ng-click="tC.addNextPage()">
+              Next
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              ng-show="tC.newThing.dialogPage == tC.newThing.pageCt"
+              ng-click="tC.addFinish()">
+              Finish
+            </button>
+
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -55,11 +147,23 @@
           <small>{{thing.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)">Delete</button>
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode === thing.id">
+          Edit
+        </button>
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode === thing.id">
+          Done
+        </button>
+        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)" ng-init="tC.editMode = false" ng-show="tC.editMode === thing.id">
+          Delete
+        </button>
+
 
         <!-- list of toggleable attributes -->
         <ul class="card-form clearfix edit-data">
-          <li ng-repeat="(k, v) in thing.data">
+          <li class="control" ng-repeat="(k, v) in thing.data">
+            <button class="btn btn-danger delete-control" ng-click="tC.deleteControl(thing.id, k)" ng-show="tC.editMode === thing.id">
+              Delete
+            </button>
             <label
               tooltip
               data-toggle="tooltip"
@@ -76,55 +180,30 @@
               placeholder="{{k}}"
               value="{{tC.isButton(v) &amp;&amp; v.value}}"
               ng-disabled="v.readonly"
+              ng-hide="tC.getTypeFor(v) == 'canvas'"
             />
+            <canvas ng-show="tC.getTypeFor(v) == 'canvas'" class="canvas-{{thing.id}}-{{k}}" style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};"></canvas>
           </li>
+
+          <!-- new control -->
+          <li class="new-control row" ng-show="tC.editMode === thing.id">
+            <div class="col-md-6">
+              <input type="text" class="col-md-6" placeholder="Name" ng-model="tC.newControl.name"/>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" ng-model="tC.newControl.type">
+                <option value="string" selected>String</option>
+                <option value="bool">Button</option>
+                <option value="number">Number</option>
+              </select>
+            </div>
+            <button class="col-md-2" ng-disabled="(!tC.newControl.type || !tC.newControl.name)" ng-click="tC.addControl(thing.id)">Add</button>
+          </li>
+
         </ul>
 
       </li>
     </ul>
-
-    <!-- <div class="card"
-      ng-repeat="thing in tC.things"
-      ng-class="{above: tC.selectedThing == thing.id}"
-      ng-mousedown="tC.selectThing(thing, $event)"
-      >
-
-      <div class="card-info">
-        <img class="card-image" src="{{thing.image}}"/>
-        <div class="card-body">
-          <h3>{{thing.name}}</h3>
-          <p>{{thing.desc}}</p>
-        </div>
-      </div>
-
-      <span class="card-icons">
-        <span class="pull-right card-icon glyphicon glyphicon glyphicon-remove" title="Remove Card" ng-click="tC.removeThing(thing.id, $index)"></span>
-        <span class="pull-right card-icon card-move glyphicon glyphicon-resize-vertical" title="Move Card"></span>
-      </span>
-
-      <ul class="card-form clearfix">
-
-        <li ng-show="thing.link">
-          <a href="{{thing.link}}" class="btn btn-default btn-lg" style="width: 100%; margin-top: 10%;">
-            Thing Page
-          </a>
-        </li>
-
-        <li ng-repeat="(k, v) in thing.data">
-          <label title="{{k}}">{{v.label || tC.convertIntoSpaces(k)}}</label>
-          <input
-            type="{{ tC.getTypeFor(v) }}"
-            ng-model="v.value"
-            ng-change="tC.updateThingData(thing.id, k, v)"
-            ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
-            placeholder="{{k}}"
-            value="{{tC.isButton(v) &amp;&amp; v.value}}"
-            ng-disabled="v.readonly"
-          />
-        </li>
-      </ul>
-
-    </div> -->
 
   </ul>
 </div>

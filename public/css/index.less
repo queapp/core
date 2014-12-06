@@ -19,6 +19,8 @@
 @import "material-button.less";
 @import "navbar.less";
 @import "things.less";
+@import "modal.less";
+@import "things-add.less";
 
 body {
   height: 100%;
@@ -30,7 +32,7 @@ body {
 ul.card-list {
   list-style-type: none;
   padding: 0px;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 64px 0px;
 }
 
 ul.card-list div.no-cards {
@@ -150,6 +152,10 @@ ul.list-group {
     min-height: 74px;
 
     .modal {
+      a.help-link {
+        .pull-right;
+        padding: 0px 4px;
+      }
       textarea {
         .form-control;
         width: 100%;

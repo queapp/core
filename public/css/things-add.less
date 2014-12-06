@@ -1,0 +1,51 @@
+// main: index.less
+.thing-add.page-3.page-spark {
+  position: relative;
+
+  background-image: url("../img/thingpins.svg");
+  background-repeat: no-repeat;
+  background-size: 348px;
+  background-position: center 44 + @font-size-base * 2;
+  min-height: 436px;
+
+  p {
+    background: #FFF;
+  }
+
+  img {
+    width: 348px;
+    margin: 0px auto;
+    display: block;
+  }
+
+  ul {
+    list-style-type: none;
+
+    li {
+      padding: 1px;
+
+      input {
+        .form-control;
+        padding: 0px 12px;
+        height: 28px;
+        width: 108px;
+
+        &.ng-pristine { opacity: 0.5; }
+        &:focus { opacity: 1; }
+      }
+    }
+  }
+
+  ul.left {
+    position: absolute;
+    left: -36px;
+    bottom: 15px;
+  }
+
+  ul.right {
+    position: absolute;
+    right: 0px;
+    bottom: 15px;
+  }
+
+}

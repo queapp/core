@@ -2,7 +2,6 @@ var express = require("express");
 var http = require("http");
 var passport = require('passport');
 var cors = require('cors');
-var cowsay = require("cowsay");
 
 // express middleware
 var bodyParser = require("body-parser");
@@ -14,14 +13,14 @@ var argv = require('minimist')(process.argv.slice(2));
 
 
 // connect to database
-var db = require("./models/persistant/provider");
+var db = require("./models");
 if (process.env.MONGOURI || argv.db) {
-  db.connect(process.env.MONGOURI || argv.db);
+  db(process.env.MONGOURI || argv.db);
 } else {
   throw new Error("Please set the MONGOURI environment variable to the uri of your mongodb instance.");
 }
 
-require("./models/logger")(argv, function(logger) {
+require("./controllers/logger")(argv, function(logger) {
   var routes = require("./routes");
 
   var app = express();
@@ -39,7 +38,7 @@ require("./models/logger")(argv, function(logger) {
   var server = http.Server(app);
 
   // create all of the routes
-  routes(app, server, argv);
+  var io = routes(app, server, argv);
 
   // run server
   server.listen(process.env.PORT || 8000, function() {
