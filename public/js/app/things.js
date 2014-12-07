@@ -204,16 +204,18 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
         case "bool":
         case "button":
           root.newControl.value = false;
+          delete root.newControl.type;
           break;
         case "number":
           root.newControl.value = 0;
+          delete root.newControl.type;
+          break;
+        case "canvas":
           break;
         default:
           root.newControl.value = "";
+          delete root.newControl.type;
       };
-
-      // get rid of the type, its served its purpose
-      delete root.newControl.type;
 
       // add each control to the thing
       _.each(ts, function(thing) {

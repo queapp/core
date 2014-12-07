@@ -6468,6 +6468,7 @@ ul.edit-data li.control label:after {
 }
 ul.edit-data li.control canvas {
   vertical-align: top;
+  float: right !important;
 }
 ul.edit-data li.control input {
   float: right !important;
