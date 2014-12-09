@@ -192,17 +192,7 @@ app.factory("thingService", function($http) {
         }).success(function(data) {
           callback(data);
         });
-      },
-
-      genAuthKey: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/things/genkey",
-        }).success(function(data) {
-          callback(data);
-        });
       }
-
     };
 
     // update thing cache

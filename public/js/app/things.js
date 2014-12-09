@@ -177,15 +177,6 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
     return string.replace('-', ' ').replace('_', ' ');
   }
 
-  // generate an authentication key
-  // used for adding a new thing
-  this.generateAuthKey = function() {
-    thingService.genAuthKey(function(data) {
-      root.authKey = data.key || null;
-    });
-  }
-  this.generateAuthKey();
-
   this.removeThing = function(id, index) {
     root.things.splice(index, 1);
     thingService.removeThing(id, function() {});
@@ -249,7 +240,6 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
         // if a new item was added, hide the modal
         if (root.things.length !== data.length) {
           $("#addThingModal").modal('hide');
-          root.generateAuthKey();
         }
 
         // update the data
