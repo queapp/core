@@ -1,7 +1,7 @@
 var app = angular.module("QueGui");
 
 // controller for things list
-app.controller("ThingsController", function($scope, $http, thingService, blockService, $interval, $document, tokenService) {
+app.controller("ThingsController", function($scope, $http, $rootScope, thingService, blockService, $interval, $document, tokenService) {
   var root = this;
 
   this.selectedThing = null;
@@ -135,10 +135,9 @@ app.controller("ThingsController", function($scope, $http, thingService, blockSe
           method: "POST",
           url: "/blocks/add",
           data: JSON.stringify(block)
-        });//.success(function() {
-        //   console.log(4556);
-        //   $scope.$emit('updateBlocks', null);
-        // });
+        }).success(function() {
+          $rootScope.$broadcast('updateBlocks', null);
+        });
       }
     });
 
