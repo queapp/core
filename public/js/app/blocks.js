@@ -28,6 +28,12 @@ app.controller("BlockController", function($scope, blockService) {
   }
   this.fetchBlocks();
 
+  // async event handler
+  $scope.$on('updateBlocks', function(event) {
+    console.log("fetch");
+    root.fetchBlocks();
+  });
+
   // add a new block
   this.addBlock = function() {
 

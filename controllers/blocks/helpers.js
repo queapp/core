@@ -23,6 +23,23 @@ module.exports = function(socket, things, services, notifys, item) {
       });
     },
 
+    // get a thing by its id
+    getThingById: function(id, cb) {
+      things.get(null, function(data) {
+
+        // get matching things
+        fltr = _.filter(data, function(item) {
+          return item.id == id;
+        });
+
+        // iterate over them
+        _.each(fltr, function(f, ct) {
+          cb(f, ct);
+        });
+      });
+    },
+
+
     // set value for things
     setThingValue: function(id, key, value, callback) {
       // set up the object
@@ -56,11 +73,13 @@ module.exports = function(socket, things, services, notifys, item) {
       thing.actions.forEach(function(action) {
         actions[action.name] = {
           trigger: function(cb) {
+            console.log("TRIGGER", action);
             request(action.trigger, function(err, resp, body) {
               cb && cb(err, resp, body);
             });
           },
           detrigger: function(cb) {
+            console.log("DETRIGGER", action);
             request(action.detrigger, function(err, resp, body) {
               cb && cb(err, resp, body);
             });
