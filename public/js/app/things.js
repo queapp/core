@@ -59,6 +59,8 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
 
         // add each pin to the list
         _.each(root.newThing.pins, function(pinv, pin) {
+
+          // add actions for each pin
           thing.actions.push({
             name: pinv,
             trigger: {
@@ -78,6 +80,13 @@ app.controller("ThingsController", function($scope, $http, thingService, $interv
               }
             }
           });
+
+          // add controls for each pin automatically,
+          // to make the user's job easier
+          thing.data[pinv] = {
+            value: false,
+            name: pinv
+          };
         });
 
         break;
