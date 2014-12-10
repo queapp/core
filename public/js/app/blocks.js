@@ -30,7 +30,6 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
 
   // async event handler
   $rootScope.$on('updateBlocks', function(event) {
-    console.log("fetch");
     root.fetchBlocks();
   });
 
