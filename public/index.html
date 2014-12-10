@@ -41,20 +41,20 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li ng-click="nC.toPage(0)" ng-class="{active: nC.pageId == 0}">
-                <a href>Dashboard</a>
+              <li ng-class="{active: nC.pageId == 0}">
+                <a href="#/dash">Dashboard</a>
               </li>
-              <li ng-click="nC.toPage(1)" ng-class="{active: nC.pageId == 1}">
-                <a href>Things</a>
+              <li ng-class="{active: nC.pageId == 1}">
+                <a href="#/things">Things</a>
               </li>
-              <li ng-click="nC.toPage(2)" ng-class="{active: nC.pageId == 2}">
-                <a href>Services</a>
+              <li ng-class="{active: nC.pageId == 2}">
+                <a href="#/services">Services</a>
               </li>
-              <li ng-click="nC.toPage(3)" ng-class="{active: nC.pageId == 3}">
-                <a href>Blocks</a>
+              <li ng-class="{active: nC.pageId == 3}">
+                <a href="#/blocks">Blocks</a>
               </li>
-              <li ng-click="nC.toPage(4)" ng-class="{active: nC.pageId == 4}">
-                <a href>Settings</a>
+              <li ng-class="{active: nC.pageId == 4}">
+                <a href="#/settings">Settings</a>
               </li>
               <!-- <li class="button">
                 <a href>login</a>
@@ -72,17 +72,7 @@
 
       </nav>
 
-      <!-- Dashboard Overview -->
-      <dashboard-overview></dashboard-overview>
-
-      <!-- Thing View: shows a list of all things -->
-      <thing-card-list></thing-card-list>
-
-      <!-- Services View: shows a list of all services -->
-      <service-card-list></service-card-list>
-
-      <!-- blocks view -->
-      <block-list></block-list>
+      <div ng-view></div>
 
     </div>
 
@@ -93,6 +83,7 @@
     <script src="//underscorejs.org/underscore-min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
 
     <!-- get the host -->
     <script src="js/get-host.js"></script>
@@ -104,7 +95,7 @@
     <!-- angular stuff -->
     <script src="js/app/app.js"></script>
     <script src="js/app/directives.js"></script>
-    
+
     <script src="js/app/things.js"></script>
     <script src="js/app/services.js"></script>
     <script src="js/app/blocks.js"></script>

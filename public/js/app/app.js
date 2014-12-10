@@ -1,4 +1,4 @@
-var app = angular.module("QueGui", ["ngAnimate"]);
+var app = angular.module("QueGui", ["ngAnimate", "ngRoute"]);
 
 // the top nav colors
 var navColorYellow = "#FCBD4B";
@@ -7,7 +7,32 @@ var navColorBlue = "#4BA9FC";
 var navColorGreen = "#42BF3F";
 var navColorBrown = "#D481DC";
 
-app.controller("navController", function($scope, $http) {
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+      when('/dash', {
+        templateUrl: 'views/dashboard-overview.html',
+        controller: 'DashboardController'
+      }).
+      when('/things', {
+        templateUrl: 'views/thing-card-list.html',
+        controller: 'ThingsController'
+      }).
+      when('/services', {
+        templateUrl: 'views/service-card-list.html',
+        controller: 'ServicesController'
+      }).
+      when('/blocks', {
+        templateUrl: 'views/blocks-list.html',
+        controller: 'BlockController'
+      }).
+      when('/settings', {
+        templateUrl: 'views/settings-list.html',
+        controller: 'ServicesController'
+      }).
+      otherwise({redirectTo: '/dash'});
+}]);
+
+app.controller("navController", function($scope, $rootScope, $http) {
   var root = this;
 
   this.pageId = 1;
@@ -19,6 +44,27 @@ app.controller("navController", function($scope, $http) {
     url: "/version"
   }).success(function(data) {
     root.version = "v"+data.version;
+  });
+
+  $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    // which page?
+    switch(next.$$route.originalPath) {
+      case "/dash":
+        root.toPage(0);
+        break;
+      case "/things":
+        root.toPage(1);
+        break;
+      case "/services":
+        root.toPage(2);
+        break;
+      case "/blocks":
+        root.toPage(3);
+        break;
+      case "/settings":
+        root.toPage(4);
+        break;
+    }
   });
 
   this.toPage = function(id) {
