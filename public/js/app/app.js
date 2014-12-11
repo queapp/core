@@ -118,6 +118,9 @@ app.controller("navController", function($scope, $rootScope, $http) {
       case 4:
         return {title: "Settings", desc: "Adjust preferences for this Que instance"};
         break;
+      default:
+        return {title: "", desc: ""}
+        break;
     }
   }
 

@@ -1,21 +1,25 @@
-<div class="container">
+<div class="settings">
 
-  <ul class="settings-list">
-
-    <h1>Things</h1>
-    <li>
-      <label>Thing Keys</label>
-      <button class="btn btn-primary">Keys...</button>
-    </li>
-    <li>
-      <label>Thing Keys</label>
-      <button class="btn btn-primary">Keys...</button>
-    </li>
-    <li class="seperator"></li>
-    <li>
-      <label>abc</label>
-      <input type="text" class="form-control"/>
-    </li>
-  </ul>
+  <section class="body">
+    <h3>
+      <span class="glyphicon glyphicon-lock"></span>
+      Keys
+    </h3>
+    <p>
+      These keys are needed for 3rd party services (like the spark) to work
+    </p>
+    <ul>
+      <li>
+        <label>Spark Key</label>
+        <p>
+          Go to <a href="//www.spark.io/build">http://www.spark.io/build</a>.
+          Login with your spark account. Click the cog in the lower left corner of the screen
+          and copy the text in the box under "Access Token". Put this in the box below
+        </p>
+        </p>
+        <input type="text" class="form-control spark-key" placeholder="Spark Key"/>
+      </li>
+    </ul>
+  </section>
 
 </div>

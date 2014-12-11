@@ -5897,7 +5897,9 @@ button.close {
 .panel-body:before,
 .panel-body:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.settings:before,
+.settings:after {
   content: " ";
   display: table;
 }
@@ -5915,7 +5917,8 @@ button.close {
 .navbar-collapse:after,
 .pager:after,
 .panel-body:after,
-.modal-footer:after {
+.modal-footer:after,
+.settings:after {
   clear: both;
 }
 .center-block {
@@ -6688,7 +6691,8 @@ ul.edit-data li.control .delete-control {
   float: right !important;
   margin: 4px 0px 4px 10px;
 }
-.modal-dialog .modal-content {
+.modal-dialog .modal-content,
+.modal-style {
   background: #FFF;
   border: 1px solid #ebedee;
   box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
@@ -6783,6 +6787,65 @@ textarea.thing-add.page-3.page-spark ul li input {
   position: absolute;
   right: 0px;
   bottom: 15px;
+}
+.settings {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .settings {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .settings {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .settings {
+    width: 1170px;
+  }
+}
+.settings > .navbar-header,
+.settings > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .settings > .navbar-header,
+  .settings > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.settings section.body {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #ebedee;
+  box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background: #FFF;
+}
+@media (min-width: 992px) {
+  .settings section.body {
+    float: left;
+    width: 100%;
+  }
+}
+.settings section.body ul {
+  padding-left: 0px;
+  list-style-type: none;
 }
 body {
   height: 100%;
