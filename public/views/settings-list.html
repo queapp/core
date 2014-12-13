@@ -1,4 +1,4 @@
-<div class="settings">
+<div class="settings" ng-controller="SettingsController as sC">
 
   <section class="body">
     <h3>
@@ -14,10 +14,21 @@
         <p>
           Go to <a href="//www.spark.io/build">http://www.spark.io/build</a>.
           Login with your spark account. Click the cog in the lower left corner of the screen
-          and copy the text in the box under "Access Token". Put this in the box below
+          and copy the text in the box under "Access Token". Enter this into the box below.
         </p>
-        </p>
-        <input type="text" class="form-control spark-key" placeholder="Spark Key"/>
+        <div class="input-group together">
+          <input
+            type="text"
+            class="form-control spark-key"
+            placeholder="Spark Key"
+            ng-model="sC.keys.sparktoken"
+            ng-change="sC.updateKeys()"
+          />
+          <span class="input-group-addon validated">
+            <span class="glyphicon glyphicon-ok" ng-show="sC.validated.sparktoken"></span>
+            <span class="glyphicon glyphicon-remove" ng-hide="sC.validated.sparktoken"></span>
+          </span>
+        </div>
       </li>
     </ul>
   </section>

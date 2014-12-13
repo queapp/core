@@ -6847,6 +6847,18 @@ textarea.thing-add.page-3.page-spark ul li input {
   padding-left: 0px;
   list-style-type: none;
 }
+.settings section.body ul .together .form-control {
+  border-right: 0px;
+}
+.settings section.body ul .validated {
+  background: #FFF;
+}
+.settings section.body ul .validated .glyphicon-ok {
+  color: #42BF3F;
+}
+.settings section.body ul .validated .glyphicon-remove {
+  color: #FC4B4B;
+}
 body {
   height: 100%;
   background: #e9edf0;
