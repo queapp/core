@@ -78,14 +78,86 @@
               </p>
 
               <ul class="right">
-                <li><input type="text" placeholder="Pin D7" ng-model="tC.newThing.pins.D7"/></li>
-                <li><input type="text" placeholder="Pin D6" ng-model="tC.newThing.pins.D6"/></li>
-                <li><input type="text" placeholder="Pin D5" ng-model="tC.newThing.pins.D5"/></li>
-                <li><input type="text" placeholder="Pin D4" ng-model="tC.newThing.pins.D4"/></li>
-                <li><input type="text" placeholder="Pin D3" ng-model="tC.newThing.pins.D3"/></li>
-                <li><input type="text" placeholder="Pin D2" ng-model="tC.newThing.pins.D2"/></li>
-                <li><input type="text" placeholder="Pin D1" ng-model="tC.newThing.pins.D1"/></li>
-                <li><input type="text" placeholder="Pin D0" ng-model="tC.newThing.pins.D0"/></li>
+                <li>
+                  <input type="text" placeholder="Pin D7" ng-model="tC.newThing.pins.D7"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D6" ng-model="tC.newThing.pins.D6"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D5" ng-model="tC.newThing.pins.D5"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D4" ng-model="tC.newThing.pins.D4"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D3" ng-model="tC.newThing.pins.D3"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D2" ng-model="tC.newThing.pins.D2"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D1" ng-model="tC.newThing.pins.D1"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <input type="text" placeholder="Pin D0" ng-model="tC.newThing.pins.D0"/>
+                  <div class="gpio-button">
+                    <span></span>
+                    <label>
+                      <input type="checkbox"/>
+                    </label>
+                  </div>
+                </li>
+
+                <script>
+                  $(".gpio-button").on("click", function() {
+                    var check = $(this).find("label").find("input");
+                    $(this).find("span").html(check.prop('checked') ? "Input" : "Output");
+                  });
+                </script>
+
               </ul>
 
               <ul class="left">

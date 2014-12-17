@@ -6711,6 +6711,11 @@ ul.edit-data li.control .delete-control {
   background-position: center 72px;
   min-height: 436px;
 }
+.thing-add.page-3.page-spark .gpio-button {
+  position: absolute;
+  left: -130px;
+  margin-top: -30px;
+}
 .thing-add.page-3.page-spark p {
   background: #FFF;
 }
