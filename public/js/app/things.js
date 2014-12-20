@@ -17,6 +17,12 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
   // custom thing
   this.customThing = {};
 
+  // spark token is validated
+  this.sparktokenvalidated = false;
+
+  // check if spark token is real
+  this.validateSparkToken = function() { this.sparktokenvalidated = this.newThing.id.length === 24; }
+
   // go to next page of add dialog
   this.addNextPage = function() {
     this.newThing.dialogPage++;
