@@ -73,44 +73,79 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
         // add each pin to the list
         _.each(root.newThing.pins, function(pinv, pin) {
 
-          // add actions for each pin
-          thing.actions.push({
-            name: pinv,
-            trigger: {
-              method: "GET",
-              url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-              params: {
-                args: pin+",HIGH",
-                access_token: tokenService.tokens.sparktoken
-              }
-            },
-            detrigger: {
-              method: "GET",
-              url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-              params: {
-                args: pin+",LOW",
-                access_token: tokenService.tokens.sparktoken
-              }
-            }
-          });
+          // for each output pin
+          if (!root.newThing.pinMode[pin]) {
 
-          // add controls for each pin automatically,
-          // to make the user's job easier
-          thing.data[pinv] = {
-            value: false,
-            name: pinv
-          };
+            // add controls for each pin automatically,
+            // to make the user's job easier
+            thing.data[pinv] = {
+              value: false,
+              name: pinv
+            };
 
-          // add the required code to the block
-          block.code.push("  if (thing.data."+pinv+".value == true) {");
-          block.code.push("    que.getActions(thing)."+pinv+".trigger(function(status) {");
-          block.code.push("      // do something here when the pin turns on");
-          block.code.push("    });");
-          block.code.push("  } else {");
-          block.code.push("    que.getActions(thing)."+pinv+".detrigger(function(status) {");
-          block.code.push("      // do something here when the pin turns off");
-          block.code.push("    });");
-          block.code.push("  }");
+            // add actions for each pin
+            thing.actions.push({
+              name: pinv,
+              trigger: {
+                method: "GET",
+                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                params: {
+                  args: pin+",HIGH",
+                  access_token: tokenService.tokens.sparktoken
+                }
+              },
+              detrigger: {
+                method: "GET",
+                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                params: {
+                  args: pin+",LOW",
+                  access_token: tokenService.tokens.sparktoken
+                }
+              }
+            });
+
+
+            // add the required code to the block
+            block.code.push("  if (thing.data."+pinv+".value == true) {");
+            block.code.push("    que.getActions(thing)."+pinv+".trigger(function(status) {");
+            block.code.push("      // do something here when the pin turns on");
+            block.code.push("    });");
+            block.code.push("  } else {");
+            block.code.push("    que.getActions(thing)."+pinv+".detrigger(function(status) {");
+            block.code.push("      // do something here when the pin turns off");
+            block.code.push("    });");
+            block.code.push("  }");
+
+          } else {
+            // input pin
+
+            // add actions for each pin
+            thing.actions.push({
+              name: pinv,
+              trigger: {
+                method: "GET",
+                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalread",
+                params: {
+                  args: pin,
+                  access_token: tokenService.tokens.sparktoken
+                }
+              },
+              detrigger: {}
+            });
+
+
+            // add the required code to the block
+            block.code.push("  que.getActions(thing)."+pinv+".trigger(function(status, body) {");
+            block.code.push("    if (body.return_value) {");
+            block.code.push("      // do something here when the pin is on");
+            block.code.push("      que.log('"+pinv+" is on.');");
+            block.code.push("    } else if (body.return_value > 0) {");
+            block.code.push("      // do something here when the pin is off");
+            block.code.push("      que.log('"+pinv+" is off.');");
+            block.code.push("    };")
+            block.code.push("  });");
+
+          }
 
         });
 
@@ -152,6 +187,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
       idClaimed: false,
       type: "",
       pins: {},
+      pinMode: {},
       actions: {},
       finished: false
     }

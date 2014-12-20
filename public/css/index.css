@@ -6713,11 +6713,26 @@ ul.edit-data li.control .delete-control {
 }
 .thing-add.page-3.page-spark .gpio-button {
   position: absolute;
-  left: -130px;
-  margin-top: -30px;
+  left: -88px;
+  margin-top: -24px;
+  width: 64px;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  -o-user-select: none;
+  user-select: none;
 }
 .thing-add.page-3.page-spark .gpio-button input {
   display: none;
+}
+.thing-add.page-3.page-spark .gpio-button label {
+  font-weight: normal;
+  cursor: pointer;
+  font-size: 16px;
+  float: right;
 }
 .thing-add.page-3.page-spark p {
   background: #FFF;
