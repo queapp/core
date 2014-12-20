@@ -94,6 +94,9 @@ module.exports = function(app, server, argv) {
   require("./blocks")(app, blocks);
   require("./notify")(app, notify);
 
+  // auth routes
+  require("./auth")(app);
+
   return io;
 }
 

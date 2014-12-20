@@ -5,7 +5,8 @@ var _ = require("underscore");
 var sessionTokenSchema = mongoose.Schema({
   "hostname": String,
   "key": String,
-  "permissions": String
+  "permissions": String,
+  "username": String
 });
 
 
