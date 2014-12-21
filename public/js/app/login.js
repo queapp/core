@@ -58,7 +58,7 @@ app.factory("loginService", function($http, $location) {
         _.each(this.auth.permissions, function(p) {
           resp.push( matchWildcard(p, permission).length );
         });
-        console.log(permission, resp);
+        // console.log(permission, resp); // debug
         return _.filter(resp, function(x) { return x !== undefined; }).length;
       } else {
         return false;

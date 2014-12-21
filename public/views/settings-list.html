@@ -1,12 +1,11 @@
 <div class="settings" ng-controller="SettingsController as sC">
-
-  <section class="body">
+  <section class="body" ng-show="nC.user.can('token.view')">
     <h3>
       <span class="glyphicon glyphicon-lock"></span>
       Keys
     </h3>
     <p>
-      These keys are needed for 3rd party services (like the spark) to work
+      These keys are needed for 3rd party services (like the spark) to work.
     </p>
     <ul>
       <li>
@@ -23,6 +22,7 @@
             placeholder="Spark Key"
             ng-model="sC.keys.sparktoken"
             ng-change="sC.updateKeys()"
+            ng-disabled="!nC.user.can('token.edit')"
           />
           <span class="input-group-addon validated">
             <span class="glyphicon glyphicon-ok" ng-show="sC.validated.sparktoken"></span>
@@ -32,5 +32,7 @@
       </li>
     </ul>
   </section>
+
+
 
 </div>
