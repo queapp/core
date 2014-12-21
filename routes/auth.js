@@ -66,7 +66,7 @@ module.exports = function(app) {
   // does the user have permission to do something?
   app.get("/auth/can/:permission", function(req, res) {
     if (req.header("authentication")) {
-      AuthController.can(req, req.param("permission"), function(err, out) {
+      AuthController.can(req.header("authentication"), req.param("permission"), function(err, out) {
         res.send(err && {error: err} || {allowed: out});
       });
     } else {
