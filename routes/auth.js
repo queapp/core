@@ -5,6 +5,7 @@ var wildcard = require("wildcard");
 
 var sessionToken = require("../models/sessiontoken");
 var User = require("../models/user");
+var AuthController = require("../controllers/auth");
 
 module.exports = function(app) {
 
@@ -63,15 +64,14 @@ module.exports = function(app) {
   });
 
   // does the user have permission to do something?
-  app.get("/auth/can/:permission", function(res, req) {
-    sessionToken.findOne({key: req.header("authentication")}, function(err, token) {
-      // check for matches
-      resp = [];
-      this.auth.permissions.forEach(function(p) {
-        resp.push( matchWildcard(p, permission).length );
+  app.get("/auth/can/:permission", function(req, res) {
+    if (req.header("authentication")) {
+      AuthController.can(req, req.param("permission"), function(err, out) {
+        res.send(err && {error: err} || {allowed: out});
       });
-      res.send({allowed: _.filter(resp, function(x) { return x !== 0; }).length});
-    });
+    } else {
+      res.send("No authentication header.")
+    }
   });
 
 }
