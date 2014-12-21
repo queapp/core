@@ -36,7 +36,7 @@ app.config(['$routeProvider', function($routeProvider) {
       otherwise({redirectTo: '/login'});
 }]);
 
-app.controller("navController", function($scope, $rootScope, $http, loginService) {
+app.controller("navController", function($scope, $rootScope, $http, loginService, $location) {
   var root = this;
 
   this.pageId = 1;
@@ -54,6 +54,12 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   });
 
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+
+    // if the user isn't logged in, redirect them to the login page
+    if (root.user && root.user.auth.username === null && next.$$route.originalPath !== "/login") {
+      $location.url("/login");
+    }
+
     // which page?
     switch(next.$$route.originalPath) {
       case "/dash":
