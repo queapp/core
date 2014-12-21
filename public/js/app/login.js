@@ -44,6 +44,9 @@ app.factory("loginService", function($http, $location) {
 
         // forget about that auth header
         $http.defaults.headers.common.Authentication = '';
+
+        // go back to the login screen
+        $location.url("/login");
       });
     },
 

@@ -1,9 +1,10 @@
 <div class="settings" ng-controller="LoginController as lC">
-  <div class="form-group">
-    Username: <input type="text" class="form-control" ng-model="lC.username"/>
-    <br/>
-    Password: <input type="text" class="form-control" ng-model="lC.password"/>
-    <br/>
-    <a href class="btn btn-primary" ng-click="lC.login()">Login</a>
+  <div class="login-dialog form-group">
+    <h1>Sign In to Que</h1>
+
+    <input type="text" class="username" ng-model="lC.username" placeholder="Username"/>
+    <input type="text" class="password" ng-model="lC.password" placeholder="Password"/>
+
+    <button class="btn btn-primary btn-lg" ng-click="lC.login()">Login</button>
   </div>
 </div>
