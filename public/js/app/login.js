@@ -24,6 +24,9 @@ app.factory("loginService", function($http, $location) {
         // save it all into the auth area
         root.auth = data;
 
+        // set header
+        $http.defaults.headers.common.Authentication = root.auth.key || "";
+
         // go to the dash
         $location.url("/dash");
       });
@@ -38,6 +41,9 @@ app.factory("loginService", function($http, $location) {
       }).success(function(data) {
         // logout
         root.auth = {username: null};
+
+        // forget about that auth header
+        $http.defaults.headers.common.Authentication = '';
       });
     },
 
