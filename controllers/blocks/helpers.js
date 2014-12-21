@@ -73,13 +73,13 @@ module.exports = function(socket, things, services, notifys, item) {
       thing.actions.forEach(function(action) {
         actions[action.name] = {
           trigger: function(cb) {
-            console.log("TRIGGER", action);
+            // console.log("TRIGGER", action);
             request(action.trigger, function(err, resp, body) {
               cb && cb(err, resp, body);
             });
           },
           detrigger: function(cb) {
-            console.log("DETRIGGER", action);
+            // console.log("DETRIGGER", action);
             request(action.detrigger, function(err, resp, body) {
               cb && cb(err, resp, body);
             });
