@@ -29,14 +29,21 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/settings-list.html',
         controller: 'ServicesController'
       }).
+      when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+      }).
       otherwise({redirectTo: '/dash'});
 }]);
 
-app.controller("navController", function($scope, $rootScope, $http) {
+app.controller("navController", function($scope, $rootScope, $http, loginService) {
   var root = this;
 
   this.pageId = 1;
   this.version = "";
+
+  // reference to loginservice
+  this.user = loginService;
 
   // get version from backend
   $http({

@@ -20,26 +20,30 @@ module.exports = function(app) {
 
   app.post("/auth", function(req, res) {
     // apply for a session token
-    User.findOne({username: req.body.name, hashpass: hash(req.body.pass)}, function(err, user) {
-      if (user) {
+    if (req.body) {
+      User.findOne({username: req.body.name, hashpass: hash(req.body.pass)}, function(err, user) {
+        if (user) {
 
-        // initialize the token's contents
-        tokenObj = {
-          hostname: req.headers.host,
-          key: uuid(),
-          permissions: user.permissions,
-          username: user.username
-        };
+          // initialize the token's contents
+          tokenObj = {
+            hostname: req.headers.host,
+            key: uuid(),
+            permissions: user.permissions,
+            username: user.username
+          };
 
-        // create new session token!
-        token = new sessionToken(tokenObj);
-        token.save(function(err) {
-          res.send(tokenObj);
-        });
-      } else {
-        res.send({error: "No matching users."})
-      }
-    });
+          // create new session token!
+          token = new sessionToken(tokenObj);
+          token.save(function(err) {
+            res.send(err && {error: "Couldn't create token."} || tokenObj);
+          });
+        } else {
+          res.send({error: "No matching users."})
+        }
+      });
+    } else {
+      res.send({error: "No Credentials"});
+    };
   });
 
   app.delete("/auth", function(req, res) {

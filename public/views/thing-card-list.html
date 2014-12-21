@@ -226,7 +226,7 @@
           <small>{{thing.desc}}</small>
         </h3>
 
-        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode === thing.id">
+        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode === thing.id" ng-disabled="nC.user.can('thing.edit')">
           Edit
         </button>
         <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode === thing.id">

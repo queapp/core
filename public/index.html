@@ -56,9 +56,15 @@
               <li ng-class="{active: nC.pageId == 4}">
                 <a href="#/settings">Settings</a>
               </li>
-              <!-- <li class="button">
-                <a href>login</a>
-              </li> -->
+              <li ng-class="{active: $location.url() == '/login'}" ng-hide="nC.user.auth.username">
+                <a href="#/login">Login</a>
+              </li>
+              <li ng-show="nC.user.auth.username">
+                <a ng-click="nC.user.logout()">
+                  <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
+                  {{nC.user.auth.username}}
+                </a>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
 
@@ -100,6 +106,8 @@
     <script src="js/app/things.js"></script>
     <script src="js/app/services.js"></script>
     <script src="js/app/blocks.js"></script>
+
+    <script src="js/app/login.js"></script>
 
   </body>
 </html>
