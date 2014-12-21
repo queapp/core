@@ -1,6 +1,7 @@
 var hash = require("sha-1");
 var uuid = require("uuid").v4;
 var async = require("async");
+var wildcard = require("wildcard");
 
 var sessionToken = require("../models/sessiontoken");
 var User = require("../models/user");
@@ -58,6 +59,18 @@ module.exports = function(app) {
           res.send(err && {error: "Couldn't delete key"} || {status: "OK"})
         });
       }
+    });
+  });
+
+  // does the user have permission to do something?
+  app.get("/auth/can/:permission", function(res, req) {
+    sessionToken.findOne({key: req.header("authentication")}, function(err, token) {
+      // check for matches
+      resp = [];
+      this.auth.permissions.forEach(function(p) {
+        resp.push( matchWildcard(p, permission).length );
+      });
+      res.send({allowed: _.filter(resp, function(x) { return x !== 0; }).length});
     });
   });
 

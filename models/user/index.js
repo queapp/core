@@ -5,7 +5,7 @@ var _ = require("underscore");
 var userSchema = mongoose.Schema({
   "username": String,
   "hashpass": String,
-  "permissions": String
+  "permissions": Array
 });
 
 

@@ -39,6 +39,21 @@ app.factory("loginService", function($http, $location) {
         // logout
         root.auth = {username: null};
       });
+    },
+
+    // if user has permission to do something
+    // if permission is thing.edit: thing.edit, thing.*, * all work
+    can: function(permission) {
+      if (typeof this.auth.permissions === "object") {
+        resp = [];
+        _.each(this.auth.permissions, function(p) {
+          resp.push( matchWildcard(p, permission).length );
+        });
+        console.log(permission, resp);
+        return _.filter(resp, function(x) { return x !== undefined; }).length;
+      } else {
+        return false;
+      }
     }
 
   }
