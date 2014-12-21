@@ -33,7 +33,7 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/login.html',
         controller: 'LoginController'
       }).
-      otherwise({redirectTo: '/dash'});
+      otherwise({redirectTo: '/login'});
 }]);
 
 app.controller("navController", function($scope, $rootScope, $http, loginService) {
