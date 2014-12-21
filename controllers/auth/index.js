@@ -11,7 +11,7 @@ var canUser = function(auth, permission, cb) {
     // check for matches
     if (token) {
       resp = [];
-      _.each(token.permissions.split(","), function(p) {
+      _.each(token.permissions, function(p) {
         resp.push( wildcard(p, permission) );
       });
       cb(null, !!_.filter(resp, function(x) {
