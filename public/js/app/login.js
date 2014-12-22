@@ -27,8 +27,34 @@ app.factory("loginService", function($http, $location) {
         // set header
         $http.defaults.headers.common.Authentication = root.auth.key || "";
 
+        // set sessionstorage
+        if (sessionStorage) sessionStorage.queKey = root.auth.key;
+
         // go to the dash
         $location.url("/dash");
+      });
+    },
+
+    loginWithKey: function(key, callback) {
+      var root = this;
+      $http({
+        method: "GET",
+        url: host+"/auth/whoami",
+        headers: {Authentication: key}
+      }).success(function(data) {
+        if (data.key !== null) {
+          // save it all into the auth area
+          root.auth = data;
+
+          // set header
+          $http.defaults.headers.common.Authentication = key || "";
+
+          // set sessionstorage
+          if (sessionStorage) sessionStorage.queKey = key;
+
+          // callback
+          callback && callback(data);
+        };
       });
     },
 
