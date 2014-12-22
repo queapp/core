@@ -6926,11 +6926,27 @@ textarea.thing-add.page-3.page-spark ul li input {
     margin-left: 0;
   }
 }
-.settings section.body {
+.settings .body {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin: 8px 0px;
+}
+@media (min-width: 992px) {
+  .settings .body {
+    float: left;
+    width: 100%;
+  }
+}
+.settings .body:first-child {
+  margin-top: 0px;
+}
+.settings .body ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+.settings section.body {
   border: 1px solid #ebedee;
   box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
   -webkit-border-radius: 2px;
@@ -6940,20 +6956,217 @@ textarea.thing-add.page-3.page-spark ul li input {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   background: #FFF;
-  margin: 8px 0px;
 }
-@media (min-width: 992px) {
-  .settings section.body {
+.settings ul.body {
+  padding: 0px;
+}
+.settings .editpermissions-modal .modal-body .row {
+  padding: 15px;
+}
+.settings .editpermissions-modal .modal-body .row input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 470px;
+  margin-right: 3px;
+}
+.settings .editpermissions-modal .modal-body .row input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.settings .editpermissions-modal .modal-body .row input::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.settings .editpermissions-modal .modal-body .row input:-ms-input-placeholder {
+  color: #777777;
+}
+.settings .editpermissions-modal .modal-body .row input::-webkit-input-placeholder {
+  color: #777777;
+}
+.settings .editpermissions-modal .modal-body .row input[disabled],
+.settings .editpermissions-modal .modal-body .row input[readonly],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.settings .editpermissions-modal .modal-body .row input {
+  height: auto;
+}
+@media (min-width: 768px) {
+  .settings .editpermissions-modal .modal-body .row input {
+    float: left;
+    width: 83.33333333%;
+  }
+}
+.settings .editpermissions-modal .modal-body .row .add-btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn:active:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active,
+.open > .dropdown-toggle.settings .editpermissions-modal .modal-body .row .add-btn {
+  color: #ffffff;
+  background-color: #1991fb;
+  border-color: #047fec;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active,
+.open > .dropdown-toggle.settings .editpermissions-modal .modal-body .row .add-btn {
+  background-image: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:hover,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:focus,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:active,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:active,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled.active,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled].active,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.active {
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn .badge {
+  color: #4ba9fc;
+  background-color: #ffffff;
+}
+@media (min-width: 768px) {
+  .settings .editpermissions-modal .modal-body .row .add-btn {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+.settings .editpermissions-modal .modal-body .row .scrollable {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  height: 500px;
+  overflow-y: scroll;
+  padding: 8px;
+  margin-top: 12px;
+}
+@media (min-width: 768px) {
+  .settings .editpermissions-modal .modal-body .row .scrollable {
     float: left;
     width: 100%;
   }
 }
-.settings section.body:first-child {
-  margin-top: 0px;
+.settings .editpermissions-modal .modal-body .row .scrollable blockquote {
+  border-color: #ddd;
+  border-color: rgba(0, 0, 0, 0.15);
 }
-.settings section.body ul {
-  padding-left: 0px;
-  list-style-type: none;
+.settings .editpermissions-modal .modal-body .row .scrollable li {
+  font-size: 16.8px;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li button {
+  float: right !important;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.thing {
+  color: #42BF3F;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.service {
+  color: #4BA9FC;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.block {
+  color: #FC4B4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.notify {
+  color: #FCBD4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.auth {
+  color: #C08C57;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.user {
+  color: #D481DC;
 }
 .together .form-control {
   border-right: 0px;

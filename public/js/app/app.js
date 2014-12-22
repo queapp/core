@@ -27,7 +27,7 @@ app.config(['$routeProvider', function($routeProvider) {
       }).
       when('/settings', {
         templateUrl: 'views/settings-list.html',
-        controller: 'ServicesController'
+        controller: 'KeysController'
       }).
       when('/login', {
         templateUrl: 'views/login.html',
