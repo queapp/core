@@ -42,6 +42,9 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   this.pageId = 1;
   this.version = "";
 
+  // log the original route
+  this.firstRoute = null;
+
   // reference to loginservice
   this.user = loginService;
 
@@ -54,6 +57,10 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   });
 
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    // if this is the first route we go to, log it
+    // why? later on once auth is done, we will redirect back here.
+    if (root.firstRoute === null && current !== undefined )
+      root.firstRoute = current.$$route.originalPath;
 
     // test to see if the authtoken is persisted
     if (root.user && root.user.auth.username === null && sessionStorage && sessionStorage.queKey) {
@@ -61,7 +68,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
         root.user.auth = data;
 
         // serve the dash, because after logging in the login page isn't needed
-        if ($location.url() === "/login") $location.url("/dash");
+        if ($location.url() === "/login") $location.url( root.firstRoute || "/dash" );
       });
     };
 
@@ -120,6 +127,9 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
         break;
       case 4:
         return navColorBrown;
+        break;
+      default:
+        return "transparent";
         break;
     }
   }
