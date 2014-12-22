@@ -55,10 +55,21 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
 
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
 
+    // test to see if the authtoken is persisted
+    if (root.user && root.user.auth.username === null && sessionStorage && sessionStorage.queKey) {
+      root.user.loginWithKey(sessionStorage.queKey, function(data) {
+        root.user.auth = data;
+
+        // serve the dash, because after logging in the login page isn't needed
+        if ($location.url() === "/login") $location.url("/dash");
+      });
+    };
+
     // if the user isn't logged in, redirect them to the login page
-    if (root.user && root.user.auth.username === null && next.$$route.originalPath !== "/login") {
-      $location.url("/login");
-    }
+    if (root.user && root.user.auth.username === null && next.$$route.originalPath !== "/login") $location.url("/login");
+
+    // but, if the user is on the login page, redirect them to the dash as long as their logged in
+    if (root.user.auth.username !== null && $location.url() === "/login") $location.url("/dash");
 
     // which page?
     switch(next.$$route.originalPath) {

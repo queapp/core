@@ -71,6 +71,9 @@ app.factory("loginService", function($http, $location) {
         // forget about that auth header
         $http.defaults.headers.common.Authentication = '';
 
+        // set sessionstorage
+        if (sessionStorage) sessionStorage.queKey = undefined;
+
         // go back to the login screen
         $location.url("/login");
       });
