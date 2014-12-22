@@ -27,11 +27,16 @@ module.exports = function(app) {
         if (user) {
 
           // initialize the token's contents
+          // they expire after 1 day (is this too long?)
           tokenObj = {
             hostname: req.headers.host,
             key: uuid(),
             permissions: user.permissions,
-            username: user.username
+            username: user.username,
+            createdAt: {
+              type: Date,
+              expires: '1d'
+            }
           };
 
           // create new session token!
