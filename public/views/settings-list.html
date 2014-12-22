@@ -29,10 +29,21 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <h4 class="modal-title" id="myModalLabel">Edit Permissions</h4>
+              <h4 class="modal-title" id="myModalLabel">
+                Edit Permissions
+                <a target="_blank" href="//1egoman.viewdocs.io/que-iot/permissions" class="permissions-link">Permission List</a>
+              </h4>
             </div>
             <div class="modal-body">
-
+              <p>
+                Permissions are what tells Que what each user is allowed to do.
+                By default, a new user can do nothing. Permissions can be written
+                in full or abbreviated with wildcards (<code>*</code>) for individual
+                sections. For example, to give a user permission to delete all things,
+                you would type into the box <code>thing.delete.*</code>; or, to give
+                a user all permissions pertaining to things you would type
+                <code>thing.*</code>.
+              </p>
               <div class="row">
                 <input type="text" placeholder="Add Permission" ng-model="uC.newPermission"/>
                 <button class="add-btn" ng-click="uC.addPermission(user.username, uC.newPermission)">Add</button>
@@ -51,10 +62,14 @@
                 </ul>
               </div>
 
+              <p>
+                <strong>Note:</strong> Permissions may require the user to log out and log back in
+                again to take effect.
+              </p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-primary" ng-click="uC.update(user.username)">Save</button>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 var ThingServer = require("../controllers/things");
 var ServiceServer = require("../controllers/services");
 var BlockServer = require("../controllers/blocks");
+var UserServer = require("../controllers/users");
 var notify = require("../controllers/notify");
 var _ = require("underscore");
 
@@ -82,6 +83,7 @@ module.exports = function(app, server, argv) {
   var things = new ThingServer();
   var services = new ServiceServer();
   var blocks = new BlockServer(things, services, notify);
+  var users = new UserServer();
 
   // web socket routes
   var io = require("./sockets.js")(app, server, things, services);
@@ -93,6 +95,7 @@ module.exports = function(app, server, argv) {
   require("./things")(app, things);
   require("./services")(app, services);
   require("./blocks")(app, blocks);
+  require("./users")(app, users);
   require("./notify")(app, notify);
 
   // auth routes

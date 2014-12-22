@@ -6960,6 +6960,11 @@ textarea.thing-add.page-3.page-spark ul li input {
 .settings ul.body {
   padding: 0px;
 }
+.settings .editpermissions-modal .permissions-link {
+  float: right !important;
+  font-size: 14px;
+  margin-right: 12px;
+}
 .settings .editpermissions-modal .modal-body .row {
   padding: 15px;
 }
@@ -6981,11 +6986,12 @@ textarea.thing-add.page-3.page-spark ul li input {
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   position: relative;
+  float: left;
+  width: 83.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
   max-width: 470px;
-  margin-right: 3px;
 }
 .settings .editpermissions-modal .modal-body .row input:focus {
   border-color: #66afe9;
@@ -7015,8 +7021,7 @@ textarea.settings .editpermissions-modal .modal-body .row input {
 }
 @media (min-width: 768px) {
   .settings .editpermissions-modal .modal-body .row input {
-    float: left;
-    width: 83.33333333%;
+    margin-right: 3px;
   }
 }
 .settings .editpermissions-modal .modal-body .row .add-btn {
@@ -7041,6 +7046,8 @@ textarea.settings .editpermissions-modal .modal-body .row input {
   background-color: #4ba9fc;
   border-color: #329dfc;
   position: relative;
+  float: left;
+  width: 16.66666667%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -7110,14 +7117,10 @@ fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.ac
   color: #4ba9fc;
   background-color: #ffffff;
 }
-@media (min-width: 768px) {
-  .settings .editpermissions-modal .modal-body .row .add-btn {
-    float: left;
-    width: 16.66666667%;
-  }
-}
 .settings .editpermissions-modal .modal-body .row .scrollable {
   position: relative;
+  float: left;
+  width: 100%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -7129,16 +7132,10 @@ fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.ac
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  height: 500px;
-  overflow-y: scroll;
+  height: 300px;
+  overflow-y: auto;
   padding: 8px;
   margin-top: 12px;
-}
-@media (min-width: 768px) {
-  .settings .editpermissions-modal .modal-body .row .scrollable {
-    float: left;
-    width: 100%;
-  }
 }
 .settings .editpermissions-modal .modal-body .row .scrollable blockquote {
   border-color: #ddd;

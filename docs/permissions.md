@@ -49,3 +49,9 @@ Auth Tokens
 ---
 - token.view
 - token.edit
+
+Users
+---
+- user.view.all
+- user.create
+- user.delete.#id

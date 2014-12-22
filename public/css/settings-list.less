@@ -26,28 +26,38 @@
 
   // permissions modal
   .editpermissions-modal {
+
+    // 'Permission List' link
+    .permissions-link {
+      .pull-right;
+      font-size: @font-size-base;
+      margin-right: 12px;
+    }
+
     .modal-body {
       .row {
         padding: 15px;
 
         input {
           .form-control;
-          .make-sm-column(10);
+          .make-xs-column(10);
           max-width: 470px;
-          margin-right: 3px;
+          @media (min-width: @screen-sm-min) {
+            margin-right: 3px;
+          };
         }
 
         .add-btn {
           .btn; .btn-primary;
-          .make-sm-column(2);
+          .make-xs-column(2);
         }
 
         .scrollable {
-          .make-sm-column(12);
+          .make-xs-column(12);
           .well;
 
-          height: 500px;
-          overflow-y: scroll;
+          height: 300px;
+          overflow-y: auto;
 
           padding: 8px;
           margin-top: 12px;

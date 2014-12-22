@@ -36,28 +36,19 @@ app.controller("KeysController", function($scope, $http) {
 
 });
 
-app.controller("UsersController", function($scope, $http) {
+app.controller("UsersController", function($scope, $http, userService) {
   var root = this;
 
   // all users
-  this.users = [
-    {
-      "username": "superadmin",
-      "hashpass": "[hashpass]",
-      "permissions": ["*"]
-    },
-    {
-      "username": "ryan",
-      "hashpass": "[hashpass]",
-      "permissions": [
-        "thing.view.all",
-        "block.*",
-        "auth.*",
-        "user.*",
-        "service.*"
-      ]
-    }
-  ];
+  this.users = [];
+
+  // pull down all user info
+  this.reload = function() {
+    userService.getAllUsers(function(users) {
+      root.users = users;
+    });
+  };
+  this.reload();
 
   // new permissions
   this.newPermission = "";
@@ -78,6 +69,7 @@ app.controller("UsersController", function($scope, $http) {
     }
   };
 
+  // delete a permission
   this.deletePermission = function(username, index) {
     user = _.filter(root.users, function(u) {
       return u.username == username
@@ -87,5 +79,58 @@ app.controller("UsersController", function($scope, $http) {
 
       this.users[userIndex].permissions.splice(index, 1);
     };
+  };
+
+  // push all permission/user data to backend
+  this.update = function(username, done) {
+    // find user
+    user = _.filter(root.users, function(u) {
+      return u.username == username
+    });
+    if (user.length) {
+      userIndex = this.users.indexOf(user[0]);
+
+      // update user
+      userService.updateUser(username, this.users[userIndex], function(d) {
+        // reload
+        // root.reload();
+
+        // callback
+        done && done(d);
+      });
+
+    };
+  };
+});
+
+app.factory("userService", function($http) {
+  return {
+    getAllUsers: function(callback) {
+      $http({
+        method: "get",
+        url: host + "/users/all",
+      }).success(function(data) {
+        callback(data.data);
+      });
+    },
+
+    updateUser: function(username, data, callback) {
+      $http({
+        method: "put",
+        url: host + "/users/" + username,
+        data: angular.toJson(data)
+      }).success(function(data) {
+        callback(data);
+      });
+    },
+
+    delete: function(id, callback) {
+      $http({
+        method: "delete",
+        url: host + "/things/" + id,
+      }).success(function(data) {
+        callback(data);
+      });
+    }
   };
 });
