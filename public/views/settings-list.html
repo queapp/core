@@ -9,6 +9,38 @@
         <span class="glyphicon glyphicon-user"></span>
         Users
       </h3>
+
+      <!-- new user stuff -->
+      <button class="btn btn-info pull-right" data-toggle="modal" data-target="#new-user">New User</button>
+      <!-- permissions editor -->
+      <div class="modal fade newuser-modal" id="new-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add a New User</h4>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <!-- <label>Username</label> -->
+                <input type="text" placeholder="Username" ng-model="uC.newUser.username"/>
+              </div>
+
+              <div class="form-group">
+                <!-- <label>Password</label> -->
+                <input type="text" placeholder="Password" ng-model="uC.newUser.pass"/>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" ng-click="uC.addUser()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <p>
         Each user listed below can login to Que - to see or edit what each user
         can do, click 'Edit Permissions' below.

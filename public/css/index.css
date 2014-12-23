@@ -6965,6 +6965,24 @@ textarea.thing-add.page-3.page-spark ul li input {
   font-size: 14px;
   margin-right: 12px;
 }
+.settings .editpermissions-modal span.permission.thing {
+  color: #42BF3F;
+}
+.settings .editpermissions-modal span.permission.service {
+  color: #4BA9FC;
+}
+.settings .editpermissions-modal span.permission.block {
+  color: #FC4B4B;
+}
+.settings .editpermissions-modal span.permission.notify {
+  color: #FCBD4B;
+}
+.settings .editpermissions-modal span.permission.auth {
+  color: #C08C57;
+}
+.settings .editpermissions-modal span.permission.user {
+  color: #D481DC;
+}
 .settings .editpermissions-modal .modal-body .row {
   padding: 15px;
 }
@@ -7147,23 +7165,49 @@ fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.ac
 .settings .editpermissions-modal .modal-body .row .scrollable li button {
   float: right !important;
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.thing {
-  color: #42BF3F;
+.settings .newuser-modal input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.service {
-  color: #4BA9FC;
+.settings .newuser-modal input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.block {
-  color: #FC4B4B;
+.settings .newuser-modal input::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.notify {
-  color: #FCBD4B;
+.settings .newuser-modal input:-ms-input-placeholder {
+  color: #777777;
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.auth {
-  color: #C08C57;
+.settings .newuser-modal input::-webkit-input-placeholder {
+  color: #777777;
 }
-.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.user {
-  color: #D481DC;
+.settings .newuser-modal input[disabled],
+.settings .newuser-modal input[readonly],
+fieldset[disabled] .settings .newuser-modal input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.settings .newuser-modal input {
+  height: auto;
 }
 .together .form-control {
   border-right: 0px;

@@ -53,6 +53,21 @@ app.controller("UsersController", function($scope, $http, userService) {
   // new permissions
   this.newPermission = "";
 
+  // potential new user
+  this.newUser = {};
+
+  // add a new user
+  this.addUser = function() {
+    userService.addUser(this.newUser, function() {
+      // add user
+      root.users.push(root.newUser);
+      root.newUser = {};
+
+      // hide modal on success
+      $(".newuser-modal").modal('hide');
+    });
+  };
+
   // delete a user
   this.deleteUser = function(username) {
     user = _.filter(root.users, function(u) {
@@ -69,7 +84,6 @@ app.controller("UsersController", function($scope, $http, userService) {
     };
   };
 
-
   // add permission
   this.addPermission = function(username, permission) {
     user = _.filter(root.users, function(u) {
@@ -77,6 +91,10 @@ app.controller("UsersController", function($scope, $http, userService) {
     });
     if (user.length) {
       userIndex = this.users.indexOf(user[0]);
+
+      // check to make sure that permissions is an array
+      if (typeof this.users[userIndex].permissions !== "object")
+        this.users[userIndex].permissions = []
 
       // add permission
       this.users[userIndex].permissions.push(permission);
@@ -138,6 +156,16 @@ app.factory("userService", function($http) {
         data: angular.toJson(data)
       }).success(function(data) {
         callback(data);
+      });
+    },
+
+    addUser: function(data, callback) {
+      $http({
+        method: "post",
+        url: host + "/users/add",
+        data: angular.toJson(data)
+      }).success(function(data) {
+        callback && callback(data);
       });
     },
 

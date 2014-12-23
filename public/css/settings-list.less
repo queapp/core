@@ -34,6 +34,16 @@
       margin-right: 12px;
     }
 
+    // permission colors
+    span.permission {
+      &.thing { color: #42BF3F; }
+      &.service { color: #4BA9FC; }
+      &.block { color: #FC4B4B; }
+      &.notify { color: #FCBD4B; }
+      &.auth { color: #C08C57; }
+      &.user { color: #D481DC; }
+    }
+
     .modal-body {
       .row {
         padding: 15px;
@@ -65,15 +75,6 @@
           li {
             font-size: @font-size-base * 1.2;
             button { .pull-right; }
-
-            span.permission {
-              &.thing { color: #42BF3F; }
-              &.service { color: #4BA9FC; }
-              &.block { color: #FC4B4B; }
-              &.notify { color: #FCBD4B; }
-              &.auth { color: #C08C57; }
-              &.user { color: #D481DC; }
-            }
           }
         }
 
@@ -81,7 +82,12 @@
     }
   }
 
-
+  // new user modal
+  .newuser-modal {
+    input {
+      .form-control;
+    }
+  }
 }
 
 // 'validating' textbox

@@ -1,5 +1,6 @@
 var async = require("async");
 var _ = require("underscore");
+var hash = require("sha-1");
 
 // the model
 var User = require("../../models/user");
@@ -18,6 +19,13 @@ module.exports = function() {
     if (data.username.split(" ").length > 1)
       done("No spaces can be in a valid username!")
 
+    // if the password hasn't been hashed already, do that now.
+    if (!data.hashpass)
+      data.hashpass = hash(data.pass);
+
+    // add permissions if they aren't there
+    if (!data.permissions)
+      data.permissions = [];
 
     // save block
     var user = new User(data);
