@@ -53,6 +53,23 @@ app.controller("UsersController", function($scope, $http, userService) {
   // new permissions
   this.newPermission = "";
 
+  // delete a user
+  this.deleteUser = function(username) {
+    user = _.filter(root.users, function(u) {
+      return u.username == username
+    });
+    if (user.length) {
+
+      // remove user
+      userIndex = this.users.indexOf(user[0]);
+      this.users.splice(userIndex, 1);
+
+      // and, also on backend too
+      userService.deleteUser(username);
+    };
+  };
+
+
   // add permission
   this.addPermission = function(username, permission) {
     user = _.filter(root.users, function(u) {
@@ -124,12 +141,12 @@ app.factory("userService", function($http) {
       });
     },
 
-    delete: function(id, callback) {
+    deleteUser: function(username, callback) {
       $http({
         method: "delete",
-        url: host + "/things/" + id,
+        url: host + "/users/" + username,
       }).success(function(data) {
-        callback(data);
+        callback && callback(data);
       });
     }
   };

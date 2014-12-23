@@ -19,7 +19,7 @@
     <li class="list-group-item" ng-repeat="user in uC.users">
       <h3>{{user.username}}</h3>
 
-      <button class="btn btn-danger pull-right">Delete</button>
+      <button class="btn btn-danger pull-right" ng-click="uC.deleteUser(user.username)">Delete</button>
       <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#user-editpermissions-{{user.username}}">Edit Permissions</button>
       <button class="btn btn-default pull-right">Change Password</button>
 
