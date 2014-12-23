@@ -6284,12 +6284,14 @@ div.view-container:after {
   color: #FFF;
 }
 .navbar-que .navbar-nav li a,
-.navbar-que .navbar-nav a:hover {
+.navbar-que .navbar-nav a:hover,
+.navbar-que .navbar-nav a:focus {
   background: transparent;
   color: #000;
 }
 .navbar-que .navbar-nav .active a,
-.navbar-que .navbar-nav .active a:hover {
+.navbar-que .navbar-nav .active a:hover,
+.navbar-que .navbar-nav .active a:focus {
   font-weight: bold;
   background: transparent;
   color: #000;

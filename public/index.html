@@ -18,71 +18,69 @@
       ">">https://oss.maxcdn.com/respond/1.4.2/respond.min.js">
     <![endif]-->
   </head>
-  <body ng-app="QueGui" ng-class="{white: !nC.user.auth.username}">
-    <div ng-controller="navController as nC">
+  <body ng-app="QueGui" ng-controller="navController as nC" ng-class="{white: !nC.user.auth.username}">
 
-      <!-- header -->
-      <nav class="navbar navbar-default navbar-que" role="navigation" ng-show="nC.user.auth.username">
+    <!-- header -->
+    <nav class="navbar navbar-default navbar-que" role="navigation" ng-show="nC.user.auth.username">
 
-        <div class="container">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" tooltip data-original-title="{{nC.version}}" data-placement="right">
-              <img src="img/logo.svg"/> <!-- logo -->
-            </a>
-          </div>
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" tooltip data-original-title="{{nC.version}}" data-placement="right">
+            <img src="img/logo.svg"/> <!-- logo -->
+          </a>
+        </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-class="{active: nC.pageId == 0}">
-                <a href="#/dash">Dashboard</a>
-              </li>
-              <li ng-class="{active: nC.pageId == 1}">
-                <a href="#/things">Things</a>
-              </li>
-              <li ng-class="{active: nC.pageId == 2}">
-                <a href="#/services">Services</a>
-              </li>
-              <li ng-class="{active: nC.pageId == 3}">
-                <a href="#/blocks">Blocks</a>
-              </li>
-              <li ng-class="{active: nC.pageId == 4}">
-                <a href="#/settings">Settings</a>
-              </li>
-              <li ng-class="{active: $location.url() == '/login'}" ng-hide="nC.user.auth.username">
-                <a href="#/login">Login</a>
-              </li>
-              <li ng-show="nC.user.auth.username">
-                <a ng-click="nC.user.logout()">
-                  <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
-                  {{nC.user.auth.username}}
-                </a>
-              </li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{active: nC.pageId == 0}">
+              <a href="#/dash">Dashboard</a>
+            </li>
+            <li ng-class="{active: nC.pageId == 1}">
+              <a href="#/things">Things</a>
+            </li>
+            <li ng-class="{active: nC.pageId == 2}">
+              <a href="#/services">Services</a>
+            </li>
+            <li ng-class="{active: nC.pageId == 3}">
+              <a href="#/blocks">Blocks</a>
+            </li>
+            <li ng-class="{active: nC.pageId == 4}">
+              <a href="#/settings">Settings</a>
+            </li>
+            <li ng-class="{active: $location.url() == '/login'}" ng-hide="nC.user.auth.username">
+              <a href="#/login">Login</a>
+            </li>
+            <li ng-show="nC.user.auth.username">
+              <a ng-click="nC.user.logout()">
+                <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
+                {{nC.user.auth.username}}
+              </a>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
 
 
-        </div><!-- /.container-fluid -->
+      </div><!-- /.container-fluid -->
 
-        <h1>
-          {{nC.getPageTitle().title}}
-          <small class="">{{nC.getPageTitle().desc}}</small>
-        </h1>
+      <h1>
+        {{nC.getPageTitle().title}}
+        <small class="">{{nC.getPageTitle().desc}}</small>
+      </h1>
 
-      </nav>
+    </nav>
 
-      <div class="view-container">
-        <div ng-view></div>
-      </div>
-
+    <div class="view-container">
+      <div ng-view></div>
     </div>
+
 
     <!-- all javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
