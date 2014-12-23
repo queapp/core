@@ -5898,6 +5898,8 @@ button.close {
 .panel-body:after,
 .modal-footer:before,
 .modal-footer:after,
+.login-dialog:before,
+.login-dialog:after,
 .settings:before,
 .settings:after,
 div.view-container:before,
@@ -5920,6 +5922,7 @@ div.view-container:after {
 .pager:after,
 .panel-body:after,
 .modal-footer:after,
+.login-dialog:after,
 .settings:after,
 div.view-container:after {
   clear: both;
@@ -6707,64 +6710,59 @@ ul.edit-data li.control .delete-control {
   background-clip: padding-box;
 }
 .login-dialog {
-  background: #FFF;
-  border: 1px solid #ebedee;
-  box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
   margin-right: auto;
   margin-left: auto;
-  padding: 15px;
-  width: 600px;
-  margin-top: 36px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 42px;
+  padding: 16px;
+}
+@media (min-width: 768px) {
+  .login-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .login-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .login-dialog {
+    width: 1170px;
+  }
+}
+.login-dialog > .navbar-header,
+.login-dialog > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .login-dialog > .navbar-header,
+  .login-dialog > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 .login-dialog input[type=text] {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555555;
-  background-color: #ffffff;
-  background-image: none;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
 }
 .login-dialog input[type=text]:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-.login-dialog input[type=text]::-moz-placeholder {
-  color: #777777;
-  opacity: 1;
-}
-.login-dialog input[type=text]:-ms-input-placeholder {
-  color: #777777;
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
 }
 .login-dialog input[type=text]::-webkit-input-placeholder {
-  color: #777777;
-}
-.login-dialog input[type=text][disabled],
-.login-dialog input[type=text][readonly],
-fieldset[disabled] .login-dialog input[type=text] {
-  cursor: not-allowed;
-  background-color: #eeeeee;
-  opacity: 1;
-}
-textarea.login-dialog input[type=text] {
-  height: auto;
+  color: #c8c8c8;
 }
 .login-dialog input[type=text].username {
   margin-top: 32px;
@@ -6775,10 +6773,13 @@ textarea.login-dialog input[type=text] {
 .login-dialog input[type=text],
 .login-dialog .btn {
   width: 500px;
-  height: 45px;
   font-size: 18.2px;
   margin: 10px auto;
   display: block;
+}
+.login-dialog input[type=text].bad,
+.login-dialog .btn.bad {
+  border-color: #fc4b4b;
 }
 .login-dialog h1 {
   text-align: center;
@@ -7229,6 +7230,9 @@ body {
   height: 100%;
   background: #e9edf0;
   overflow-y: scroll;
+}
+body.white {
+  background: #fefefe;
 }
 div.view-container {
   margin-right: auto;

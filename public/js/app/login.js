@@ -5,8 +5,12 @@ app.controller("LoginController", function($scope, $http, loginService) {
   this.username = "superadmin";
   this.password = "root";
 
+  this.badlogin = false;
+
   this.login = function() {
-    loginService.login(root.username, root.password);
+    loginService.login(root.username, root.password, function(status) {
+      if (!status) root.badlogin = true;
+    });
   }
 });
 
@@ -14,24 +18,31 @@ app.factory("loginService", function($http, $location) {
   return {
     auth: {username: null},
 
-    login: function(user, pass) {
+    login: function(user, pass, callback) {
       var root = this;
       $http({
         method: "POST",
         url: host+"/auth",
         data: {name: user, pass: pass}
       }).success(function(data) {
-        // save it all into the auth area
-        root.auth = data;
+        // was is successful?
+        if (data.key) {
+          // save it all into the auth area
+          root.auth = data;
 
-        // set header
-        $http.defaults.headers.common.Authentication = root.auth.key || "";
+          // set header
+          $http.defaults.headers.common.Authentication = root.auth.key || "";
 
-        // set sessionstorage
-        if (sessionStorage) sessionStorage.queKey = root.auth.key;
+          // set sessionstorage
+          if (sessionStorage) sessionStorage.queKey = root.auth.key;
 
-        // go to the dash
-        $location.url("/dash");
+          // go to the dash
+          $location.url("/dash");
+          callback && callback(true);
+        } else {
+          // wrong credentials
+          callback && callback(false);
+        }
       });
     },
 
