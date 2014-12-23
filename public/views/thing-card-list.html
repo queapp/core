@@ -9,7 +9,14 @@
         A thing is a physical object that Que can control.
         <span>A garden, an Autofeeding pet dish, or a 3d Printer</span>
         <br/>
-        <a href class="btn btn-success btn-lg" data-toggle="modal" data-target="#addThingModal">Add a thing</a>
+        <a
+          href
+          class="btn btn-success btn-lg"
+          data-toggle="modal"
+          data-target="#addThingModal"
+          ng-show="nC.user.can('thing.create')"
+          >Add a thing
+        </a>
       </div>
     </div>
 
@@ -20,7 +27,8 @@
       class="add-button"
       ng-show="tC.things.length !== 0"
       data-toggle="modal"
-      data-target="#addThingModal">
+      data-target="#addThingModal"
+      ng-show="nC.user.can('thing.create')">
       +
     </div>
 

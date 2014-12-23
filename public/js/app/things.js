@@ -4,6 +4,8 @@ var app = angular.module("QueGui");
 app.controller("ThingsController", function($scope, $http, $rootScope, thingService, blockService, $interval, $document, tokenService) {
   var root = this;
 
+  this.things = [];
+
   this.selectedThing = null;
   this.editMode = false;
 
