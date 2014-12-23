@@ -77,8 +77,19 @@
                 <code>thing.*</code>.
               </p>
               <div class="row">
-                <input type="text" placeholder="Add Permission" ng-model="uC.newPermission"/>
-                <button class="add-btn" ng-click="uC.addPermission(user.username, uC.newPermission)">Add</button>
+
+                <!-- add a new permission -->
+                <input
+                  type="text"
+                  placeholder="Add Permission"
+                  ng-model="uC.newPermission"
+                  ng-class="{invalid: uC.newPermission.length !== 0 && !uC.checkPermissionValidity()}"
+                />
+                <button
+                  class="add-btn"
+                  ng-click="uC.addPermission(user.username, uC.newPermission)"
+                  ng-disabled="!uC.checkPermissionValidity()"
+                >Add</button>
 
                 <!-- permission list -->
                 <ul class="scrollable">

@@ -6965,26 +6965,8 @@ textarea.thing-add.page-3.page-spark ul li input {
   font-size: 14px;
   margin-right: 12px;
 }
-.settings .editpermissions-modal span.permission.thing {
-  color: #42BF3F;
-}
-.settings .editpermissions-modal span.permission.service {
-  color: #4BA9FC;
-}
-.settings .editpermissions-modal span.permission.block {
-  color: #FC4B4B;
-}
-.settings .editpermissions-modal span.permission.notify {
-  color: #FCBD4B;
-}
-.settings .editpermissions-modal span.permission.auth {
-  color: #C08C57;
-}
-.settings .editpermissions-modal span.permission.user {
-  color: #D481DC;
-}
 .settings .editpermissions-modal .modal-body .row {
-  padding: 15px;
+  padding: 0px 15px 15px 15px;
 }
 .settings .editpermissions-modal .modal-body .row input {
   display: block;
@@ -7009,6 +6991,7 @@ textarea.thing-add.page-3.page-spark ul li input {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  z-index: 100;
   max-width: 470px;
 }
 .settings .editpermissions-modal .modal-body .row input:focus {
@@ -7041,6 +7024,9 @@ textarea.settings .editpermissions-modal .modal-body .row input {
   .settings .editpermissions-modal .modal-body .row input {
     margin-right: 3px;
   }
+}
+.settings .editpermissions-modal .modal-body .row input.invalid {
+  color: #fc4b4b;
 }
 .settings .editpermissions-modal .modal-body .row .add-btn {
   display: inline-block;
@@ -7164,6 +7150,24 @@ fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.ac
 }
 .settings .editpermissions-modal .modal-body .row .scrollable li button {
   float: right !important;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.thing {
+  color: #42BF3F;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.service {
+  color: #4BA9FC;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.block {
+  color: #FC4B4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.notify {
+  color: #FCBD4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.auth {
+  color: #C08C57;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.user {
+  color: #D481DC;
 }
 .settings .newuser-modal input {
   display: block;

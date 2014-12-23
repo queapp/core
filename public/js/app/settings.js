@@ -136,6 +136,19 @@ app.controller("UsersController", function($scope, $http, userService) {
 
     };
   };
+
+  // check permission validity
+  this.checkPermissionValidity = function() {
+    // check for spaces
+    if (this.newPermission.split(' ').length > 1) return false;
+    if (this.newPermission.substr(-1).trim() == '') return false;
+
+    // check for plurals in first section
+    if (this.newPermission.split('.')[0].substr(-1) == 's') return false;
+
+    // otherwise, it seems ok
+    return true;
+  }
 });
 
 app.factory("userService", function($http) {

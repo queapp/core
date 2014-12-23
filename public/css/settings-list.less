@@ -34,27 +34,22 @@
       margin-right: 12px;
     }
 
-    // permission colors
-    span.permission {
-      &.thing { color: #42BF3F; }
-      &.service { color: #4BA9FC; }
-      &.block { color: #FC4B4B; }
-      &.notify { color: #FCBD4B; }
-      &.auth { color: #C08C57; }
-      &.user { color: #D481DC; }
-    }
-
     .modal-body {
       .row {
-        padding: 15px;
+        padding: 0px 15px 15px 15px;
 
         input {
           .form-control;
           .make-xs-column(10);
+          z-index: 100;
           max-width: 470px;
           @media (min-width: @screen-sm-min) {
             margin-right: 3px;
           };
+
+          &.invalid {
+            color: @brand-danger;
+          }
         }
 
         .add-btn {
@@ -75,6 +70,16 @@
           li {
             font-size: @font-size-base * 1.2;
             button { .pull-right; }
+
+            // permission colors
+            span.permission {
+              &.thing { color: #42BF3F; }
+              &.service { color: #4BA9FC; }
+              &.block { color: #FC4B4B; }
+              &.notify { color: #FCBD4B; }
+              &.auth { color: #C08C57; }
+              &.user { color: #D481DC; }
+            }
           }
         }
 
