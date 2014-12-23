@@ -156,4 +156,11 @@
     </ul>
   </section>
 
+  <!-- no permissions -->
+  <section class="body" ng-hide="nC.user.can('user.view.all') || nC.user.can('token.view')">
+    <h3 style="text-align:center;margin:32px;">
+      Well, this is awkward. You don't have permission to see any settings page.
+    </h3>
+  </section>
+
 </div>
