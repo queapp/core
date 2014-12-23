@@ -6744,7 +6744,8 @@ ul.edit-data li.control .delete-control {
     margin-left: 0;
   }
 }
-.login-dialog input[type=text] {
+.login-dialog input[type=text],
+.login-dialog input[type=password] {
   background: #f0f0f0;
   border: 2px solid #fefefe;
   border-radius: 3px;
@@ -6757,20 +6758,25 @@ ul.edit-data li.control .delete-control {
   outline: none;
   transition: all 0.5s ease;
 }
-.login-dialog input[type=text]:focus {
+.login-dialog input[type=text]:focus,
+.login-dialog input[type=password]:focus {
   background: #fefefe;
   border: 2px solid #f0f0f0;
 }
-.login-dialog input[type=text]::-webkit-input-placeholder {
+.login-dialog input[type=text]::-webkit-input-placeholder,
+.login-dialog input[type=password]::-webkit-input-placeholder {
   color: #c8c8c8;
 }
-.login-dialog input[type=text].username {
+.login-dialog input[type=text].username,
+.login-dialog input[type=password].username {
   margin-top: 32px;
 }
-.login-dialog input[type=text].password {
+.login-dialog input[type=text].password,
+.login-dialog input[type=password].password {
   margin-bottom: 20px;
 }
 .login-dialog input[type=text],
+.login-dialog input[type=password],
 .login-dialog .btn {
   width: 500px;
   font-size: 18.2px;
@@ -6778,6 +6784,7 @@ ul.edit-data li.control .delete-control {
   display: block;
 }
 .login-dialog input[type=text].bad,
+.login-dialog input[type=password].bad,
 .login-dialog .btn.bad {
   border-color: #fc4b4b;
 }
