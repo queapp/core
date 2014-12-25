@@ -31,7 +31,7 @@ app.controller("KeysController", function($scope, $http) {
 
   // update all key validations
   this.validateAll = function() {
-    root.validated.sparktoken = root.keys.sparktoken.length === 40;
+    root.validated.sparktoken = (root.keys.sparktoken || '').length === 40;
   }
 
 });
