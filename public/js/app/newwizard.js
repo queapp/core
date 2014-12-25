@@ -66,7 +66,13 @@ app.controller("newWizardController", function($scope, $http, loginService) {
           url: host+"/users/add",
           data: JSON.stringify({
             username: root.info.userMadeUsername,
-            pass: root.info.userMadePassword
+            pass: root.info.userMadePassword,
+            permissions: [
+              "thing.*",
+              "block.*",
+              "notify.*",
+              "token.*"
+            ]
           })
         });
 
