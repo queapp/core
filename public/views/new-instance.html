@@ -53,8 +53,14 @@
   </section>
 
 
-  <nav class="wizard-nav">
-    <a href class="btn btn-lg btn-primary pull-left" ng-click="wC.prevPage()" ng-disabled="wC.page < 1">
+  <nav class="wizard-nav text-center">
+    <a 
+      href 
+      class="btn btn-lg btn-primary pull-left" 
+      ng-click="wC.prevPage()" 
+      ng-disabled="wC.page < 1"
+      ng-hide="wC.pageis(0)"
+      >
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
     <a 
@@ -62,8 +68,19 @@
       class="btn btn-lg btn-primary pull-right" 
       ng-click="wC.nextPage()" 
       ng-disabled="!wC.canGoToNextPage()"
+      ng-hide="wC.pageis(0)"
       >
       <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+
+    <!-- start button -->
+    <a 
+      href 
+      class="btn btn-lg btn-primary" 
+      ng-click="wC.nextPage()" 
+      ng-show="wC.pageis(0)"
+      >
+      Start<span class="glyphicon glyphicon-chevron-right"></span>
     </a>
   </nav>
 
