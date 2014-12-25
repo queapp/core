@@ -1,20 +1,43 @@
-<div class="que-setup">
+<div class="que-setup" ng-controller="newWizardController as wC">
 
-  <h1>Welcome to Que!</h1>
+  <section class="jumbotron" ng-show="wC.pageis(0)">
+    <h1>Welcome to Que!</h1>
+  </section>
 
-  <section>
+
+  <section ng-show="wC.pageis(1)">
     <h2>New Admin User</h2>
     <p>
       We're going to create a superadmin user - you shouldn't need to log in
       as the superadmin unless you have problems down the road. Type in a really
       secure password, because the superadmin has permission to do anything.
     </p>
-    <input type="text" placeholder="Password" />
+    <div class="form-group">
+      <div class="input-group">
+        <!-- <label>Username</label> -->
+        <input type="text" placeholder="Username" value="superadmin" disabled />
+      </div>
+      <div class="input-group">
+        <!-- <label>Password</label> -->
+        <input type="text" placeholder="Password" ng-model="wC.info.superAdminPassword" />
+      </div>
+    </div>
   </section>
 
-  <section>
+
+  <section ng-show="wC.pageis(2)">
     <h2>New user</h2>
     <input type="text" placeholder="Password" />
   </section>
+
+
+  <nav class="wizard-nav">
+    <a href class="btn btn-lg btn-primary pull-left" ng-click="wC.prevPage()" ng-disabled="wC.page < 1">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a href class="btn btn-lg btn-primary pull-right" ng-click="wC.nextPage()" ng-disabled="!wC.canGoToNextPage()">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </nav>
 
 </div>

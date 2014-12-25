@@ -5902,6 +5902,8 @@ button.close {
 .login-dialog:after,
 .settings:before,
 .settings:after,
+.que-setup section:before,
+.que-setup section:after,
 div.view-container:before,
 div.view-container:after {
   content: " ";
@@ -5924,6 +5926,7 @@ div.view-container:after {
 .modal-footer:after,
 .login-dialog:after,
 .settings:after,
+.que-setup section:after,
 div.view-container:after {
   clear: both;
 }
@@ -6203,6 +6206,26 @@ div.view-container:after {
 .container.dashboard-overview .second div.pane .body {
   list-style-type: none;
   padding-left: 10px;
+}
+.fancy-box {
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
+}
+.fancy-box:focus {
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
+}
+.fancy-box::-webkit-input-placeholder {
+  color: #c8c8c8;
 }
 .notif.ng-enter {
   -webkit-transition: 0.5s;
@@ -7234,6 +7257,80 @@ textarea.settings .newuser-modal input {
 }
 .validated .glyphicon-remove {
   color: #FC4B4B;
+}
+.que-setup section {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 32px;
+  font-size: 21px;
+}
+@media (min-width: 768px) {
+  .que-setup section {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .que-setup section {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .que-setup section {
+    width: 1170px;
+  }
+}
+.que-setup section > .navbar-header,
+.que-setup section > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .que-setup section > .navbar-header,
+  .que-setup section > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.que-setup section input[type=text] {
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
+  width: 100%;
+}
+.que-setup section input[type=text]:focus {
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
+}
+.que-setup section input[type=text]::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.que-setup section .form-group {
+  max-width: 500px;
+  margin: 20px auto 0px auto;
+}
+.que-setup section .form-group .input-group {
+  width: 100%;
+  margin: 5px 0px;
+}
+.que-setup .jumbotron {
+  background: transparent;
+}
+.que-setup .jumbotron h1 {
+  text-align: center;
+}
+.que-setup nav.wizard-nav {
+  width: 150px;
+  margin: 0px auto;
 }
 body {
   height: 100%;

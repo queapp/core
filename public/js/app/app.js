@@ -50,7 +50,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
 
   // check if this is a new que instance
   this.user.isNewInstance(function(newInstance) {
-    console.log(newInstance)
+    // console.log(newInstance)
   });
 
   // get version from backend
