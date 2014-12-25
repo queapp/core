@@ -2,8 +2,8 @@ app.controller("LoginController", function($scope, $http, loginService) {
 
   var root = this;
 
-  this.username = "superadmin";
-  this.password = "root";
+  this.username = "";
+  this.password = "";
 
   this.badlogin = false;
 
