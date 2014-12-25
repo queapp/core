@@ -27,16 +27,26 @@ app.config(['$routeProvider', function($routeProvider) {
       }).
       when('/settings', {
         templateUrl: 'views/settings-list.html',
-        controller: 'ServicesController'
+        controller: 'KeysController'
       }).
-      otherwise({redirectTo: '/dash'});
+      when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+      }).
+      otherwise({redirectTo: '/login'});
 }]);
 
-app.controller("navController", function($scope, $rootScope, $http) {
+app.controller("navController", function($scope, $rootScope, $http, loginService, $location) {
   var root = this;
 
   this.pageId = 1;
   this.version = "";
+
+  // log the original route
+  this.firstRoute = null;
+
+  // reference to loginservice
+  this.user = loginService;
 
   // get version from backend
   $http({
@@ -47,6 +57,27 @@ app.controller("navController", function($scope, $rootScope, $http) {
   });
 
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    // if this is the first route we go to, log it
+    // why? later on once auth is done, we will redirect back here.
+    if (root.firstRoute === null && current !== undefined )
+      root.firstRoute = current.$$route.originalPath;
+
+    // test to see if the authtoken is persisted
+    if (root.user && root.user.auth.username === null && sessionStorage && sessionStorage.queKey) {
+      root.user.loginWithKey(sessionStorage.queKey, function(data) {
+        root.user.auth = data;
+
+        // serve the dash, because after logging in the login page isn't needed
+        if ($location.url() === "/login") $location.url( root.firstRoute || "/dash" );
+      });
+    };
+
+    // if the user isn't logged in, redirect them to the login page
+    if (root.user && root.user.auth.username === null && next.$$route.originalPath !== "/login") $location.url("/login");
+
+    // but, if the user is on the login page, redirect them to the dash as long as their logged in
+    if (root.user.auth.username !== null && $location.url() === "/login") $location.url("/dash");
+
     // which page?
     switch(next.$$route.originalPath) {
       case "/dash":
@@ -96,6 +127,9 @@ app.controller("navController", function($scope, $rootScope, $http) {
         break;
       case 4:
         return navColorBrown;
+        break;
+      default:
+        return "transparent";
         break;
     }
   }

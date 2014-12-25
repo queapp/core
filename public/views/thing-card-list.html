@@ -9,7 +9,14 @@
         A thing is a physical object that Que can control.
         <span>A garden, an Autofeeding pet dish, or a 3d Printer</span>
         <br/>
-        <a href class="btn btn-success btn-lg" data-toggle="modal" data-target="#addThingModal">Add a thing</a>
+        <a
+          href
+          class="btn btn-success btn-lg"
+          data-toggle="modal"
+          data-target="#addThingModal"
+          ng-show="nC.user.can('thing.create')"
+          >Add a thing
+        </a>
       </div>
     </div>
 
@@ -20,7 +27,8 @@
       class="add-button"
       ng-show="tC.things.length !== 0"
       data-toggle="modal"
-      data-target="#addThingModal">
+      data-target="#addThingModal"
+      ng-show="nC.user.can('thing.create')">
       +
     </div>
 
@@ -226,21 +234,37 @@
           <small>{{thing.desc}}</small>
         </h3>
 
-        <button class="btn btn-primary pull-right" ng-click="tC.editMode = thing.id" ng-hide="tC.editMode === thing.id">
+        <button
+          class="btn btn-primary pull-right"
+          ng-click="tC.editMode = thing.id"
+          ng-hide="tC.editMode === thing.id"
+          ng-disabled="!nC.user.can('thing.edit.'+thing.id)"
+          >
           Edit
         </button>
         <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode === thing.id">
           Done
         </button>
-        <button class="btn btn-danger pull-right" ng-click="tC.removeThing(thing.id, $index)" ng-init="tC.editMode = false" ng-show="tC.editMode === thing.id">
+        <button
+          class="btn btn-danger pull-right"
+          ng-click="tC.removeThing(thing.id, $index)"
+          ng-init="tC.editMode = false"
+          ng-show="tC.editMode === thing.id"
+          ng-disabled="!nC.user.can('thing.delete.'+thing.id)"
+          >
           Delete
         </button>
 
 
         <!-- list of toggleable attributes -->
         <ul class="card-form clearfix edit-data">
-          <li class="control" ng-repeat="(k, v) in thing.data">
-            <button class="btn btn-danger delete-control" ng-click="tC.deleteControl(thing.id, k)" ng-show="tC.editMode === thing.id">
+          <li class="control" ng-repeat="(k, v) in thing.data" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+            <button
+              class="btn btn-danger delete-control"
+              ng-click="tC.deleteControl(thing.id, k)"
+              ng-show="tC.editMode === thing.id"
+              ng-disabled="!nC.user.can('thing.control.delete.'+thing.id)"
+              >
               Delete
             </button>
             <label
@@ -258,7 +282,7 @@
               ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
               placeholder="{{k}}"
               value="{{tC.isButton(v) &amp;&amp; v.value}}"
-              ng-disabled="v.readonly"
+              ng-disabled="v.readonly || !nC.user.can('thing.control.write.'+k+'.'+thing.id)"
               ng-hide="tC.getTypeFor(v) == 'canvas'"
             />
             <canvas ng-show="tC.getTypeFor(v) == 'canvas'" class="canvas-{{thing.id}}-{{k}}" style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};"></canvas>
@@ -267,17 +291,29 @@
           <!-- new control -->
           <li class="new-control row" ng-show="tC.editMode === thing.id">
             <div class="col-md-6">
-              <input type="text" class="col-md-6" placeholder="Name" ng-model="tC.newControl.name"/>
+              <input
+                type="text"
+                class="col-md-6"
+                placeholder="Name"
+                ng-model="tC.newControl.name"
+                ng-disabled="!nC.user.can('thing.control.create.'+thing.id)"
+              />
             </div>
             <div class="col-md-4">
-              <select class="form-control" ng-model="tC.newControl.type">
+              <select class="form-control" ng-model="tC.newControl.type" ng-disabled="!nC.user.can('thing.control.create.'+thing.id)">
                 <option value="string" selected>String</option>
                 <option value="bool">Button</option>
                 <option value="number">Number</option>
                 <option value="canvas">Canvas</option>
               </select>
             </div>
-            <button class="col-md-2" ng-disabled="(!tC.newControl.type || !tC.newControl.name)" ng-click="tC.addControl(thing.id)">Add</button>
+            <button
+              class="col-md-2"
+              ng-disabled="!(nC.user.can('thing.control.create.'+thing.id) && tC.newControl.type && tC.newControl.name)"
+              ng-click="tC.addControl(thing.id)"
+              >
+              Add
+            </button>
           </li>
 
         </ul>

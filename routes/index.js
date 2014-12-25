@@ -1,12 +1,14 @@
 var ThingServer = require("../controllers/things");
 var ServiceServer = require("../controllers/services");
 var BlockServer = require("../controllers/blocks");
+var UserServer = require("../controllers/users");
 var notify = require("../controllers/notify");
 var _ = require("underscore");
 
 var pjson = require('../package.json');
 
 var Token = require("../models/token");
+var userCan = require("../controllers/auth").canMiddleware;
 
 // create all of the routes for the application
 module.exports = function(app, server, argv) {
@@ -17,7 +19,7 @@ module.exports = function(app, server, argv) {
   });
 
   // get all auth tokens to 3rd party services
-  app.get("/tokens", function(req, res) {
+  app.get("/tokens", userCan("token.view"), function(req, res) {
     // get all tokens specified in argumnts / variables
     all = _.extend(process.env, argv);
     matches = {};
@@ -41,7 +43,7 @@ module.exports = function(app, server, argv) {
   });
 
   // push all auth tokens on client update
-  app.put("/tokens", function(req, res) {
+  app.put("/tokens", userCan("token.edit"), function(req, res) {
     if (req.body) {
       // for each token, upsert the db (add/update if needed)
       _.each(req.body, function(v, k) {
@@ -81,6 +83,7 @@ module.exports = function(app, server, argv) {
   var things = new ThingServer();
   var services = new ServiceServer();
   var blocks = new BlockServer(things, services, notify);
+  var users = new UserServer();
 
   // web socket routes
   var io = require("./sockets.js")(app, server, things, services);
@@ -92,7 +95,11 @@ module.exports = function(app, server, argv) {
   require("./things")(app, things);
   require("./services")(app, services);
   require("./blocks")(app, blocks);
+  require("./users")(app, users);
   require("./notify")(app, notify);
+
+  // auth routes
+  require("./auth")(app);
 
   return io;
 }

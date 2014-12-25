@@ -5898,8 +5898,12 @@ button.close {
 .panel-body:after,
 .modal-footer:before,
 .modal-footer:after,
+.login-dialog:before,
+.login-dialog:after,
 .settings:before,
-.settings:after {
+.settings:after,
+div.view-container:before,
+div.view-container:after {
   content: " ";
   display: table;
 }
@@ -5918,7 +5922,9 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-footer:after,
-.settings:after {
+.login-dialog:after,
+.settings:after,
+div.view-container:after {
   clear: both;
 }
 .center-block {
@@ -6278,12 +6284,14 @@ button.close {
   color: #FFF;
 }
 .navbar-que .navbar-nav li a,
-.navbar-que .navbar-nav a:hover {
+.navbar-que .navbar-nav a:hover,
+.navbar-que .navbar-nav a:focus {
   background: transparent;
   color: #000;
 }
 .navbar-que .navbar-nav .active a,
-.navbar-que .navbar-nav .active a:hover {
+.navbar-que .navbar-nav .active a:hover,
+.navbar-que .navbar-nav .active a:focus {
   font-weight: bold;
   background: transparent;
   color: #000;
@@ -6703,6 +6711,89 @@ ul.edit-data li.control .delete-control {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.login-dialog {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 42px;
+  padding: 16px;
+}
+@media (min-width: 768px) {
+  .login-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .login-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .login-dialog {
+    width: 1170px;
+  }
+}
+.login-dialog > .navbar-header,
+.login-dialog > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .login-dialog > .navbar-header,
+  .login-dialog > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.login-dialog input[type=text],
+.login-dialog input[type=password] {
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
+}
+.login-dialog input[type=text]:focus,
+.login-dialog input[type=password]:focus {
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
+}
+.login-dialog input[type=text]::-webkit-input-placeholder,
+.login-dialog input[type=password]::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.login-dialog input[type=text].username,
+.login-dialog input[type=password].username {
+  margin-top: 32px;
+}
+.login-dialog input[type=text].password,
+.login-dialog input[type=password].password {
+  margin-bottom: 20px;
+}
+.login-dialog input[type=text],
+.login-dialog input[type=password],
+.login-dialog .btn {
+  width: 500px;
+  font-size: 18.2px;
+  margin: 10px auto;
+  display: block;
+}
+.login-dialog input[type=text].bad,
+.login-dialog input[type=password].bad,
+.login-dialog .btn.bad {
+  border-color: #fc4b4b;
+}
+.login-dialog h1 {
+  text-align: center;
+  font-size: 42px;
+}
 .thing-add.page-3.page-spark {
   position: relative;
   background-image: url("../img/thingpins.svg");
@@ -6845,11 +6936,27 @@ textarea.thing-add.page-3.page-spark ul li input {
     margin-left: 0;
   }
 }
-.settings section.body {
+.settings .body {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin: 8px 0px;
+}
+@media (min-width: 992px) {
+  .settings .body {
+    float: left;
+    width: 100%;
+  }
+}
+.settings .body:first-child {
+  margin-top: 0px;
+}
+.settings .body ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+.settings section.body {
   border: 1px solid #ebedee;
   box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
   -webkit-border-radius: 2px;
@@ -6860,15 +6967,261 @@ textarea.thing-add.page-3.page-spark ul li input {
   background-clip: padding-box;
   background: #FFF;
 }
-@media (min-width: 992px) {
-  .settings section.body {
-    float: left;
-    width: 100%;
+.settings ul.body {
+  padding: 0px;
+}
+.settings .editpermissions-modal .permissions-link {
+  float: right !important;
+  font-size: 14px;
+  margin-right: 12px;
+}
+.settings .editpermissions-modal .modal-body .row {
+  padding: 0px 15px 15px 15px;
+}
+.settings .editpermissions-modal .modal-body .row input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  position: relative;
+  float: left;
+  width: 83.33333333%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  z-index: 100;
+  max-width: 470px;
+}
+.settings .editpermissions-modal .modal-body .row input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.settings .editpermissions-modal .modal-body .row input::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.settings .editpermissions-modal .modal-body .row input:-ms-input-placeholder {
+  color: #777777;
+}
+.settings .editpermissions-modal .modal-body .row input::-webkit-input-placeholder {
+  color: #777777;
+}
+.settings .editpermissions-modal .modal-body .row input[disabled],
+.settings .editpermissions-modal .modal-body .row input[readonly],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.settings .editpermissions-modal .modal-body .row input {
+  height: auto;
+}
+@media (min-width: 768px) {
+  .settings .editpermissions-modal .modal-body .row input {
+    margin-right: 3px;
   }
 }
-.settings section.body ul {
-  padding-left: 0px;
-  list-style-type: none;
+.settings .editpermissions-modal .modal-body .row input.invalid {
+  color: #fc4b4b;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+  position: relative;
+  float: left;
+  width: 16.66666667%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn:active:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active,
+.open > .dropdown-toggle.settings .editpermissions-modal .modal-body .row .add-btn {
+  color: #ffffff;
+  background-color: #1991fb;
+  border-color: #047fec;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.active,
+.open > .dropdown-toggle.settings .editpermissions-modal .modal-body .row .add-btn {
+  background-image: none;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled],
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:hover,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:hover,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:focus,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:focus,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled:active,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled]:active,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn:active,
+.settings .editpermissions-modal .modal-body .row .add-btn.disabled.active,
+.settings .editpermissions-modal .modal-body .row .add-btn[disabled].active,
+fieldset[disabled] .settings .editpermissions-modal .modal-body .row .add-btn.active {
+  background-color: #4ba9fc;
+  border-color: #329dfc;
+}
+.settings .editpermissions-modal .modal-body .row .add-btn .badge {
+  color: #4ba9fc;
+  background-color: #ffffff;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  height: 300px;
+  overflow-y: auto;
+  padding: 8px;
+  margin-top: 12px;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable blockquote {
+  border-color: #ddd;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li {
+  font-size: 16.8px;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li button {
+  float: right !important;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.thing {
+  color: #42BF3F;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.service {
+  color: #4BA9FC;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.block {
+  color: #FC4B4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.notify {
+  color: #FCBD4B;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.auth {
+  color: #C08C57;
+}
+.settings .editpermissions-modal .modal-body .row .scrollable li span.permission.user {
+  color: #D481DC;
+}
+.settings .newuser-modal input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.settings .newuser-modal input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.settings .newuser-modal input::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.settings .newuser-modal input:-ms-input-placeholder {
+  color: #777777;
+}
+.settings .newuser-modal input::-webkit-input-placeholder {
+  color: #777777;
+}
+.settings .newuser-modal input[disabled],
+.settings .newuser-modal input[readonly],
+fieldset[disabled] .settings .newuser-modal input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.settings .newuser-modal input {
+  height: auto;
 }
 .together .form-control {
   border-right: 0px;
@@ -6886,6 +7239,61 @@ body {
   height: 100%;
   background: #e9edf0;
   overflow-y: scroll;
+}
+body.white {
+  background: #fefefe;
+}
+div.view-container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  div.view-container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  div.view-container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  div.view-container {
+    width: 1170px;
+  }
+}
+div.view-container > .navbar-header,
+div.view-container > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  div.view-container > .navbar-header,
+  div.view-container > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+div[ng-view].ng-enter,
+div[ng-view].ng-leave {
+  -webkit-transition: 0.35s linear all;
+  transition: 0.35s linear all;
+  position: absolute;
+}
+div[ng-view].ng-enter {
+  opacity: 0;
+}
+div[ng-view].ng-enter.ng-enter-active {
+  opacity: 1;
+}
+div[ng-view].ng-leave {
+  opacity: 1;
+}
+div[ng-view].ng-leave.ng-leave-active {
+  opacity: 0;
 }
 ul.card-list {
   list-style-type: none;
