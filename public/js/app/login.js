@@ -17,6 +17,7 @@ app.controller("LoginController", function($scope, $http, loginService) {
 app.factory("loginService", function($http, $location) {
   return {
     auth: {username: null},
+    newInstance: false,
 
     login: function(user, pass, callback) {
       var root = this;
@@ -103,6 +104,18 @@ app.factory("loginService", function($http, $location) {
       } else {
         return false;
       }
+    },
+
+    // is this a new que instance?
+    isNewInstance: function(callback) {
+      var root = this;
+      $http({
+        method: "GET",
+        url: host+"/users/any"
+      }).success(function(data) {
+        root.newInstance = data.newInstance;
+        callback && callback(data.newInstance);
+      });
     }
 
   }
