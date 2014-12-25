@@ -2,7 +2,10 @@ app.controller("newWizardController", function($scope) {
   this.page = 0;
 
   this.info = {
-    superAdminPassword: ""
+    superAdminPassword: "",
+
+    userMadeUsername: "",
+    userMadePassword: ""
   }
 
   this.nextPage = function() { this.page++; };
@@ -12,6 +15,7 @@ app.controller("newWizardController", function($scope) {
   // can the user move on to the next page?
   // used for the next button
   this.canGoToNextPage = function() {
+    console.log(this.page)
     switch(this.page) {
       case 0:
         return true;
@@ -20,9 +24,11 @@ app.controller("newWizardController", function($scope) {
         return this.info.superAdminPassword.length > 5;
         break;
       case 2:
-        return true;
+        return this.info.userMadeUsername.length > 3 && 
+          this.info.userMadeUsername.indexOf(' ') === -1 && 
+          this.info.userMadePassword.length > 5;
         break;
     };
   };
-  
+
 });

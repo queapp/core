@@ -26,8 +26,21 @@
 
 
   <section ng-show="wC.pageis(2)">
-    <h2>New user</h2>
-    <input type="text" placeholder="Password" />
+    <h2>Your Account</h2>
+    <p>
+      Also, you should create a user account for yourself. This will 
+      let you login and access Que.
+    </p>
+    <div class="form-group">
+      <div class="input-group">
+        <!-- <label>Username</label> -->
+        <input type="text" placeholder="Username" ng-model="wC.info.userMadeUsername" />
+      </div>
+      <div class="input-group">
+        <!-- <label>Password</label> -->
+        <input type="text" placeholder="Password" ng-model="wC.info.userMadePassword" />
+      </div>
+    </div>
   </section>
 
 
