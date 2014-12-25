@@ -57,7 +57,12 @@
     <a href class="btn btn-lg btn-primary pull-left" ng-click="wC.prevPage()" ng-disabled="wC.page < 1">
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
-    <a href class="btn btn-lg btn-primary pull-right" ng-click="wC.nextPage()" ng-disabled="!wC.canGoToNextPage()">
+    <a 
+      href 
+      class="btn btn-lg btn-primary pull-right" 
+      ng-click="wC.nextPage()" 
+      ng-disabled="!wC.canGoToNextPage()"
+      >
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
   </nav>

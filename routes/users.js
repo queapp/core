@@ -10,6 +10,28 @@ module.exports = function(app, users) {
     });
   });
 
+  // add superuser
+  app.post("/users/addsuperuser", function(req, res, next) {
+
+    // is there users?
+    users.get(null, function(data) {
+      if (!data.length && req.body.pass) {
+        // add user
+        users.add({
+          username: "superadmin",
+          pass: req.body.pass,
+          permissions: ["*"]
+        }, function(err, d) {
+          err &&
+            res.send( users.createResponsePacket({error: err}) ) ||
+            res.send( users.createResponsePacket() );
+        });
+      } else {
+        res.send("Permission Denied.");
+      };
+    });
+  });
+
   // get all users
   app.get("/users/all", userCan("user.view.all"), function(req, res, next) {
     users.get(null, function(data) {
