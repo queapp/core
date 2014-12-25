@@ -2,6 +2,14 @@ var userCan = require("../controllers/auth").canMiddleware;
 
 module.exports = function(app, users) {
 
+  // is this a new que instance (with zero users?)
+  app.get("/users/any", function(req, res) {
+    users.get(null, function(data) {
+      res.status(200);
+      res.end(JSON.stringify({newInstance: !data.length}));
+    });
+  });
+
   // get all users
   app.get("/users/all", userCan("user.view.all"), function(req, res, next) {
     users.get(null, function(data) {
