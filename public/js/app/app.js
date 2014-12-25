@@ -48,6 +48,11 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   // reference to loginservice
   this.user = loginService;
 
+  // check if this is a new que instance
+  this.user.isNewInstance(function(newInstance) {
+    // console.log(newInstance)
+  });
+
   // get version from backend
   $http({
     method: "get",

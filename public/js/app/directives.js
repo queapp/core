@@ -1,11 +1,11 @@
 var app = angular.module("QueGui");
 
-// app.directive("thingCardList", function() {
-//   return {
-//     restrict: 'E',
-//     templateUrl: "js/directives/thing-card-list.html"
-//   }
-// });
+app.directive("newInstance", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "views/new-instance.html"
+  }
+});
 //
 // app.directive("serviceCardList", function() {
 //   return {

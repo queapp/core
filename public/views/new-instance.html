@@ -1,0 +1,90 @@
+<div class="que-setup" ng-controller="newWizardController as wC">
+
+  <section class="jumbotron" ng-show="wC.pageis(0)">
+    <h1>Welcome to Que!</h1>
+  </section>
+
+
+  <section ng-show="wC.pageis(1)">
+    <h2>New Admin User</h2>
+    <p>
+      We're going to create a superadmin user - you shouldn't need to log in
+      as the superadmin unless you have problems down the road. Type in a really
+      secure password, because the superadmin has permission to do anything.
+    </p>
+    <div class="form-group">
+      <div class="input-group">
+        <!-- <label>Username</label> -->
+        <input type="text" placeholder="Username" value="superadmin" disabled />
+      </div>
+      <div class="input-group">
+        <!-- <label>Password</label> -->
+        <input type="text" placeholder="Password" ng-model="wC.info.superAdminPassword" />
+      </div>
+    </div>
+  </section>
+
+
+  <section ng-show="wC.pageis(2)">
+    <h2>Your Account</h2>
+    <p>
+      Also, you should create a user account for yourself. This will 
+      let you login and access Que. This user will be given (by default)
+      these permissions: <code>thing.*</code>, <code>block.*</code>, 
+      <code>token.*</code>, and <code>notify.*</code>.
+    </p>
+    <div class="form-group">
+      <div class="input-group">
+        <!-- <label>Username</label> -->
+        <input type="text" placeholder="Username" ng-model="wC.info.userMadeUsername" />
+      </div>
+      <div class="input-group">
+        <!-- <label>Password</label> -->
+        <input type="text" placeholder="Password" ng-model="wC.info.userMadePassword" />
+      </div>
+    </div>
+  </section>
+
+  <section class="jumbotron" ng-show="wC.pageis(3)">
+    <h1>Well, that's it.</h1>
+    <p>
+      On the next screen, login to Que using the username and password you created.
+      Once you've logged in, take a look at the settings page and fill in the auth
+      tokens for the various services. Until you do this, these devices / services
+      won't work.
+    </p>
+  </section>
+
+
+  <nav class="wizard-nav text-center">
+    <a 
+      href 
+      class="btn btn-lg btn-primary pull-left" 
+      ng-click="wC.prevPage()" 
+      ng-disabled="wC.page < 1"
+      ng-hide="wC.pageis(0)"
+      >
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a 
+      href 
+      class="btn btn-lg btn-primary pull-right" 
+      ng-click="wC.nextPage()" 
+      ng-disabled="!wC.canGoToNextPage()"
+      ng-hide="wC.pageis(0)"
+      >
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+
+    <!-- start button -->
+    <a 
+      href 
+      class="btn btn-lg btn-primary" 
+      ng-click="wC.nextPage()" 
+      ng-show="wC.pageis(0)"
+      >
+      Start<span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </nav>
+
+</div>

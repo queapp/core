@@ -1,4 +1,6 @@
-<div class="login" ng-controller="LoginController as lC">
+<!-- login dialog -->
+<!-- only show this when this isn't a new que instance -->
+<div class="login" ng-controller="LoginController as lC" ng-hide="nC.user.newInstance">
   <div class="login-dialog form-group">
     <h1>Sign In to Que</h1>
     <input
@@ -19,3 +21,7 @@
     <button class="btn btn-primary btn-lg" ng-click="lC.login()">Login</button>
   </div>
 </div>
+
+<!-- new instance wizard -->
+<!-- show this instead of the login dialog -->
+<new-instance ng-show="nC.user.newInstance"></new-instance>
