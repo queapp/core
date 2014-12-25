@@ -5,3 +5,4 @@ Welcome to Que's Documentation
 [Code Examples](/que-iot/code-examples)
 [Environment Variables](/que-iot/variables)
 [Add a Spark](/que-iot/addspark)
+[Permissions](/que-iot/permissions)
