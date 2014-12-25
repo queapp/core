@@ -29,7 +29,9 @@
     <h2>Your Account</h2>
     <p>
       Also, you should create a user account for yourself. This will 
-      let you login and access Que.
+      let you login and access Que. This user will be given (by default)
+      these permissions: <code>thing.*</code>, <code>block.*</code>, 
+      <code>token.*</code>, and <code>notify.*</code>.
     </p>
     <div class="form-group">
       <div class="input-group">
@@ -41,6 +43,13 @@
         <input type="text" placeholder="Password" ng-model="wC.info.userMadePassword" />
       </div>
     </div>
+  </section>
+
+  <section class="jumbotron" ng-show="wC.pageis(3)">
+    <h1>Well, that's it.</h1>
+    <p>
+      On the next screen, login to Que using the username and password you created.
+    </p>
   </section>
 
 
