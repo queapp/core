@@ -74,14 +74,41 @@
       </h2>
 
       <!-- delete button -->
-      <button class="btn btn-danger pull-right" ng-click="bC.deleteBlock(block);">Delete</button>
+      <button 
+        class="btn btn-danger pull-right" 
+        ng-click="bC.deleteBlock(block);"
+        ng-disabled="!nC.user.can('block.delete.'+block.id)"
+        >
+        Delete
+      </button>
 
       <!-- code edit button -->
-      <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#{{block.id}}-code-modal">Edit Code</button>
+      <button 
+        class="btn btn-primary pull-right" 
+        data-toggle="modal" 
+        data-target="#{{block.id}}-code-modal"
+        ng-disabled="!(nC.user.can('block.code.view.'+block.id) || nC.user.can('block.code.edit.'+block.id))"
+        >
+        Edit Code
+      </button>
 
       <!-- disable button -->
-      <button class="btn btn-warning pull-right" ng-click="bC.setBlockDisabled(block, true);" ng-hide="block.disable">Disable</button>
-      <button class="btn btn-default pull-right" ng-click="bC.setBlockDisabled(block, false);" ng-show="block.disable">Enable</button>
+      <button 
+        class="btn btn-warning pull-right" 
+        ng-click="bC.setBlockDisabled(block, true);" 
+        ng-hide="block.disable"
+        ng-disabled="!nC.user.can('block.disable.'+block.id)"
+        >
+        Disable
+      </button>
+      <button 
+        class="btn btn-default pull-right" 
+        ng-click="bC.setBlockDisabled(block, false);" 
+        ng-show="block.disable"
+        ng-disabled="!nC.user.can('block.disable.'+block.id)"
+        >
+        Enable
+      </button>
 
       <!-- Modal to update code for block -->
       <div class="modal fade" id="{{block.id}}-code-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -107,7 +134,12 @@
 
               <!-- code editor -->
               <label for="textarea">Block Code:</label>
-              <textarea ng-model="block.devCode" placeholder="Blocks are written in javascript."></textarea>
+              <textarea 
+                ng-model="block.devCode" 
+                placeholder="Blocks are written in javascript."
+                ng-disabled="nC.user.can('block.code.view.'+block.id) && !nC.user.can('block.code.edit.'+block.id)"
+                >
+              </textarea>
 
               <!-- log area -->
               <pre class="log-space">{{bC.formatLogs(block)}}</pre>
@@ -118,7 +150,14 @@
               <button type="button" class="btn btn-default pull-left" ng-click="block.log=[]">Clear Log</button>
 
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" ng-click="bC.updateBlock(block);">Save</button>
+              <button 
+                type="button" 
+                class="btn btn-primary" 
+                ng-click="bC.updateBlock(block);"
+                ng-disabled="!nC.user.can('block.code.edit.'+block.id)"
+                >
+                Save
+              </button>
             </div>
 
           </div>
