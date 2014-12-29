@@ -1,0 +1,10 @@
+<div class="container">
+
+  <div class="query-box" ng-show="qC.results.status">
+    <span class="glyphicon glyphicon-ok main-icon" ng-show="qC.results.status == 'OK'"></span>
+    <span class="glyphicon glyphicon-remove main-icon" ng-show="qC.results.status !== 'OK'"></span>
+
+    <p>{{qC.results.msg || "Request completed successfully"}}</p>
+  </div>
+
+</div>

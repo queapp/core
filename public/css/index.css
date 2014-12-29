@@ -7367,6 +7367,37 @@ textarea.settings .newuser-modal input {
   width: 150px;
   margin: 0px auto;
 }
+.query-box {
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
+  background: #FFF;
+  min-height: 256px;
+  padding: 50px 40px;
+}
+.query-box:focus {
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
+}
+.query-box::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.query-box .main-icon {
+  font-size: 96px;
+  float: left !important;
+}
+.query-box p {
+  margin-left: 148px;
+  margin-top: 12px;
+}
 body {
   height: 100%;
   background: #e9edf0;
