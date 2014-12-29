@@ -101,6 +101,9 @@ module.exports = function(app, server, argv) {
   // auth routes
   require("./auth")(app);
 
+  // natural query routes
+  require("./nlp-query")(app, things);
+
   return io;
 }
 

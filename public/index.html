@@ -19,69 +19,77 @@
     <![endif]-->
   </head>
   <body ng-app="QueGui" ng-controller="navController as nC" ng-class="{white: !nC.user.auth.username}">
+    <div ng-controller="QueryResultsController as qC">
 
-    <!-- header -->
-    <nav class="navbar navbar-default navbar-que" role="navigation" ng-show="nC.user.auth.username">
+      <!-- header -->
+      <nav class="navbar navbar-default navbar-que" role="navigation" ng-show="nC.user.auth.username">
 
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#" tooltip data-original-title="{{nC.version}}" data-placement="right">
-            <img src="img/logo.svg"/> <!-- logo -->
-          </a>
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" tooltip data-original-title="{{nC.version}}" data-placement="right">
+              <img src="img/logo.svg"/> <!-- logo -->
+            </a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-class="{active: nC.pageId == 0}">
+                <a href="#/dash">Dashboard</a>
+              </li>
+              <li ng-class="{active: nC.pageId == 1}">
+                <a href="#/things">Things</a>
+              </li>
+              <li ng-class="{active: nC.pageId == 2}">
+                <a href="#/services">Services</a>
+              </li>
+              <li ng-class="{active: nC.pageId == 3}">
+                <a href="#/blocks">Blocks</a>
+              </li>
+              <li ng-class="{active: nC.pageId == 4}">
+                <a href="#/settings">Settings</a>
+              </li>
+              <li ng-class="{active: $location.url() == '/login'}" ng-hide="nC.user.auth.username">
+                <a href="#/login">Login</a>
+              </li>
+              <li ng-show="nC.user.auth.username">
+                <a ng-click="nC.user.logout()">
+                  <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
+                  {{nC.user.auth.username}}
+                </a>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+
+
+        </div><!-- /.container-fluid -->
+
+        <h1>
+          {{nC.getPageTitle().title}}
+          <small class="">{{nC.getPageTitle().desc}}</small>
+        </h1>
+
+        <div class="search-container" ng-class="{hide: nC.pageId !== 0}">
+          <div class="container">
+            <input type="text" placeholder="What do you want Que to do?" ng-model="qC.queryText" />
+            <span class="glyphicon glyphicon-search" ng-click="qC.doQuery()" ng-show="qC.queryText.length"></span>
+          </div>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{active: nC.pageId == 0}">
-              <a href="#/dash">Dashboard</a>
-            </li>
-            <li ng-class="{active: nC.pageId == 1}">
-              <a href="#/things">Things</a>
-            </li>
-            <li ng-class="{active: nC.pageId == 2}">
-              <a href="#/services">Services</a>
-            </li>
-            <li ng-class="{active: nC.pageId == 3}">
-              <a href="#/blocks">Blocks</a>
-            </li>
-            <li ng-class="{active: nC.pageId == 4}">
-              <a href="#/settings">Settings</a>
-            </li>
-            <li ng-class="{active: $location.url() == '/login'}" ng-hide="nC.user.auth.username">
-              <a href="#/login">Login</a>
-            </li>
-            <li ng-show="nC.user.auth.username">
-              <a ng-click="nC.user.logout()">
-                <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
-                {{nC.user.auth.username}}
-              </a>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
+      </nav>
 
+      <div class="view-container">
+        <div ng-view></div>
+      </div>
 
-      </div><!-- /.container-fluid -->
-
-      <h1>
-        {{nC.getPageTitle().title}}
-        <small class="">{{nC.getPageTitle().desc}}</small>
-      </h1>
-
-    </nav>
-
-    <div class="view-container">
-      <div ng-view></div>
     </div>
-
-
     <!-- all javascript -->
     <script src="js/libs/jquery.min.js"></script>
     <script src="js/libs/jqueryui.min.js"></script>
@@ -110,6 +118,7 @@
 
     <script src="js/app/login.js"></script>
     <script src="js/app/newwizard.js"></script>
+    <script src="js/app/query-results.js"></script>
 
   </body>
 </html>
