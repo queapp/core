@@ -39,12 +39,6 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li>
-              <input type="text" class="form-control"/>
-            </li>
-          </ul>
-
           <ul class="nav navbar-nav navbar-right">
             <li ng-class="{active: nC.pageId == 0}">
               <a href="#/dash">Dashboard</a>
@@ -80,6 +74,13 @@
         {{nC.getPageTitle().title}}
         <small class="">{{nC.getPageTitle().desc}}</small>
       </h1>
+
+      <div class="search-container" ng-class="{hide: nC.pageId !== 0}">
+        <div class="container">
+          <input type="text" placeholder="What do you want Que to do?" />
+          <span class="glyphicon glyphicon-search"></span>
+        </div>
+      </div>
 
     </nav>
 
