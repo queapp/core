@@ -10,6 +10,7 @@
     "cowsay": "^1.0.3",
     "express": "4.x.x",
     "express-session": "^1.8.2",
+    "imperative-nlp": "0.0.1",
     "mime": "1.2.x",
     "minimist": "0.2.x",
     "mkdirp": "^0.5.0",
