@@ -79,7 +79,7 @@
         <div class="search-container" ng-class="{hide: nC.pageId !== 0}">
           <div class="container">
             <input type="text" placeholder="What do you want Que to do?" ng-model="qC.queryText" />
-            <span class="glyphicon glyphicon-search" ng-click="qC.doQuery()"></span>
+            <span class="glyphicon glyphicon-search" ng-click="qC.doQuery()" ng-show="qC.queryText.length"></span>
           </div>
         </div>
 
