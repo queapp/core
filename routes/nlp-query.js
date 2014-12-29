@@ -16,6 +16,17 @@ module.exports = function(app, things) {
     });
   };
 
+  // format data for the user to view
+  formatForUser = function(a) {
+    if (a == true) {
+      return "on"
+    } else if (a == false) {
+      return "off";
+    } else {
+      return a;
+    }
+  };
+
 
   // post a natural query to que to turn on/off
   // or do another action. This doesn't do the query,
@@ -69,7 +80,10 @@ module.exports = function(app, things) {
         case "enable":
           hash[dataItem] = {value: true};
           things.update(thing.id, hash, function() {
-            res.send(things.createResponsePacket('OK', {resp: true}));
+            res.send(things.createResponsePacket('OK', {
+              resp: true,
+              msg: "The value of " + thing.name + " has been set to on."
+            }));
           });
           break;
 
@@ -77,7 +91,10 @@ module.exports = function(app, things) {
         case "disable":
           hash[dataItem] = {value: false};
           things.update(thing.id, hash, function() {
-            res.send(things.createResponsePacket('OK', {resp: true}));
+            res.send(things.createResponsePacket('OK', {
+              resp: true,
+              msg: "The value of " + thing.name + " has been set to off."
+            }));
           });
           break;
 
@@ -85,7 +102,10 @@ module.exports = function(app, things) {
         case "toggle":
           hash[dataItem] = { value: !thing.data[dataItem].value };
           things.update(thing.id, hash, function() {
-            res.send(things.createResponsePacket('OK', {resp: true}));
+            res.send(things.createResponsePacket('OK', {
+              resp: true,
+              msg: "The value of " + thing.name + " has been toggled to be " + formatForUser(!thing.data[dataItem].value) + "."
+            }));
           });
           break;
 
@@ -93,7 +113,10 @@ module.exports = function(app, things) {
         case "status_default_true":
         case "status_default_false":
         case "status":
-          res.send(things.createResponsePacket('OK', {resp: thing.data[dataItem].value}));
+          res.send(things.createResponsePacket('OK', {
+            resp: thing.data[dataItem].value,
+            msg: "The " + thing.name + " is currently " + formatForUser(thing.data[dataItem].value) + "."
+          }));
           break;
 
         // if nothing matched, then the operator is null or unknown
