@@ -39,6 +39,8 @@ Blocks
 - block.code.view.#id
 - block.code.edit.#id
 
+- block.disable.#id
+
 Notifys
 ---
 - notify.create

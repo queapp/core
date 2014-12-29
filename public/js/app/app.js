@@ -32,6 +32,8 @@ app.config(['$routeProvider', function($routeProvider) {
       when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginController'
+      }).when('/queryresults', {
+        templateUrl: 'views/query-results.html'
       }).
       otherwise({redirectTo: '/login'});
 }]);

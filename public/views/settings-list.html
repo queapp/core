@@ -12,7 +12,6 @@
 
       <!-- new user stuff -->
       <button class="btn btn-info pull-right" data-toggle="modal" data-target="#new-user">New User</button>
-      <!-- permissions editor -->
       <div class="modal fade newuser-modal" id="new-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -21,6 +20,10 @@
               <h4 class="modal-title" id="myModalLabel">Add a New User</h4>
             </div>
             <div class="modal-body">
+              <p>
+                Please choose a username and secure password below. 
+                By default, a new user has no permissions.
+              </p>
 
               <div class="form-group">
                 <!-- <label>Username</label> -->
@@ -34,8 +37,19 @@
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" ng-click="uC.addUser()">Save</button>
+              <button 
+                type="button" 
+                class="btn btn-default" 
+                data-dismiss="modal"
+                >Close
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-primary tooltip-disable" 
+                ng-click="uC.addUser()"
+                ng-disabled="!uC.checkForValidPassword()"
+                >Save
+              </button>
             </div>
           </div>
         </div>

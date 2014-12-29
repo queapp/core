@@ -6227,6 +6227,9 @@ div.view-container:after {
 .fancy-box::-webkit-input-placeholder {
   color: #c8c8c8;
 }
+.tooltip-disable {
+  pointer-events: all;
+}
 .notif.ng-enter {
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -6279,7 +6282,7 @@ div.view-container:after {
 .navbar-que h1 {
   display: none;
 }
-.navbar-que .container {
+.navbar-que > .container {
   height: 100%;
 }
 .navbar-que .navbar-header,
@@ -6323,6 +6326,38 @@ div.view-container:after {
   .navbar-que {
     height: 320px;
   }
+  .navbar-que .search-container {
+    background: #FFF;
+    height: 68px;
+    margin-top: 40px;
+    padding: 10px 0px;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    transition: all 0.350s ease;
+    opacity: 1;
+  }
+  .navbar-que .search-container.hide {
+    opacity: 0;
+  }
+  .navbar-que .search-container input {
+    height: 45px;
+    font-size: 24px;
+    width: 95%;
+    outline: none;
+    border: none;
+    opacity: 0.5;
+    transition: all 0.350s ease;
+  }
+  .navbar-que .search-container input:hover,
+  .navbar-que .search-container input:active,
+  .navbar-que .search-container input:focus {
+    opacity: 1;
+  }
+  .navbar-que .search-container .glyphicon {
+    float: right !important;
+    margin-top: 15px;
+    cursor: pointer;
+  }
   .navbar-que .navbar-nav li a,
   .navbar-que .navbar-nav a:hover {
     color: #FFF;
@@ -6331,7 +6366,7 @@ div.view-container:after {
   .navbar-que .navbar-nav .active a:hover {
     color: #FFF;
   }
-  .navbar-que .container {
+  .navbar-que > .container {
     height: 96px;
   }
   .navbar-que h1 {
@@ -7331,6 +7366,37 @@ textarea.settings .newuser-modal input {
 .que-setup nav.wizard-nav {
   width: 150px;
   margin: 0px auto;
+}
+.query-box {
+  background: #f0f0f0;
+  border: 2px solid #fefefe;
+  border-radius: 3px;
+  color: #606060;
+  font-size: 32px;
+  font-weight: 300;
+  height: 58px;
+  padding: 0 16px;
+  margin: 10px auto;
+  outline: none;
+  transition: all 0.5s ease;
+  background: #FFF;
+  min-height: 256px;
+  padding: 50px 40px;
+}
+.query-box:focus {
+  background: #fefefe;
+  border: 2px solid #f0f0f0;
+}
+.query-box::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.query-box .main-icon {
+  font-size: 96px;
+  float: left !important;
+}
+.query-box p {
+  margin-left: 148px;
+  margin-top: 12px;
 }
 body {
   height: 100%;

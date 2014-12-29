@@ -148,6 +148,12 @@ app.controller("UsersController", function($scope, $http, userService) {
 
     // otherwise, it seems ok
     return true;
+  };
+
+  // check a potential password for validity
+  this.checkForValidPassword = function(pass) {
+    password = pass || this.newUser.pass;
+    return typeof password == "string" && password.length > 5;
   }
 });
 
