@@ -20,7 +20,7 @@ module.exports = function(app, things) {
   // post a natural query to que to turn on/off
   // or do another action. This doesn't do the query,
   // but just returns the crucial parts of a query
-  app.post("/natural/parser", function(req, res) {
+  app.post("/natural/parser", userCan("natural.parse"), function(req, res) {
 
     // parse the query
     parseQuery(req.body.data || '', function(thing, operation, dataItem) {
@@ -35,7 +35,7 @@ module.exports = function(app, things) {
   });
 
   // do a natural-language query
-  app.post("/natural/query", function(req, res) {
+  app.post("/natural/query", userCan("natural.query"), function(req, res) {
 
     // start by parsing the query
     parseQuery(req.body.data || '', function(thing, operation, dataItem) {
