@@ -4,7 +4,6 @@ var path = require("path");
 var async = require("async");
 
 var Thing = require("../../models/things");
-var Authkey = require("../../models/authkey");
 
 
 Object.deepExtend = function(destination, source) {
@@ -26,9 +25,6 @@ Object.deepExtend = function(destination, source) {
 module.exports = function(thedb) {
   var root = this;
 
-  // currently active auth key
-  this.currentAuthKey = null;
-
   // a default thing; used in .add()
   this.defaultThing = {
     "name": "Untitled Thing",
@@ -46,81 +42,6 @@ module.exports = function(thedb) {
 
   // the websocket instance
   this.socket = null;
-
-  // setting and retreiving auth keys
-  this.setAuthKey = function(akey) {
-    // remove all current authkeys (there can only be one!)
-    Authkey.remove({type: "thing"}, function(err) {
-
-      // add our new one
-      var authkey = new Authkey();
-      authkey.type = "thing";
-      authkey.key = akey;
-      authkey.save();
-
-    });
-  };
-
-  this.getAuthKey = function(callback) {
-    // get the current thing authkey
-    Authkey.findOne({type: "thing"}, function(err, doc) {
-      // convert to object from model
-      ob = doc.toObject();
-      delete ob._id;
-
-      // callback
-      callback(err, ob.key);
-    });
-  };
-
-  /**
-    Create a new auth key for adding a thing
-  */
-  this.createNewAuthKey = function(length, chars) {
-
-    // result string
-    var result = '';
-
-    // character choices
-    chars = chars || 'ABCDEFGHJKLMNPQRTWXY34689';
-
-    // generate the key
-    for (var i = length || 8; i > 0; --i)
-      result += chars[Math.round(Math.random() * (chars.length - 1))];
-
-    // cache it for later
-    this.currentAuthKey = result;
-    this.setAuthKey(result);
-
-    return result;
-  }
-
-  /**
-    Try and add a new thing, but only if the user specifies
-    the correct authentication key
-  */
-  this.addWithAuth = function(userKey, data, done) {
-
-    // fetch the auth key
-    this.getAuthKey(function(err, authkey) {
-      console.log(authkey)
-      // only if auth key exists
-      if (typeof authkey !== "string" || typeof userKey !== "string") {
-        done(null);
-        return;
-      }
-
-      // is auth key correct?
-      if ( authkey.toLowerCase() == userKey.toLowerCase() ) {
-
-        // reset key and add thing
-        root.createNewAuthKey();
-        root.add(data, done);
-      } else {
-        done(null);
-      }
-    });
-  }
 
   /**
     Add a new thing to the list of things

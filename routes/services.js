@@ -7,13 +7,13 @@
 //
 // // convert thing model to service model
 // var services = ServiceConverter(new ThingServer());
-
+var userCan = require("../controllers/auth").canMiddleware;
 
 // all the routes
 module.exports = function(app, services) {
 
   // get all things
-  app.get("/services/all", function(req, res, next) {
+  app.get("/services/all", userCan("service.view.all"), function(req, res, next) {
     services.get(null, function(data) {
       res.status(200);
       res.end(JSON.stringify({data: data}));
@@ -21,7 +21,7 @@ module.exports = function(app, services) {
   });
 
   // get things that match a specific tag
-  app.get("/services/tag/:tag", function(req, res, next) {
+  app.get("/services/tag/:tag", userCan("service.view.all"), function(req, res, next) {
     services.get(null, function(data) {
       res.send({data: _.filter(data, function(item) {
         return _.contains(item.tags, req.param("tag"));
@@ -31,7 +31,7 @@ module.exports = function(app, services) {
 
 
   // create auth key for adding a new thing
-  app.get("/services/genkey", function(req, res, next) {
+  app.get("/services/genkey", userCan("service.genkey"), function(req, res, next) {
     res.send(
       services.createResponsePacket(
         "OK", {
@@ -42,7 +42,7 @@ module.exports = function(app, services) {
   });
 
   // add a new thing with authentication
-  app.post("/services/add/:key", function(req, res, next) {
+  app.post("/services/add/:key", userCan("service.create"), function(req, res, next) {
     services.addWithAuth(req.param("key"), req.body, function(id) {
       if (id) {
         res.send( services.createResponsePacket("OK", {id: id}) );
@@ -53,14 +53,14 @@ module.exports = function(app, services) {
   });
 
   // list a specific thing's data
-  app.get("/services/:id/data", function(req, res, next) {
+  app.get("/services/:id/data", userCan("service.view.#id"), function(req, res, next) {
     services.get(parseInt(req.param("id")), function(data) {
       res.send( data && data.data || services.createResponsePacket("NOHIT") );
     });
   });
 
   // update thing data
-  app.put("/services/:id/data", function(req, res, next) {
+  app.put("/services/:id/data", userCan("service.edit.#id"), function(req, res, next) {
     services.update(parseInt(req.param("id")), req.body, function() {
       res.send( services.createResponsePacket() );
     });
@@ -74,7 +74,7 @@ module.exports = function(app, services) {
   });
 
   // delete a thing
-  app.delete("/services/:id", function(req, res, next) {
+  app.delete("/services/:id", userCan("service.delete.#id"), function(req, res, next) {
     services.delete(parseInt(req.param("id")), function() {
       res.send( services.createResponsePacket() );
     });

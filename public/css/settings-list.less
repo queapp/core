@@ -1,0 +1,110 @@
+// main: index.less
+
+@bg-color: #373737;
+.settings {
+  .container;
+  position: relative;
+
+  .body {
+    .make-md-column(12);
+
+    margin: 8px 0px;
+    &:first-child { margin-top: 0px; }
+
+    ul {
+      padding-left: 0px;
+      list-style-type: none;
+    }
+  }
+
+  section.body {
+    .modal-style;
+    background: #FFF;
+  }
+
+  ul.body { padding: 0px; }
+
+  // permissions modal
+  .editpermissions-modal {
+
+    // 'Permission List' link
+    .permissions-link {
+      .pull-right;
+      font-size: @font-size-base;
+      margin-right: 12px;
+    }
+
+    .modal-body {
+      .row {
+        padding: 0px 15px 15px 15px;
+
+        input {
+          .form-control;
+          .make-xs-column(10);
+          z-index: 100;
+          max-width: 470px;
+          @media (min-width: @screen-sm-min) {
+            margin-right: 3px;
+          };
+
+          &.invalid {
+            color: @brand-danger;
+          }
+        }
+
+        .add-btn {
+          .btn; .btn-primary;
+          .make-xs-column(2);
+        }
+
+        .scrollable {
+          .make-xs-column(12);
+          .well;
+
+          height: 300px;
+          overflow-y: auto;
+
+          padding: 8px;
+          margin-top: 12px;
+
+          li {
+            font-size: @font-size-base * 1.2;
+            button { .pull-right; }
+
+            // permission colors
+            span.permission {
+              &.thing { color: #42BF3F; }
+              &.service { color: #4BA9FC; }
+              &.block { color: #FC4B4B; }
+              &.notify { color: #FCBD4B; }
+              &.auth { color: #C08C57; }
+              &.user { color: #D481DC; }
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  // new user modal
+  .newuser-modal {
+    input {
+      .form-control;
+    }
+  }
+}
+
+// 'validating' textbox
+.together {
+  .form-control {
+    border-right: 0px;
+  }
+}
+
+// shows the validation status of any key entered
+.validated {
+  background: #FFF;
+  .glyphicon-ok { color: #42BF3F; }
+  .glyphicon-remove { color: #FC4B4B; }
+}

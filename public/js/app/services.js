@@ -3,6 +3,8 @@ var app = angular.module("QueGui");
 app.controller("ServicesController", function($scope, $http, servicesService, $interval, $document) {
   var root = this;
 
+  this.things = [];
+
   this.selectedThing = null;
 
   // service authentication key

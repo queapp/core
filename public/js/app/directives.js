@@ -1,32 +1,32 @@
 var app = angular.module("QueGui");
 
-app.directive("thingCardList", function() {
+app.directive("newInstance", function() {
   return {
     restrict: 'E',
-    templateUrl: "js/directives/thing-card-list.html"
+    templateUrl: "views/new-instance.html"
   }
 });
-
-app.directive("serviceCardList", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/service-card-list.html"
-  }
-});
-
-app.directive("blockList", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/blocks-list.html"
-  }
-});
-
-app.directive("dashboardOverview", function() {
-  return {
-    restrict: 'E',
-    templateUrl: "js/directives/dashboard-overview.html"
-  }
-});
+//
+// app.directive("serviceCardList", function() {
+//   return {
+//     restrict: 'E',
+//     templateUrl: "js/directives/service-card-list.html"
+//   }
+// });
+//
+// app.directive("blockList", function() {
+//   return {
+//     restrict: 'E',
+//     templateUrl: "js/directives/blocks-list.html"
+//   }
+// });
+//
+// app.directive("dashboardOverview", function() {
+//   return {
+//     restrict: 'E',
+//     templateUrl: "js/directives/dashboard-overview.html"
+//   }
+// });
 
 // for bootstrap tooltips
 app.directive('tooltip', function(){

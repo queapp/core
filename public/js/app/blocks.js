@@ -1,6 +1,6 @@
 var app = angular.module("QueGui");
 
-app.controller("BlockController", function($scope, blockService) {
+app.controller("BlockController", function($scope, $rootScope, blockService) {
   var root = this;
   this.blocks = [];
 
@@ -27,6 +27,11 @@ app.controller("BlockController", function($scope, blockService) {
     });
   }
   this.fetchBlocks();
+
+  // async event handler
+  $rootScope.$on('updateBlocks', function(event) {
+    root.fetchBlocks();
+  });
 
   // add a new block
   this.addBlock = function() {

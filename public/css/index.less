@@ -21,12 +21,35 @@
 @import "things.less";
 @import "modal.less";
 @import "things-add.less";
+@import "settings-list.less";
+@import "new-instance.less";
+@import "query-results.less";
 
 body {
   height: 100%;
   background: @bgcolor;
   overflow-y: scroll;
+
+  &.white {
+    background: #fefefe;
+  }
 }
+
+// angular view transistions
+div.view-container {
+  .container;
+  position: relative;
+}
+div[ng-view].ng-enter, div[ng-view].ng-leave {
+  -webkit-transition: 0.35s linear all;
+  transition: 0.35s linear all;
+  position: absolute;
+}
+
+div[ng-view].ng-enter { opacity: 0; }
+div[ng-view].ng-enter.ng-enter-active { opacity: 1; }
+div[ng-view].ng-leave { opacity: 1; }
+div[ng-view].ng-leave.ng-leave-active { opacity: 0; }
 
 // card list
 ul.card-list {

@@ -1,0 +1,180 @@
+<div class="settings">
+
+
+  <ul class="list-group body" ng-controller="UsersController as uC" ng-show="nC.user.can('user.view.all')">
+
+    <!-- header unit -->
+    <li class="list-group-item">
+      <h3>
+        <span class="glyphicon glyphicon-user"></span>
+        Users
+      </h3>
+
+      <!-- new user stuff -->
+      <button class="btn btn-info pull-right" data-toggle="modal" data-target="#new-user">New User</button>
+      <div class="modal fade newuser-modal" id="new-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add a New User</h4>
+            </div>
+            <div class="modal-body">
+              <p>
+                Please choose a username and secure password below. 
+                By default, a new user has no permissions.
+              </p>
+
+              <div class="form-group">
+                <!-- <label>Username</label> -->
+                <input type="text" placeholder="Username" ng-model="uC.newUser.username"/>
+              </div>
+
+              <div class="form-group">
+                <!-- <label>Password</label> -->
+                <input type="text" placeholder="Password" ng-model="uC.newUser.pass"/>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-default" 
+                data-dismiss="modal"
+                >Close
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-primary tooltip-disable" 
+                ng-click="uC.addUser()"
+                ng-disabled="!uC.checkForValidPassword()"
+                >Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Each user listed below can login to Que - to see or edit what each user
+        can do, click 'Edit Permissions' below.
+      </p>
+    </li>
+
+
+    <li class="list-group-item" ng-repeat="user in uC.users">
+      <h3>{{user.username}}</h3>
+
+      <button class="btn btn-danger pull-right" ng-click="uC.deleteUser(user.username)">Delete</button>
+      <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#user-editpermissions-{{user.username}}">Edit Permissions</button>
+      <!-- <button class="btn btn-default pull-right">Change Password</button> -->
+
+      <!-- permissions editor -->
+      <div class="modal fade editpermissions-modal" id="user-editpermissions-{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">
+                Edit Permissions
+                <a target="_blank" href="//1egoman.viewdocs.io/que-iot/permissions" class="permissions-link">Permission List</a>
+              </h4>
+            </div>
+            <div class="modal-body">
+              <p>
+                Permissions are what tells Que what each user is allowed to do.
+                By default, a new user can do nothing. Permissions can be written
+                in full or abbreviated with wildcards (<code>*</code>) for individual
+                sections. For example, to give a user permission to delete all things,
+                you would type into the box <code>thing.delete.*</code>; or, to give
+                a user all permissions pertaining to things you would type
+                <code>thing.*</code>.
+              </p>
+              <div class="row">
+
+                <!-- add a new permission -->
+                <input
+                  type="text"
+                  placeholder="Add Permission"
+                  ng-model="uC.newPermission"
+                  ng-class="{invalid: uC.newPermission.length !== 0 && !uC.checkPermissionValidity()}"
+                />
+                <button
+                  class="add-btn"
+                  ng-click="uC.addPermission(user.username, uC.newPermission)"
+                  ng-disabled="!uC.checkPermissionValidity()"
+                >Add</button>
+
+                <!-- permission list -->
+                <ul class="scrollable">
+                  <li ng-repeat="p in user.permissions">
+                    <!-- display permission -->
+                    <span class="permission {{p.split('.')[0]}}">{{p.split('.')[0]}}</span>
+                    <span ng-show="p.split('.').length > 1">.</span>
+                    <span>{{p.split('.').slice(1).join('.')}}</span>
+
+                    <!-- delete button -->
+                    <button class="btn btn-danger btn-xs" ng-click="uC.deletePermission(user.username, $index)">Delete</button>
+                  </li>
+                </ul>
+              </div>
+
+              <p>
+                <strong>Note:</strong> Permissions may require the user to log out and log back in
+                again to take effect.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" ng-click="uC.update(user.username)">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </li>
+  </ul>
+
+  <section class="body" ng-controller="KeysController as kC" ng-show="nC.user.can('token.view')">
+    <h3>
+      <span class="glyphicon glyphicon-lock"></span>
+      Keys
+    </h3>
+    <p>
+      These keys are needed for 3rd party services (like the spark) to work.
+    </p>
+    <ul>
+      <li>
+        <label>Spark Key</label>
+        <p>
+          Go to <a href="//www.spark.io/build">http://www.spark.io/build</a>.
+          Login with your spark account. Click the cog in the lower left corner of the screen
+          and copy the text in the box under "Access Token". Enter this into the box below.
+        </p>
+        <div class="input-group together">
+          <input
+            type="text"
+            class="form-control spark-key"
+            placeholder="Spark Key"
+            ng-model="kC.keys.sparktoken"
+            ng-change="kC.updateKeys()"
+            ng-disabled="!nC.user.can('token.edit')"
+          />
+          <span class="input-group-addon validated">
+            <span class="glyphicon glyphicon-ok" ng-show="kC.validated.sparktoken"></span>
+            <span class="glyphicon glyphicon-remove" ng-hide="kC.validated.sparktoken"></span>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- no permissions -->
+  <section class="body" ng-hide="nC.user.can('user.view.all') || nC.user.can('token.view')">
+    <h3 style="text-align:center;margin:32px;">
+      Well, this is awkward. You don't have permission to see any settings page.
+    </h3>
+  </section>
+
+</div>

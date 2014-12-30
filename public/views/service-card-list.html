@@ -1,6 +1,6 @@
 
 <!-- Thing View: shows a list of all things -->
-<div class="container" ng-controller="ServicesController as sC" ng-show="nC.pageId == 2">
+<div class="container" ng-controller="ServicesController as sC">
   <ul class="card-list card-list-things">
 
     <div class="no-cards" ng-show="sC.things.length === 0">
@@ -8,7 +8,14 @@
         A service is an intangible object that Que can control.
         <span>Email, social networks, or other online services</span>
         <br/>
-        <a href class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addServiceModal">Add a service</a>
+        <a
+          href
+          class="btn btn-primary btn-lg"
+          data-toggle="modal"
+          data-target="#addServiceModal"
+          ng-show="nC.user.can('service.create')"
+          >Add a service
+        </a>
       </div>
     </div>
 
@@ -18,7 +25,8 @@
       class="add-button"
       ng-show="sC.things.length !== 0"
       data-toggle="modal"
-      data-target="#addServiceModal">
+      data-target="#addServiceModal"
+      ng-show="nC.user.can('service.create')">
       +
     </div>
 

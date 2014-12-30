@@ -16,3 +16,11 @@ que.getThingByTag("spark", function(thing, n) {
   }
 });
 ```
+
+Keep canvas up to date with an image source
+---
+```javascript
+c = que.getCanvas(3, "aaavvv");
+c.clear();
+c.imageFromUrl("http://placehold.it/350x150", 0, 0);
+```

@@ -7,9 +7,46 @@
 
   .border-radius(0px);
 
+  // search box
+  .search-container {
+    background: #FFF;
+    height: 68px;
+    margin-top: 40px;
+
+    padding: 10px 0px;
+
+    border-top: 1px solid @gray-lighter;
+    border-bottom: 1px solid @gray-lighter;
+
+    transition: all 0.350s ease;
+    opacity: 1;
+
+    &.hide { opacity: 0; }
+
+    input {
+      height: 45px;
+      font-size: 24px;
+      width: 95%;
+
+      outline: none;
+      border: none;
+
+      opacity: 0.5;
+      transition: all 0.350s ease;
+
+      &:hover, &:active, &:focus { opacity: 1; }
+    }
+
+    .glyphicon {
+      .pull-right;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+  }
+
   h1 { display: none; }
 
-  .container {
+  &>.container {
     height: 100%;
   }
 
@@ -45,12 +82,12 @@
   }
 
   .navbar-nav {
-    li a, a:hover {
+    li a, a:hover, a:focus {
       background: transparent;
       color: #000;
     }
 
-    .active a, .active a:hover {
+    .active a, .active a:hover, .active a:focus {
       font-weight: bold;
       background: transparent;
       color: #000;
@@ -73,7 +110,7 @@
       }
     }
 
-    .container {
+    &>.container {
       height: 96px;
     }
 
