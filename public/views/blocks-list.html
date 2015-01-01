@@ -74,8 +74,8 @@
       </h2>
 
       <!-- delete button -->
-      <button 
-        class="btn btn-danger pull-right" 
+      <button
+        class="btn btn-danger pull-right"
         ng-click="bC.deleteBlock(block);"
         ng-disabled="!nC.user.can('block.delete.'+block.id)"
         >
@@ -83,9 +83,9 @@
       </button>
 
       <!-- code edit button -->
-      <button 
-        class="btn btn-primary pull-right" 
-        data-toggle="modal" 
+      <button
+        class="btn btn-primary pull-right"
+        data-toggle="modal"
         data-target="#{{block.id}}-code-modal"
         ng-disabled="!(nC.user.can('block.code.view.'+block.id) || nC.user.can('block.code.edit.'+block.id))"
         >
@@ -93,17 +93,17 @@
       </button>
 
       <!-- disable button -->
-      <button 
-        class="btn btn-warning pull-right" 
-        ng-click="bC.setBlockDisabled(block, true);" 
+      <button
+        class="btn btn-warning pull-right"
+        ng-click="bC.setBlockDisabled(block, true);"
         ng-hide="block.disable"
         ng-disabled="!nC.user.can('block.disable.'+block.id)"
         >
         Disable
       </button>
-      <button 
-        class="btn btn-default pull-right" 
-        ng-click="bC.setBlockDisabled(block, false);" 
+      <button
+        class="btn btn-default pull-right"
+        ng-click="bC.setBlockDisabled(block, false);"
         ng-show="block.disable"
         ng-disabled="!nC.user.can('block.disable.'+block.id)"
         >
@@ -129,13 +129,13 @@
             <div class="modal-body">
 
               <!-- api help -->
-              <a href="http://1egoman.viewdocs.io/que-iot/block-api" class="help-link">API Reference</a>
-              <a href="http://1egoman.viewdocs.io/que-iot/code-examples" class="help-link">Code Examples</a>
+              <a href="http://que.apps.rgaus.net/docs/block-api" class="help-link">API Reference</a>
+              <a href="http://que.apps.rgaus.net/que-iot/code-examples" class="help-link">Code Examples</a>
 
               <!-- code editor -->
               <label for="textarea">Block Code:</label>
-              <textarea 
-                ng-model="block.devCode" 
+              <textarea
+                ng-model="block.devCode"
                 placeholder="Blocks are written in javascript."
                 ng-disabled="nC.user.can('block.code.view.'+block.id) && !nC.user.can('block.code.edit.'+block.id)"
                 >
@@ -150,9 +150,9 @@
               <button type="button" class="btn btn-default pull-left" ng-click="block.log=[]">Clear Log</button>
 
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button 
-                type="button" 
-                class="btn btn-primary" 
+              <button
+                type="button"
+                class="btn btn-primary"
                 ng-click="bC.updateBlock(block);"
                 ng-disabled="!nC.user.can('block.code.edit.'+block.id)"
                 >
