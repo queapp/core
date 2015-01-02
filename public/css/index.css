@@ -6960,6 +6960,9 @@ textarea.thing-add.page-3.page-spark ul li input {
   right: 0px;
   bottom: 15px;
 }
+.http-endpoint-action {
+  padding: 10px 0px;
+}
 .settings {
   margin-right: auto;
   margin-left: auto;

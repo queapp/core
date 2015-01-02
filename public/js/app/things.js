@@ -18,6 +18,11 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
   // custom thing
   this.customThing = {};
+  this.customActions = [{
+    name: "123",
+    trigger: {},
+    detrigger: {}
+  }];
 
   // spark token is validated
   this.sparktokenvalidated = false;
@@ -62,6 +67,10 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
     switch(root.newThing.type) {
       case "manual":
         thing = _.extend(thing, JSON.parse(root.customThing));
+        break;
+
+      case "actions":
+        thing.actions = root.customActions;
         break;
 
       // preprocessing for spark
@@ -167,7 +176,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
     $http({
       method: "POST",
       url: "/things/add",
-      data: JSON.stringify(thing)
+      data: angular.toJson(thing)
     }).success(function(data) {
       if (block) {
         // replace id
@@ -203,6 +212,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
       actions: [],
       data: []
     }, null, 2);
+    root.customActions = [];
   }
 
   // run this now

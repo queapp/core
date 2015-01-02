@@ -65,7 +65,8 @@
                 <h3>What is the type of the new thing?</h3>
                 <select class="form-control" ng-model="tC.newThing.type">
                   <option value="spark">Spark</option>
-                  <option value="manual">Custom...</option>
+                  <option value="actions">Custom Actions</option>
+                  <option value="manual">Custom JSON</option>
                 </select>
               </p>
             </div>
@@ -185,7 +186,57 @@
               </ul>
             </div>
 
-            <!-- spark options -->
+            <!-- custom http endpoints -->
+            <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'actions'">
+              <p>
+                <h3>
+                  Custom Actions
+                  <button class="btn btn-primary" ng-click="tC.customActions.push({trigger: {},detrigger: {}})">Add Action</button>
+                </h3>
+
+                <p>
+                  If you've got a cool, custom thing that Que doesn't natively support,
+                  this is the place to be. This page lets you manually add actions - each
+                  with a trigger url (called when the action is enabled), and a detrigger
+                  url (called when the action is disabled).
+                </p>
+
+                <div class="http-endpoint-action" ng-repeat="action in tC.customActions">
+                  <input type="text" placeholder="Name" class="form-control" ng-model="action.name"/>
+                  <div class="row" style="margin-top: 5px;">
+                    <div class="col-md-3">
+                      <select class="form-control" ng-model="action.trigger.method">
+                        <option value="get" default>GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="patch">PATCH</option>
+                        <option value="delete">DELETE</option>
+                      </select>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" placeholder="HTTP Trigger URL" class="form-control" ng-model="action.trigger.url" />
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 5px;">
+                    <div class="col-md-3">
+                      <select class="form-control" ng-model="action.detrigger.method">
+                        <option value="get" default>GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="patch">PATCH</option>
+                        <option value="delete">DELETE</option>
+                      </select>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" placeholder="HTTP Detrigger URL" class="form-control" ng-model="action.detrigger.url" />
+                    </div>
+                  </div>
+                </div>
+
+              </p>
+            </div>
+
+            <!-- custom json -->
             <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'manual'">
               <p>
                 <h3>Enter the custom thing json</h3>

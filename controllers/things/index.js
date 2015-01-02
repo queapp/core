@@ -59,17 +59,19 @@ module.exports = function(thedb) {
       item = _.extend(root.defaultThing, data);
       item.id = ++maxId;
 
-      console.log(data);
-
       // save thing in db
       item.type = "thing";
       var thing = new Thing(item);
       thing.save(function(err, d) {
-        // tell the frontend it needs to pull in a new thing
-        root.socket && root.socket.emit("backend-data-change", data);
+        if (err) {
+          done(null);
+        } else {
+          // tell the frontend it needs to pull in a new thing
+          root.socket && root.socket.emit("backend-data-change", data);
 
-        // callback
-        done && done(item.id);
+          // callback
+          done && done(item.id);
+        };
       });
     });
   }
