@@ -5,7 +5,7 @@
 
     <div class="no-cards" ng-show="rC.things.length === 0">
       <div class="side">
-        A service is an intangible object that Que can control.
+        A rooms is an intangible object that Que can control.
         <span>Email, social networks, or other online services</span>
         <br/>
         <a
@@ -13,20 +13,20 @@
           class="btn btn-primary btn-lg"
           data-toggle="modal"
           data-target="#addServiceModal"
-          ng-show="nC.user.can('service.create')"
-          >Add a service
+          ng-show="nC.user.can('rooms.create')"
+          >Add a room
         </a>
       </div>
     </div>
 
 
-    <!-- button to generate new key and add a service -->
+    <!-- button to generate new key and add a rooms -->
     <div
       class="add-button"
       ng-show="rC.things.length !== 0"
       data-toggle="modal"
       data-target="#addServiceModal"
-      ng-show="nC.user.can('service.create')">
+      ng-show="nC.user.can('rooms.create')">
       +
     </div>
 
@@ -38,11 +38,11 @@
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
             </button>
-            <h4 class="modal-title">Add New Service</h4>
+            <h4 class="modal-title">Add New Room</h4>
           </div>
           <div class="modal-body">
             <p>
-              Enter this Authentication key below into the new service:
+              Enter this Authentication key below into the new room:
               <pre class="big">{{rC.authKey}}</pre>
             </p>
           </div>
@@ -56,21 +56,21 @@
 
 
     <ul class="list-group">
-      <li class="list-group-item thing" ng-repeat="service in rC.things">
+      <li class="list-group-item thing" ng-repeat="rooms in rC.things">
         <h3>
-          {{service.name}}
-          <small>{{service.desc}}</small>
+          {{rooms.name}}
+          <small>{{rooms.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="rC.removeThing(service.id, $index)">Delete</button>
+        <button class="btn btn-danger pull-right" ng-click="rC.removeThing(rooms.id, $index)">Delete</button>
         <button
           class="btn btn-primary pull-right"
           data-toggle="modal"
-          data-target="#{{service.id}}-service-data"
-          >Edit Data
+          data-target="#{{rooms.id}}-rooms-data"
+          >Edit Containing Things
         </button>
 
-        <div class="modal fade edit-data" id="{{service.id}}-service-data">
+        <div class="modal fade edit-data" id="{{rooms.id}}-rooms-data">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -78,24 +78,29 @@
                   <span aria-hidden="true">&times;</span>
                   <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title">Edit Service Data</h4>
+                <h4 class="modal-title">Edit Room's Things</h4>
               </div>
               <div class="modal-body">
-                <ul class="card-form clearfix edit-data">
 
-                  <li ng-repeat="(k, v) in service.data">
-                    <label title="{{k}}">{{v.label || rC.convertIntoSpaces(k)}}</label>
-                    <input
-                      type="{{ rC.getTypeFor(v) }}"
-                      ng-model="v.value"
-                      ng-change="rC.updateThingData(service.id, k, v)"
-                      ng-class="{'btn': rC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
-                      placeholder="{{k}}"
-                      value="{{rC.isButton(v) &amp;&amp; v.value}}"
-                      ng-disabled="v.readonly"
-                    />
+                <ul class="scrollable">
+                  <li ng-repeat="th in rooms.things">
+                    <span class="title">
+                      {{th.thing.name}}
+                    </span>
+                    <button class="btn btn-danger btn-xs">Delete</button>
                   </li>
                 </ul>
+
+                <!-- add form -->
+                <div class="row">
+                  <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control" placeholder="Enter thing name to add to room" ng-model="thingToAddName" />
+                  </div>
+                  <div class="col-xs-12 col-md-2">
+                    <button class="btn btn-info" ng-click="rC.addToRoom(rooms.id, thingToAddName)">Add</button>
+                  </div>
+                </div>
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

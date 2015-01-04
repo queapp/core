@@ -1,6 +1,6 @@
 var app = angular.module("QueGui");
 
-app.controller("RoomsController", function($scope, $http, roomsService, $interval, $document) {
+app.controller("RoomsController", function($scope, $http, roomsService, thingService, $interval, $document) {
   var root = this;
 
   this.things = [];
@@ -12,7 +12,18 @@ app.controller("RoomsController", function($scope, $http, roomsService, $interva
 
   // get all data from server
   roomsService.getAllThings(function(data) {
-    root.things = data;
+    thingService.getAllThings(function(things) {
+
+      _.each(data, function(rm, i) {
+        _.each(rm.things, function(th, j) {
+          thing = _.filter(things, function(i) { return i.id === th.id; });
+          th.thing = thing.length && thing[0] || {};
+        });
+      });
+
+      root.things = data;
+
+    });
   });
 
   // given a data type, get the textbox type it would go into
@@ -34,17 +45,12 @@ app.controller("RoomsController", function($scope, $http, roomsService, $interva
     }
   }
 
-  // is this control represented as a button?
-  this.isButton = function(v) {
-    return v.type == "button";
-  }
-
   // update backend on keypress
   this.updateThingData = function(id, key, value, callback) {
     data = {}
     data[key] = value;
 
-    roomsService.updateThingData(id, data, callback || function() {});
+    roomsService.update(id, data, callback || function() {});
   }
 
   // convert from CamelCase or underscore-format to normal, smaced words
@@ -68,6 +74,18 @@ app.controller("RoomsController", function($scope, $http, roomsService, $interva
     root.things.splice(index, 1);
     roomsService.removeThing(id, function() {});
   }
+
+  // add a new thing to the room
+  this.addToRoom = function(id, name) {
+    thingService.getAllThings(function(things) {
+      possibles = _.filter(things, function(i) { return i.name === name; });
+      if (possibles.length) {
+        roomsService.addThing(id, possibles[0].id, function(data) {
+          root.things.push({id: id});
+        });
+      }
+    });
+  };
 
   // generate an authentication key
   // used for adding a new service

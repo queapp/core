@@ -348,10 +348,14 @@ app.factory("roomsService", function($http) {
         }
       },
 
-      updateThingData: function(id, data, callback) {
-        socket.emit('push-service-data-update', {
-          id: id,
-          data: data
+      addThing: function(id, tid, callback) {
+        $http({
+          method: "post",
+          url: host + "/rooms/" + id + "/addthing",
+          data: JSON.stringify({id: tid})
+        }).success(function(data) {
+          console.log(data)
+          callback(data);
         });
 
         // $http({

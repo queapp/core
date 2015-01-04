@@ -40,6 +40,17 @@ module.exports = function(app, rooms) {
     });
   });
 
+  // add a new thing with authentication
+  app.post("/rooms/:id/addthing", userCan("room.addthings"), function(req, res, next) {
+    rooms.addNewThing(parseInt(req.param("id")), req.body.id, function(id) {
+      if (id) {
+        res.send( rooms.createResponsePacket("OK", {id: id}) );
+      } else {
+        res.send( rooms.createResponsePacket("AUTHFAIL") );
+      }
+    });
+  });
+
   // list a specific thing's data
   app.get("/rooms/:id/data", userCan("room.view.#id"), function(req, res, next) {
     rooms.get(parseInt(req.param("id")), function(data) {

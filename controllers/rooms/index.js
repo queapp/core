@@ -4,6 +4,7 @@ var path = require("path");
 var async = require("async");
 
 var Room = require("../../models/rooms");
+var Thing = require("../../models/things");
 
 // a service container
 module.exports = function(thedb) {
@@ -113,7 +114,7 @@ module.exports = function(thedb) {
       // update record's data
       if (record) {
         // add in the new attributes, and save
-        record.data = Object.deepExtend(record.data, changes || {});
+        record = Object.deepExtend(record, changes || {});
 
         Room.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update
@@ -127,7 +128,23 @@ module.exports = function(thedb) {
     });
   }
 
+  /**
+    Add a new thing to a room
+  */
+  this.addNewThing = function(id, tid) {
+    Room.findOne({id: id}, function(err, thng) {
 
+      // only add if the array doesn't already contain it
+      if ( thng.things.filter(function(i) {
+        return i.id !== tid;
+      }).length !== 0 ) {
+        thng.things.push({id: tid});
+      }
+      Room.update({id: id}, {
+        things: thng.things
+      }, {}, function(err) {});
+    });
+  }
 
   /**
     Create a response packet with the correct status and message
