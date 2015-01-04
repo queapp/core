@@ -17,9 +17,9 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/thing-card-list.html',
         controller: 'ThingsController'
       }).
-      when('/services', {
-        templateUrl: 'views/service-card-list.html',
-        controller: 'ServicesController'
+      when('/rooms', {
+        templateUrl: 'views/room-list.html',
+        controller: 'RoomsController'
       }).
       when('/blocks', {
         templateUrl: 'views/blocks-list.html',
@@ -93,7 +93,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
       case "/things":
         root.toPage(1);
         break;
-      case "/services":
+      case "/rooms":
         root.toPage(2);
         break;
       case "/blocks":
@@ -151,7 +151,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
         return {title: "My Things", desc: "A list of all your things"};
         break;
       case 2:
-        return {title: "My Services", desc: "A list of all services linked to this Que instance"};
+        return {title: "My Rooms", desc: "Groups of things that correspond to each physical room the things are in"};
         break;
       case 3:
         return {title: "Blocks", desc: "Blocks are what tell your things and services how to work"};
@@ -321,14 +321,14 @@ app.factory("tokenService", function($http) {
   return tokenService;
 });
 
-app.factory("servicesService", function($http) {
-    serviceservice = {
+app.factory("roomsService", function($http) {
+    roomservice = {
       cache: {},
 
       getAllThings: function(callback) {
         $http({
           method: "get",
-          url: host + "/services/all",
+          url: host + "/rooms/all",
         }).success(function(data) {
           callback(data.data);
         });
@@ -340,9 +340,9 @@ app.factory("servicesService", function($http) {
         } else {
           $http({
             method: "get",
-            url: host + "/services/" + id + "/data",
+            url: host + "/rooms/" + id + "/data",
           }).success(function(data) {
-            serviceservice.cache = data;
+            roomservice.cache = data;
             callback(data);
           });
         }
@@ -356,7 +356,7 @@ app.factory("servicesService", function($http) {
 
         // $http({
         //   method: "put",
-        //   url: host + "/services/" + id + "/data",
+        //   url: host + "/rooms/" + id + "/data",
         //   data: JSON.stringify(data)
         // }).success(function(data) {
         //   callback(data);
@@ -366,7 +366,7 @@ app.factory("servicesService", function($http) {
       reorderThing: function(id, newLocation, callback) {
         $http({
           method: "get",
-          url: host + "/services/" + id + "/location/" + newLocation,
+          url: host + "/rooms/" + id + "/location/" + newLocation,
         }).success(function(data) {
           callback(data);
         });
@@ -375,7 +375,7 @@ app.factory("servicesService", function($http) {
       removeThing: function(id, callback) {
         $http({
           method: "delete",
-          url: host + "/services/" + id,
+          url: host + "/rooms/" + id,
         }).success(function(data) {
           callback(data);
         });
@@ -384,7 +384,7 @@ app.factory("servicesService", function($http) {
       genAuthKey: function(callback) {
         $http({
           method: "get",
-          url: host + "/services/genkey",
+          url: host + "/rooms/genkey",
         }).success(function(data) {
           callback(data);
         });
@@ -393,19 +393,19 @@ app.factory("servicesService", function($http) {
     };
 
     // update thing cache
-    socket.on('pull-service-data-update', function(changed) {
+    socket.on('pull-room-data-update', function(changed) {
 
       // create the item if it doesn't exist
-      if (!serviceservice.cache[changed.id]) {
-        serviceservice.cache[changed.id] = {};
+      if (!roomservice.cache[changed.id]) {
+        roomservice.cache[changed.id] = {};
       }
 
       // update cache
       _.each(changed.data, function(v, k) {
-        serviceservice.cache[changed.id][k] = v;
+        roomservice.cache[changed.id][k] = v;
       });
     });
-    return serviceservice;
+    return roomservice;
  });
 
 app.factory("blockService", function($http) {
@@ -449,7 +449,7 @@ app.factory("blockService", function($http) {
             method: "get",
             url: host + "/blocks/" + id + "/code",
           }).success(function(data) {
-            serviceservice.cache = data;
+            roomservice.cache = data;
             callback(data);
           });
         }

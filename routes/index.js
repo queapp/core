@@ -1,5 +1,5 @@
 var ThingServer = require("../controllers/things");
-var ServiceServer = require("../controllers/services");
+var RoomServer = require("../controllers/rooms");
 var BlockServer = require("../controllers/blocks");
 var UserServer = require("../controllers/users");
 var notify = require("../controllers/notify");
@@ -81,19 +81,20 @@ module.exports = function(app, server, argv) {
 
   // create thing server and service server
   var things = new ThingServer();
-  var services = new ServiceServer();
-  var blocks = new BlockServer(things, services, notify);
+  var rooms = new RoomServer();
+  var blocks = new BlockServer(things, rooms, notify);
   var users = new UserServer();
 
   // web socket routes
-  var io = require("./sockets.js")(app, server, things, services);
+  var io = require("./sockets.js")(app, server, things, rooms);
   things.socket = io;
+  rooms.socket = io;
   blocks.socket = io;
   notify.socket = io;
 
   // http routes
   require("./things")(app, things);
-  require("./services")(app, services);
+  require("./rooms")(app, rooms);
   require("./blocks")(app, blocks);
   require("./users")(app, users);
   require("./notify")(app, notify);

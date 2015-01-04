@@ -1,6 +1,6 @@
 var app = angular.module("QueGui");
 
-app.controller("ServicesController", function($scope, $http, servicesService, $interval, $document) {
+app.controller("RoomsController", function($scope, $http, roomsService, $interval, $document) {
   var root = this;
 
   this.things = [];
@@ -11,7 +11,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   this.authKey = null;
 
   // get all data from server
-  servicesService.getAllThings(function(data) {
+  roomsService.getAllThings(function(data) {
     root.things = data;
   });
 
@@ -44,7 +44,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
     data = {}
     data[key] = value;
 
-    servicesService.updateThingData(id, data, callback || function() {});
+    roomsService.updateThingData(id, data, callback || function() {});
   }
 
   // convert from CamelCase or underscore-format to normal, smaced words
@@ -66,20 +66,20 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
 
   this.removeThing = function(id, index) {
     root.things.splice(index, 1);
-    servicesService.removeThing(id, function() {});
+    roomsService.removeThing(id, function() {});
   }
 
   // generate an authentication key
   // used for adding a new service
   this.generateAuthKey = function() {
-    servicesService.genAuthKey(function(data) {
+    roomsService.genAuthKey(function(data) {
       root.authKey = data.key || null;
     });
   }
   this.generateAuthKey();
 
   // $interval(function(){
-  //   servicesService.getAllThings(function(data) {
+  //   roomsService.getAllThings(function(data) {
   //
   //     if ( angular.toJson(root.things) != angular.toJson(data) ) {
   //
@@ -97,7 +97,7 @@ app.controller("ServicesController", function($scope, $http, servicesService, $i
   // }, 1000);
 
   socket.on('backend-data-change', function(data) {
-    servicesService.getAllThings(function(data) {
+    roomsService.getAllThings(function(data) {
       if ($(':focus').length == 0) {
         // if a new item was added, hide the modal
         if (root.things && root.things.length !== data.length) {
