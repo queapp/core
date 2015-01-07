@@ -303,8 +303,30 @@
           ng-show="tC.editMode === thing.id"
           ng-disabled="!nC.user.can('thing.delete.'+thing.id)"
           >
-          Delete
+          Delete Thing
         </button>
+
+        <!-- add to room -->
+        <span ng-controller="RoomsController as rC">
+          <button
+            class="btn btn-success pull-right"
+            style="margin-right: 20px;"
+            ng-click="rC.addToRoom(rC.getRoomId(roomToAdd), thing.name)"
+            ng-show="tC.editMode === thing.id"
+            ng-disabled="!nC.user.can('room.addthing.'+thing.id) || !roomToAdd"
+            >
+            Add to Room
+          </button>
+          <select
+            type="text"
+            class="form-control like-button pull-right"
+            style="width: auto;"
+            ng-show="tC.editMode === thing.id"
+            ng-model="roomToAdd"
+            ng-disabled="!nC.user.can('room.addthing.'+thing.id)">
+            <option ng-repeat="item in rC.rooms">{{item.name}}</option>
+          </select>
+        </span>
 
 
         <!-- list of toggleable attributes -->

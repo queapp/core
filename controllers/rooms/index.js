@@ -131,18 +131,26 @@ module.exports = function(thedb) {
   /**
     Add a new thing to a room
   */
-  this.addNewThing = function(id, tid) {
+  this.addNewThing = function(id, tid, callback) {
     Room.findOne({id: id}, function(err, thng) {
 
-      // only add if the array doesn't already contain it
-      if ( thng.things.filter(function(i) {
-        return i.id !== tid;
-      }).length !== 0 ) {
-        thng.things.push({id: tid});
-      }
-      Room.update({id: id}, {
-        things: thng.things
-      }, {}, function(err) {});
+      if (!err && thng) {
+
+        // FIXME Adding mutliple of one thing?
+        // only add if the array doesn't already contain it
+        // if ( thng.things.filter(function(i) {
+          // return i.id !== tid;
+        // }).length !== 0 ) {
+          thng.things.push({id: tid});
+        // };
+
+        Room.update({id: id}, thng, {}, function(err) {
+          callback && callback(err);
+        });
+      } else {
+        callback && callback(true);
+      };
+
     });
   }
 
