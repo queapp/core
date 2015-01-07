@@ -168,7 +168,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   this.toPage(0); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
-app.controller("DashboardController", function($scope, servicesService, thingService, notificationService) {
+app.controller("DashboardController", function($scope, thingService, notificationService) {
   var root = $scope;
   root.notifications = [];
 
@@ -184,9 +184,7 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   // service count
   root.serviceCount = 0;
   root.getServiceCount = function() {
-    servicesService.getAllThings(function(data) {
-      root.serviceCount = data.length;
-    });
+    root.serviceCount = 0;
   }
   root.getServiceCount();
 
