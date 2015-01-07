@@ -68,6 +68,33 @@ module.exports = function(thedb) {
   }
 
   /**
+    Delete a thing from the room
+  */
+  this.deleteThing = function(id, tid, done) {
+    Room.findOne({id: id}, function(err, room) {
+
+      // turn the room into an object
+      // room = room.toObject();
+      delete room._id;
+
+      // remove the thing
+      room.things = room.things.filter(function(i) {
+        return i.id !== tid;
+      });
+
+      // update the room
+      Room.update({id: id}, room, {}, function(err) {
+
+        // tell the frontend it's time to update
+        root.socket && root.socket.emit("backend-data-change", {type: "room"});
+
+        // callback
+        done && done();
+      });
+    });
+  };
+
+  /**
     Get a list of all things connected to the container
   */
   this.get = function(id, done) {

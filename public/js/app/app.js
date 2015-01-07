@@ -374,10 +374,10 @@ app.factory("roomsService", function($http) {
         });
       },
 
-      removeThing: function(id, callback) {
+      removeThing: function(rid, tid, callback) {
         $http({
           method: "delete",
-          url: host + "/rooms/" + id,
+          url: host + "/rooms/" + rid + "/" + tid,
         }).success(function(data) {
           callback(data);
         });

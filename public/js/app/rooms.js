@@ -70,9 +70,15 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     return string.replace('-', ' ').replace('_', ' ');
   }
 
-  this.removeThing = function(id, index) {
-    root.things.splice(index, 1);
-    roomsService.removeThing(id, function() {});
+  this.removeThing = function(rid, tid) {
+    room = root.rooms.filter(function(i) {
+      return i.id === rid;
+    });
+    if (room.length) {
+      room[0].things = room[0].things.splice(tid, 1);
+    }
+
+    roomsService.removeThing(rid, tid, function() {});
   }
 
   // add a new thing to the room

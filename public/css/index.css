@@ -7512,7 +7512,8 @@ ul.list-group li.list-group-item {
 ul.list-group li.list-group-item h3 {
   display: inline-block;
 }
-ul.list-group li.list-group-item button.pull-right {
+ul.list-group li.list-group-item button.pull-right,
+ul.list-group li.list-group-item .like-button {
   margin: 12px 0px 4px 10px;
   vertical-align: middle;
 }

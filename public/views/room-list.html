@@ -3,7 +3,7 @@
 <div class="container" ng-controller="RoomsController as rC">
   <ul class="card-list card-list-things">
 
-    <div class="no-cards" ng-show="rC.things.length === 0">
+    <div class="no-cards" ng-show="rC.rooms.length === 0">
       <div class="side">
         A rooms is an intangible object that Que can control.
         <span>Email, social networks, or other online services</span>
@@ -23,14 +23,14 @@
     <!-- button to generate new key and add a rooms -->
     <div
       class="add-button"
-      ng-show="rC.things.length !== 0"
+      ng-show="rC.rooms.length !== 0"
       data-toggle="modal"
-      data-target="#addServiceModal"
+      data-target="#addRoomModal"
       ng-show="nC.user.can('rooms.create')">
       +
     </div>
 
-    <div class="modal fade" id="addServiceModal">
+    <div class="modal fade" id="addRoomModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -56,7 +56,7 @@
 
 
     <ul class="list-group">
-      <li class="list-group-item thing" ng-repeat="rooms in rC.things">
+      <li class="list-group-item thing" ng-repeat="rooms in rC.rooms">
         <h3>
           {{rooms.name}}
           <small>{{rooms.desc}}</small>
@@ -87,19 +87,19 @@
                     <span class="title">
                       {{th.thing.name}}
                     </span>
-                    <button class="btn btn-danger btn-xs">Delete</button>
+                    <button class="btn btn-danger btn-xs" ng-click="rC.removeThing(rooms.id, th.id)">Delete</button>
                   </li>
                 </ul>
 
                 <!-- add form -->
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-xs-12 col-md-10">
                     <input type="text" class="form-control" placeholder="Enter thing name to add to room" ng-model="thingToAddName" />
                   </div>
                   <div class="col-xs-12 col-md-2">
                     <button class="btn btn-info" ng-click="rC.addToRoom(rooms.id, thingToAddName)">Add</button>
                   </div>
-                </div>
+                </div> -->
 
               </div>
               <div class="modal-footer">
