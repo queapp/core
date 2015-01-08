@@ -222,13 +222,22 @@ app.factory("thingService", function($http) {
 
       getAllThings: function(callback) {
         var r = this;
-        $http({
-          method: "get",
-          url: host + "/things/all",
-        }).success(function(data) {
-          r.count = data.data.length;
-          callback(data.data);
-        });
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          console.log("cache")
+          callback(this.cache);
+        } else {
+          console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/things/all",
+          }).success(function(data) {
+            console.log(123)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       // get thing data
@@ -242,7 +251,7 @@ app.factory("thingService", function($http) {
             method: "get",
             url: host + "/things/" + id + "/data",
           }).success(function(data) {
-            thingservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
@@ -255,6 +264,9 @@ app.factory("thingService", function($http) {
           data: data
         });
 
+        // clear cache - update was made
+        this.cache = {};
+
         // $http({
         //   method: "put",
         //   url: host + "/things/" + id + "/data",
@@ -264,26 +276,33 @@ app.factory("thingService", function($http) {
         // });
       },
 
-      reorderThing: function(id, newLocation, callback) {
-        $http({
-          method: "get",
-          url: host + "/things/" + id + "/location/" + newLocation,
-        }).success(function(data) {
-          callback(data);
-        });
-      },
+      // reorderThing: function(id, newLocation, callback) {
+      //   $http({
+      //     method: "get",
+      //     url: host + "/things/" + id + "/location/" + newLocation,
+      //   }).success(function(data) {
+      //     callback(data);
+      //   });
+      // },
 
       removeThing: function(id, callback) {
         $http({
           method: "delete",
           url: host + "/things/" + id,
         }).success(function(data) {
+          // clear cache - update was made
+          this.cache = {};
           callback(data);
         });
       }
     };
 
     // update thing cache
+    socket.on('backend-data-change', function(payload) {
+      if (payload && payload.type === "thing") {
+        thingservice.cache = payload.data;
+      }
+    });
     socket.on('pull-thing-data-update', function(changed) {
 
       // create the item if it doesn't exist
@@ -322,14 +341,26 @@ app.factory("tokenService", function($http) {
 app.factory("roomsService", function($http) {
     roomservice = {
       cache: {},
+      count: 0,
 
       getAllThings: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/rooms/all",
-        }).success(function(data) {
-          callback(data.data);
-        });
+        var r = this;
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          // console.log("cache")
+          callback(this.cache);
+        } else {
+          // console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/rooms/all",
+          }).success(function(data) {
+            // console.log(123)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       getThingData: function(id, callback) {
@@ -340,7 +371,7 @@ app.factory("roomsService", function($http) {
             method: "get",
             url: host + "/rooms/" + id + "/data",
           }).success(function(data) {
-            roomservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
@@ -352,7 +383,7 @@ app.factory("roomsService", function($http) {
           url: host + "/rooms/" + id + "/addthing",
           data: JSON.stringify({id: tid})
         }).success(function(data) {
-          console.log(data)
+          this.cache = {};
           callback(data);
         });
 
@@ -379,22 +410,20 @@ app.factory("roomsService", function($http) {
           method: "delete",
           url: host + "/rooms/" + rid + "/" + tid,
         }).success(function(data) {
-          callback(data);
-        });
-      },
-
-      genAuthKey: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/rooms/genkey",
-        }).success(function(data) {
+          this.cache = {};
           callback(data);
         });
       }
 
     };
 
-    // update thing cache
+    // update room chache
+    socket.on('backend-data-change', function(payload) {
+      if (payload && payload.type === "room") {
+        roomservice.cache = payload.data;
+      }
+    });
+
     socket.on('pull-room-data-update', function(changed) {
 
       // create the item if it doesn't exist

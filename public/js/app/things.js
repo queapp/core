@@ -353,8 +353,10 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
     });
   }
 
-  socket.on('backend-data-change', function() {
-    root.refresh();
+  socket.on('backend-data-change', function(payload) {
+    if (payload && payload.type === "thing") {
+      root.refresh();
+    }
   });
 
 
