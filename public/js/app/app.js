@@ -224,16 +224,16 @@ app.factory("thingService", function($http) {
         var r = this;
         // first, check cache
         if (!$.isEmptyObject(this.cache)) {
-          console.log("cache")
+          // console.log("cache", this.cache)
           callback(this.cache);
         } else {
-          console.log("req")
+          // console.log("req")
           // fall back to http request
           $http({
             method: "get",
             url: host + "/things/all",
           }).success(function(data) {
-            console.log(123)
+            // console.log("-> done", data)
             r.cache = data.data;
             callback(data.data);
           });
@@ -300,6 +300,7 @@ app.factory("thingService", function($http) {
     // update thing cache
     socket.on('backend-data-change', function(payload) {
       if (payload && payload.type === "thing") {
+        // console.log(payload)
         thingservice.cache = payload.data;
       }
     });
@@ -449,6 +450,7 @@ app.factory("blockService", function($http) {
           url: host + "/blocks/add",
           data: JSON.stringify(data)
         }).success(function(data) {
+          this.cache = {};
           callback && callback(data.id || data);
         });
       },
@@ -458,18 +460,29 @@ app.factory("blockService", function($http) {
           method: "delete",
           url: host + "/blocks/"+id
         }).success(function(data) {
-          console.log(data);
+          this.cache = {};
           callback && callback(data);
         });
       },
 
       getAllBlocks: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/blocks/all",
-        }).success(function(data) {
-          callback(data.data);
-        });
+        var r = this;
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          // console.log("cache")
+          callback(this.cache);
+        } else {
+          // console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/blocks/all",
+          }).success(function(data) {
+            // console.log(123)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       getBlockData: function(id, callback) {
@@ -480,7 +493,7 @@ app.factory("blockService", function($http) {
             method: "get",
             url: host + "/blocks/" + id + "/code",
           }).success(function(data) {
-            roomservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
@@ -492,6 +505,7 @@ app.factory("blockService", function($http) {
           url: host + "/blocks/" + id + "/code",
           data: JSON.stringify(data)
         }).success(function(data) {
+          this.cache = {};
           callback(data);
         });
       }

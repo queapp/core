@@ -349,6 +349,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
         // update the data
         root.things = data;
+        $scope.$apply();
       }
     });
   }

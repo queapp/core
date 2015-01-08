@@ -112,6 +112,7 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
 
         // update the data
         root.rooms = data;
+        $scope.$apply();
       }
     });
   });
