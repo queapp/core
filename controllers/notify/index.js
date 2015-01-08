@@ -38,7 +38,10 @@ module.exports = {
       var notify = new Notify(item);
       notify.save(function(err, d) {
         // tell the frontend it needs to pull in a new notify
-        root.socket && root.socket.emit("backend-data-change", "notify");
+        root.socket && root.socket.emit("backend-data-change", {
+          type: "notify",
+          data: docs
+        });
 
         // callback
         done && done(item.id);

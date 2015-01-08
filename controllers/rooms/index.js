@@ -46,7 +46,10 @@ module.exports = function(thedb) {
       var thing = new Room(item);
       thing.save(function(err, d) {
         // tell the frontend it needs to pull in a new thing
-        root.socket && root.socket.emit("backend-data-change", data);
+        root.socket && root.socket.emit("backend-data-change", {
+          type: "room",
+          data: all
+        });
 
         // callback
         done && done(item.id);
@@ -58,9 +61,16 @@ module.exports = function(thedb) {
     Delete a thing from the list of things
   */
   this.delete = function(id, done) {
-    Room.remove({id: id}, function(err) {
+    Room.remove({id: id}, function(err, all) {
+      console.log(123, all)
+
       // tell the frontend it's time to update
-      root.socket && root.socket.emit("backend-data-change", data);
+      Room.find({}, function(err, all) {
+        root.socket && root.socket.emit("backend-data-change", {
+          type: "room",
+          data: all
+        });
+      });
 
       // callback
       done && done();
@@ -86,7 +96,12 @@ module.exports = function(thedb) {
       Room.update({id: id}, room, {}, function(err) {
 
         // tell the frontend it's time to update
-        root.socket && root.socket.emit("backend-data-change", {type: "room"});
+        Room.find({}, function(err, all) {
+          root.socket && root.socket.emit("backend-data-change", {
+            type: "room",
+            data: all
+          });
+        });
 
         // callback
         done && done();
@@ -145,7 +160,10 @@ module.exports = function(thedb) {
 
         Room.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update
-          root.socket && root.socket.emit("backend-data-change", data);
+          root.socket && root.socket.emit("backend-data-change", {
+            type: "room",
+            data: data
+          });
 
           // callback
           done && done();

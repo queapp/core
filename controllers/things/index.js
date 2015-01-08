@@ -67,7 +67,10 @@ module.exports = function(thedb) {
           done(null);
         } else {
           // tell the frontend it needs to pull in a new thing
-          root.socket && root.socket.emit("backend-data-change", data);
+          root.socket && root.socket.emit("backend-data-change", {
+            type: "thing",
+            data: all
+          });
 
           // callback
           done && done(item.id);
@@ -82,7 +85,12 @@ module.exports = function(thedb) {
   this.delete = function(id, done) {
      Thing.remove({id: id}, function(err) {
        // tell the frontend it's time to update
-       root.socket && root.socket.emit("backend-data-change", {});
+       Thing.find({}, function(err, all) {
+         root.socket && root.socket.emit("backend-data-change", {
+           type: "thing",
+           data: all
+         });
+       });
 
        // callback
        done && done();
@@ -149,7 +157,10 @@ module.exports = function(thedb) {
         // update thing
         Thing.update({id: id}, record, {}, function(err) {
           // tell the frontend it's time to update
-          root.socket && root.socket.emit("backend-data-change", data);
+          root.socket && root.socket.emit("backend-data-change", {
+            type: "thing",
+            data: data
+          });
 
           // callback
           done && done();
