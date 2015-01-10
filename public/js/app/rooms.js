@@ -84,7 +84,6 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     });
 
     if (room.length) {
-      console.log(room[0].things)
       // room[0].things.splice(tindex, 1);
       delete room[0].things[tindex];
       // room[0].things[tindex].name = "Deleted";
@@ -116,6 +115,18 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
       return room.name === name;
     });
     return id.length ? id[0].id : null;
+  }
+
+  // returns each room the specified thing isn't
+  // part of; Used for the selection boxes to add
+  // a thing to a specified room on thing page.
+  this.onlyNotIn = function(rooms, thing) {
+    return _.filter(rooms, function(r) {
+      // each room that doesn't contain the specified thing
+      return !_.filter(r.things, function(t) {
+        return t.id === thing;
+      }).length;
+    });
   }
 
   // the backend has new data for us
