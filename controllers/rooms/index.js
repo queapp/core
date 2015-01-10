@@ -181,13 +181,12 @@ module.exports = function(thedb) {
 
       if (!err && thng) {
 
-        // FIXME Adding mutliple of one thing?
         // only add if the array doesn't already contain it
-        // if ( thng.things.filter(function(i) {
-          // return i.id !== tid;
-        // }).length !== 0 ) {
+        if( thng.things.filter(function(i) {
+          return i.id === tid;
+        }).length === 0) {
           thng.things.push({id: tid});
-        // };
+        };
 
         Room.update({id: id}, thng, {}, function(err) {
           callback && callback(err);
