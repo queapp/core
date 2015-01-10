@@ -84,11 +84,16 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
   // add a new thing to the room
   this.addToRoom = function(id, name) {
     thingService.getAllThings(function(things) {
+      // look for possible thins that match the name requirement
       possibles = _.filter(things, function(i) { return i.name === name; });
       if (possibles.length) {
-        console.log(id, possibles[0].id)
         roomsService.addThing(id, possibles[0].id, function(data) {
-          root.rooms.push({id: id});
+          // add the thing to the room
+          _.each(_.filter(root.rooms, function(i) {
+            return i.id == id;
+          }), function(i) {
+            i.things.push(possibles[0]);
+          });
         });
       }
     });
