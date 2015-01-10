@@ -10,18 +10,26 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
   // service authentication key
   this.authKey = null;
 
+  // process newly aquired data from server
+  // takes each thing within each room and
+  // fills in the missing data for conveinence
+  this.processNewData = function(things, data) {
+    _.each(data, function(rm, i) {
+      _.each(rm.things, function(th, j) {
+        thing = _.filter(things, function(i) { return i.id === th.id; });
+        th.thing = thing.length && thing[0] || {};
+      });
+    });
+
+    return data;
+  }
+
   // get all data from server
   roomsService.getAllThings(function(data) {
     thingService.getAllThings(function(things) {
 
-      _.each(data, function(rm, i) {
-        _.each(rm.things, function(th, j) {
-          thing = _.filter(things, function(i) { return i.id === th.id; });
-          th.thing = thing.length && thing[0] || {};
-        });
-      });
-
-      root.rooms = data;
+      // process data
+      root.rooms = root.processNewData(things, data);
 
     });
   });
@@ -70,12 +78,16 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     return string.replace('-', ' ').replace('_', ' ');
   }
 
-  this.removeThing = function(rid, tid) {
+  this.removeThing = function(rid, tid, tindex) {
     room = root.rooms.filter(function(i) {
       return i.id === rid;
     });
+
     if (room.length) {
-      room[0].things = room[0].things.splice(tid, 1);
+      console.log(room[0].things)
+      // room[0].things.splice(tindex, 1);
+      delete room[0].things[tindex];
+      // room[0].things[tindex].name = "Deleted";
     }
 
     roomsService.removeThing(rid, tid, function() {});
@@ -106,20 +118,25 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     return id.length ? id[0].id : null;
   }
 
-  socket.on('backend-data-change', function(data) {
-    roomsService.getAllThings(function(data) {
+  // the backend has new data for us
+  socket.on('backend-data-change', function(payload) {
+    if (payload && payload.type === "room") {
       if ($(':focus').length == 0) {
-        // if a new item was added, hide the modal
-        if (root.rooms && root.rooms.length < data.length) {
-          $("#addRoomModal").modal('hide');
-          // root.generateAuthKey();
-        }
 
-        // update the data
-        root.rooms = data;
+        // if a new item was added, hide the modal
+        if (root.rooms && root.rooms.length < payload.data.length) {
+          $("#addRoomModal").modal('hide');
+        };
+
+        // update the payload data
+        thingService.getAllThings(function(things) {
+          root.rooms = root.processNewData(things, payload.data);
+        });
+
+        // update scope
         $scope.$apply();
-      }
-    });
+      };
+    };
   });
 
 });
