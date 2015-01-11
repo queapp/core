@@ -137,7 +137,7 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     roomsService.add({
       name: this.newRoom.name,
       desc: this.newRoom.desc,
-      tags: this.newRoom.tags.split(" "),
+      tags: (this.newRoom.tags || '').split(" "),
       things: []
     }, function() {
       $("#addRoomModal").modal('hide');
