@@ -156,7 +156,6 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
 
       // update the payload data
       thingService.getAllThings(function(things) {
-        console.log(root.processNewData(things, payload.data))
         root.rooms = root.processNewData(things, payload.data);
       });
 
