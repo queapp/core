@@ -315,7 +315,7 @@
             style="margin-right: 16px;"
             ng-click="rC.addToRoom(rC.getRoomId(roomToAdd), thing.name)"
             ng-hide="tC.editMode === thing.id"
-            ng-disabled="!nC.user.can('room.addthing.'+thing.id) || !roomToAdd"
+            ng-disabled="!nC.user.can('room.thing.add.'+thing.id) || !roomToAdd"
             >
             Add to Room
           </button>
@@ -325,7 +325,7 @@
             style="width: auto;"
             ng-hide="tC.editMode === thing.id"
             ng-model="roomToAdd"
-            ng-disabled="!nC.user.can('room.addthing.'+thing.id)">
+            ng-disabled="!nC.user.can('room.thing.add.'+thing.id)">
             <option ng-repeat="item in rC.onlyNotIn(rC.rooms, thing.id)">{{item.name}}</option>
           </select>
         </span>

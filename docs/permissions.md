@@ -17,16 +17,15 @@ Things
 - thing.control.read.[name].#id
 - thing.control.write.[name].#id
 
-Services
+Rooms
 ---
-- service.view.all
-- service.view.#id
+- room.view.all
+- room.view.#id
 
-- service.create
-- service.edit.#id
-- service.delete.#id
-
-- service.genkey
+- room.create
+- room.thing.add.#id
+- room.thing.delete.#id
+- room.delete.#id
 
 Blocks
 ---

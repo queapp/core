@@ -61,14 +61,26 @@
           <small>{{rooms.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="rC.remove(rooms.id)">Delete</button>
+        <button
+          class="btn btn-danger pull-right"
+          ng-click="rC.remove(rooms.id)"
+          ng-disabled="!nC.user.can('room.delete.'+thing.id)"
+          >
+          Delete
+        </button>
 
         <ul class="scrollable">
           <li ng-repeat="th in rooms.things">
             <span class="title">
               {{th.thing.name}}
             </span>
-            <button class="btn btn-danger btn-xs" ng-click="rC.removeThing(rooms.id, th.id, $index)">Delete</button>
+            <button
+              class="btn btn-danger btn-xs"
+              ng-click="rC.removeThing(rooms.id, th.id, $index)"
+              ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+              >
+              Delete
+            </button>
           </li>
         </ul>
 

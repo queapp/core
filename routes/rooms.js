@@ -80,7 +80,7 @@ module.exports = function(app, rooms) {
   });
 
   // delete a thing
-  app.delete("/rooms/:id/:tid", userCan("room.deletething.#id"), function(req, res, next) {
+  app.delete("/rooms/:id/:tid", userCan("room.thing.delete.#id"), function(req, res, next) {
     rooms.deleteThing(parseInt(req.param("id")), parseInt(req.param("tid")), function() {
       res.send( rooms.createResponsePacket() );
     });
