@@ -41,14 +41,13 @@
             <h4 class="modal-title">Add New Room</h4>
           </div>
           <div class="modal-body">
-            <p>
-              Enter this Authentication key below into the new room:
-              <pre class="big">{{rC.authKey}}</pre>
-            </p>
+            <input class="form-control" placeholder="Room Name" ng-model="rC.newRoom.name"/>
+            <input class="form-control" placeholder="Room Description" ng-model="rC.newRoom.desc"/>
+            <input class="form-control" placeholder="Room Tags (space seperated)" ng-model="rC.newRoom.tags"/>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" ng-click="rC.generateAuthKey()">Generate New Key</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="rC.add()">Add</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -62,7 +61,7 @@
           <small>{{rooms.desc}}</small>
         </h3>
 
-        <button class="btn btn-danger pull-right" ng-click="rC.removeThing(rooms.id, $index)">Delete</button>
+        <button class="btn btn-danger pull-right" ng-click="rC.remove(rooms.id)">Delete</button>
 
         <ul class="scrollable">
           <li ng-repeat="th in rooms.things">

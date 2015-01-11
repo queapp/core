@@ -5,6 +5,8 @@ var _ = require("underscore");
 var roomSchema = mongoose.Schema({
   "name": String,
   "desc": String,
+  "id": Number,
+  "tags": Array,
   "things": Array
 });
 

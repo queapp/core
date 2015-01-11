@@ -397,12 +397,22 @@ app.factory("roomsService", function($http) {
         // });
       },
 
-      reorderThing: function(id, newLocation, callback) {
+      add: function(data, callback) {
         $http({
-          method: "get",
-          url: host + "/rooms/" + id + "/location/" + newLocation,
+          method: "post",
+          url: host + "/rooms/add",
+          data: JSON.stringify(data)
         }).success(function(data) {
-          callback(data);
+          callback && callback(data);
+        });
+      },
+
+      remove: function(id, callback) {
+        $http({
+          method: "delete",
+          url: host + "/rooms/" + id
+        }).success(function(data) {
+          callback && callback(data);
         });
       },
 

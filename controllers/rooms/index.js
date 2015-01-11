@@ -13,7 +13,7 @@ module.exports = function(thedb) {
   // currently active auth key
   this.currentAuthKey = null;
 
-  // a default service; used in .add()
+  // a default room; used in .add()
   this.defaultRoom = {
     "name": "Untitled Room",
     "desc": "Untitled Room Description",
@@ -42,13 +42,16 @@ module.exports = function(thedb) {
       item = _.extend(root.defaultRoom, data);
       item.id = ++maxId;
 
-      item.type = "service";
+      item.type = "room";
       var thing = new Room(item);
       thing.save(function(err, d) {
+
         // tell the frontend it needs to pull in a new thing
-        root.socket && root.socket.emit("backend-data-change", {
-          type: "room",
-          data: all
+        Room.find({}, function(err, all) {
+          root.socket && root.socket.emit("backend-data-change", {
+            type: "room",
+            data: all
+          });
         });
 
         // callback
@@ -62,7 +65,6 @@ module.exports = function(thedb) {
   */
   this.delete = function(id, done) {
     Room.remove({id: id}, function(err, all) {
-      console.log(123, all)
 
       // tell the frontend it's time to update
       Room.find({}, function(err, all) {

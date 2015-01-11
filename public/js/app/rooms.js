@@ -10,6 +10,9 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
   // service authentication key
   this.authKey = null;
 
+  // creating new rooms
+  this.newRoom = {};
+
   // process newly aquired data from server
   // takes each thing within each room and
   // fills in the missing data for conveinence
@@ -129,24 +132,35 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     });
   }
 
+  // create new room
+  this.add = function() {
+    roomsService.add({
+      name: this.newRoom.name,
+      desc: this.newRoom.desc,
+      tags: this.newRoom.tags.split(" "),
+      things: []
+    }, function() {
+      $("#addRoomModal").modal('hide');
+    });
+  };
+
+  // remove a room
+  this.remove = function(id) {
+    roomsService.remove(id);
+  };
+
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "room") {
-      if ($(':focus').length == 0) {
 
-        // if a new item was added, hide the modal
-        if (root.rooms && root.rooms.length < payload.data.length) {
-          $("#addRoomModal").modal('hide');
-        };
+      // update the payload data
+      thingService.getAllThings(function(things) {
+        console.log(root.processNewData(things, payload.data))
+        root.rooms = root.processNewData(things, payload.data);
+      });
 
-        // update the payload data
-        thingService.getAllThings(function(things) {
-          root.rooms = root.processNewData(things, payload.data);
-        });
-
-        // update scope
-        $scope.$apply();
-      };
+      // update scope
+      $scope.$apply();
     };
   });
 
