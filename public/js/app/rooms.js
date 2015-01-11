@@ -141,6 +141,7 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
       things: []
     }, function() {
       $("#addRoomModal").modal('hide');
+      root.newRoom = {};
     });
   };
 
