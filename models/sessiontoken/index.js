@@ -6,7 +6,11 @@ var sessionTokenSchema = mongoose.Schema({
   "hostname": String,
   "key": String,
   "permissions": Array,
-  "username": String
+  "username": String,
+  "createdAt": {
+    "type": Date,
+    "expires": '1d'
+  }
 });
 
 
