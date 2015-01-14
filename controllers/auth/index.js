@@ -2,14 +2,28 @@ var _ = require("underscore");
 var sessionToken = require("../../models/sessiontoken");
 var wildcard = require("wildcard");
 
+var tokenexpiresafter = 60 * 60 * 24; // 1 day
+
 var canUser = function(auth, permission, cb) {
   sessionToken.findOne({key: auth}, function(err, token) {
     if (err) {
       cb(err);
       return;
     }
+
     // check for matches
     if (token) {
+
+      // get creation time
+      createdat = new Date(token.toObject().createdAt.toString());
+
+      // check for token expiration
+      if ( createdat.getTime() / 1000 + tokenexpiresafter < new Date().getTime() / 1000 ) {
+        sessionToken.remove({key: auth}, function(err) {
+          cb(err || "Token Expired - Not Authenticated");
+        });
+      }
+
       resp = [];
       _.each(token.permissions, function(p) {
         resp.push( wildcard(p, permission) );
