@@ -172,12 +172,17 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
         break;
     }
 
+    console.log(1)
     // add the thing to the database serverside
     $http({
       method: "POST",
       url: "/things/add",
       data: angular.toJson(thing)
     }).success(function(data) {
+
+      // clear thing cache
+      thingService.cache = {};
+
       if (block) {
         // replace id
         block.code[1] = block.code[1].replace("%THINGID%", data.id);
@@ -189,11 +194,14 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
           data: JSON.stringify(block)
         }).success(function() {
           $rootScope.$broadcast('updateBlocks', null);
+          root.refresh();
         });
+      } else {
+        root.refresh();
       }
     });
 
-  }
+  };
 
   // initialize the newThing object on cancel (or on start)
   // and the customThing JSON string if the user is adding a custom thing
@@ -349,7 +357,6 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
         // update the data
         root.things = data;
-        $scope.$apply();
       }
     });
   }
@@ -357,6 +364,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "thing") {
       root.refresh();
+      $scope.$apply();
     }
   });
 
