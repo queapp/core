@@ -104,17 +104,17 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
             thing.actions.push({
               name: pinv,
               trigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-                params: {
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                form: {
                   args: pin+",HIGH",
                   access_token: tokenService.tokens.sparktoken
                 }
               },
               detrigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-                params: {
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                form: {
                   args: pin+",LOW",
                   access_token: tokenService.tokens.sparktoken
                 }
