@@ -59,6 +59,9 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
   this.deleteBlock = function(block) {
 
     blockService.removeBlock(block.id, function() {
+      // clear cache
+      blockService.cache = {};
+
       // refetch blocks
       root.fetchBlocks();
     });
