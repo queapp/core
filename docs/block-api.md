@@ -1,6 +1,18 @@
 Blocks Api
 ===
 
+###@0.7
+
+- **warn(msg)** - Log message to block's console, but with warning priority.
+```javascript
+que.warn("Hmm, this isn't right.");
+```
+
+- **error(msg)** - Log message to block's console, but with error priority.
+```javascript
+que.warn("Something just went wrong.");
+```
+
 ###@0.5
 
 - **getActions(thing)** - returns an object containing each action name of the thing as
