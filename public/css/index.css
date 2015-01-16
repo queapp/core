@@ -7682,8 +7682,28 @@ textarea.blocks li .modal input.block-name {
   margin-top: 14px;
   max-height: 200px;
   height: 200px;
+  overflow-y: auto;
+  font-family: "monospace";
 }
 .blocks li .modal .log-space blockquote {
   border-color: #ddd;
   border-color: rgba(0, 0, 0, 0.15);
+}
+.blocks li .modal .log-space .log-info .text {
+  color: blue;
+}
+.blocks li .modal .log-space .log-info .text:before {
+  content: "> ";
+}
+.blocks li .modal .log-space .log-warn .text {
+  color: orange;
+}
+.blocks li .modal .log-space .log-warn .text:before {
+  content: "! ";
+}
+.blocks li .modal .log-space .log-error .text {
+  color: red;
+}
+.blocks li .modal .log-space .log-error .text:before {
+  content: "X ";
 }

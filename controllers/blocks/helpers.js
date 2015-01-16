@@ -102,6 +102,27 @@ module.exports = function(socket, things, services, notifys, item) {
       socket && socket.emit("block-log", {
         id: item.id,
         type: "info",
+        when: new Date(),
+        msg: msg.toString()
+      });
+    },
+
+    // log to console underneath the block (level warn)
+    warn: function(msg) {
+      socket && socket.emit("block-log", {
+        id: item.id,
+        type: "warn",
+        when: new Date(),
+        msg: msg.toString()
+      });
+    },
+
+    // log to console underneath the block (level error)
+    error: function(msg) {
+      socket && socket.emit("block-log", {
+        id: item.id,
+        type: "error",
+        when: new Date(),
         msg: msg.toString()
       });
     },

@@ -103,8 +103,12 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
 
     // append to the log, and update the view
     if (b.length && b[0].log) {
-      console.log(blk.msg)
-      b[0].log.unshift(blk.msg && blk.msg.toString() || blk.msg);
+      // convert date
+      blk.when = typeof blk.when == "string" ? new Date(blk.when) : blk.when;
+
+      // log it out
+      console.log(blk);
+      b[0].log.unshift(blk);
       $scope.$apply();
     };
   });

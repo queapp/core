@@ -204,6 +204,24 @@ ul.list-group {
         margin-top: 14px;
         max-height: 200px;
         height: 200px;
+        overflow-y: auto;
+
+        font-family: "monospace";
+
+        .log-info .text {
+          color: blue;
+          &:before { content: "> "; }
+        }
+
+        .log-warn .text {
+          color: orange;
+          &:before { content: "! "; }
+        }
+
+        .log-error .text {
+          color: red;
+          &:before { content: "X "; }
+        }
       }
     }
   }
