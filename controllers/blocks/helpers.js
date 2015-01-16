@@ -47,8 +47,12 @@ module.exports = function(socket, things, services, notifys, item) {
       obj[key] = {value: value};
 
       // update
-      things.update(id, obj, function(data) {
-        callback && (data && callback(true) || callback(null));
+      things.get(id, function(thing) {
+        if (thing.data[key].value !== value) {
+          things.update(id, obj, function(data) {
+            callback && (data && callback(true) || callback(null));
+          });
+        }
       });
     },
 
