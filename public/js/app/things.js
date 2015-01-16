@@ -100,22 +100,25 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
               name: pinv
             };
 
+            // what type is the pin?
+            pintype = pin[0] === "D" && "digital" || "analog";
+
             // add actions for each pin
             thing.actions.push({
               name: pinv,
               trigger: {
                 method: "POST",
-                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/"+pintype+"write",
                 form: {
-                  args: pin+",HIGH",
+                  args: pin+","+(pintype === "digital" && "HIGH" || "255"),
                   access_token: tokenService.tokens.sparktoken
                 }
               },
               detrigger: {
                 method: "POST",
-                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/"+pintype+"write",
                 form: {
-                  args: pin+",LOW",
+                  args: pin+","+(pintype === "digital" && "LOW" || "0"),
                   access_token: tokenService.tokens.sparktoken
                 }
               }
@@ -140,9 +143,9 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
             thing.actions.push({
               name: pinv,
               trigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalread",
-                params: {
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalread",
+                form: {
                   args: pin,
                   access_token: tokenService.tokens.sparktoken
                 }
@@ -172,7 +175,6 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
         break;
     }
 
-    console.log(1)
     // add the thing to the database serverside
     $http({
       method: "POST",
