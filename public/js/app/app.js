@@ -168,7 +168,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   this.toPage(0); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
-app.controller("DashboardController", function($scope, thingService, notificationService) {
+app.controller("DashboardController", function($scope, thingService, roomsService, notificationService) {
   var root = $scope;
   root.notifications = [];
 
@@ -181,12 +181,13 @@ app.controller("DashboardController", function($scope, thingService, notificatio
   }
   root.getThingCount();
 
-  // service count
-  root.serviceCount = 0;
-  root.getServiceCount = function() {
-    root.serviceCount = 0;
-  }
-  root.getServiceCount();
+  root.roomCount = 0;
+  root.getRoomCount = function() {
+    roomsService.getAllThings(function(data) {
+      root.roomCount = data.length;
+    });
+  };
+  root.getRoomCount();
 
   // notifications
   root.refetch = function() {
