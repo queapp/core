@@ -98,7 +98,7 @@ module.exports = function(socket, things, services, notifys, item) {
       socket && socket.emit("block-log", {
         id: item.id,
         type: "info",
-        msg: msg && JSON.stringify(msg) || msg
+        msg: msg.toString()
       });
     },
 

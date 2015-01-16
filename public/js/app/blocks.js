@@ -104,7 +104,7 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
     // append to the log, and update the view
     if (b.length && b[0].log) {
       console.log(blk.msg)
-      b[0].log.push(blk.msg && blk.msg.toString() || blk.msg);
+      b[0].log.unshift(blk.msg && blk.msg.toString() || blk.msg);
       $scope.$apply();
     };
   });
