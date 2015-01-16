@@ -155,11 +155,11 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
 
             // add the required code to the block
-            block.code.push("  que.getActions(thing)."+pinv+".trigger(function(status, body) {");
+            block.code.push("  que.getActions(thing)."+pinv+".trigger(function(status, resp, body) {");
             block.code.push("    if (body.return_value) {");
             block.code.push("      // do something here when the pin is on");
             block.code.push("      que.log('"+pinv+" is on.');");
-            block.code.push("    } else if (body.return_value > 0) {");
+            block.code.push("    } else {");
             block.code.push("      // do something here when the pin is off");
             block.code.push("      que.log('"+pinv+" is off.');");
             block.code.push("    };")
