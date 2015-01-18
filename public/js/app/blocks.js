@@ -43,6 +43,9 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
 
     // add block
     blockService.addBlock(this.newBlock, function() {
+      // clear block cache
+      blockService.cache = {};
+      
       // refetch blocks
       root.fetchBlocks();
     });
