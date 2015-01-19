@@ -125,7 +125,7 @@
                 ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
                 ng-click=""
                 data-toggle="modal"
-                data-target="#EnterRoomModal-{{rooms.id}}"
+                data-target="#EnterRoomModal-{{rooms.id}}-{{th.id}}"
                 >
                 On Enter
               </button>
@@ -134,13 +134,13 @@
                 ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
                 ng-click=""
                 data-toggle="modal"
-                data-target="#LeaveRoomModal-{{rooms.id}}"
+                data-target="#LeaveRoomModal-{{rooms.id}}-{{th.id}}"
                 >
                 On Leave
               </button>
 
               <!-- enter configuration modal -->
-              <div class="modal fade" class="roomModal" id="EnterRoomModal-{{rooms.id}}">
+              <div class="modal fade" class="roomModal" id="EnterRoomModal-{{rooms.id}}-{{th.id}}">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -152,7 +152,7 @@
                     </div>
                     <div class="modal-body">
                       <ul class="card-form clearfix edit-data">
-                        <li class="control" ng-repeat="(k, v) in th.enter" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+                        <li class="control" ng-repeat="(k, v) in (th.enter || th.thing.data)" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
                           <label
                             tooltip
                             data-toggle="tooltip"
@@ -162,6 +162,7 @@
                             {{v.label || tC.convertIntoSpaces(k)}}
                           </label>
                           <input
+                            ng-init="th.leave = th.leave || th.thing.data"
                             type="{{ tC.getTypeFor(v) }}"
                             ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
                             placeholder="{{k}}"
@@ -187,7 +188,7 @@
               </div><!-- /.modal -->
 
               <!-- leave configuration modal -->
-              <div class="modal fade" class="roomModal" id="LeaveRoomModal-{{rooms.id}}">
+              <div class="modal fade" class="roomModal" id="LeaveRoomModal-{{rooms.id}}-{{th.id}}">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -199,7 +200,7 @@
                     </div>
                     <div class="modal-body">
                       <ul class="card-form clearfix edit-data">
-                        <li class="control" ng-repeat="(k, v) in th.leave" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+                        <li class="control" ng-repeat="(k, v) in (th.leave || th.thing.data)" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
                           <label
                             tooltip
                             data-toggle="tooltip"
@@ -209,6 +210,7 @@
                             {{v.label || tC.convertIntoSpaces(k)}}
                           </label>
                           <input
+                            ng-init="th.leave = th.leave || th.thing.data"
                             type="{{ tC.getTypeFor(v) }}"
                             ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
                             placeholder="{{k}}"
