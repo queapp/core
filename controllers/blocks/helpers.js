@@ -79,13 +79,17 @@ module.exports = function(socket, things, services, notifys, item) {
           trigger: function(cb) {
             // console.log("TRIGGER", JSON.stringify(action));
             request(action.trigger, function(err, resp, body) {
-              cb && cb(err, resp, JSON.parse(body));
+              try {
+                cb && cb(err, resp, JSON.parse(body));
+              } catch (err) {}
             });
           },
           detrigger: function(cb) {
             // console.log("DETRIGGER", JSON.stringify(action));;
             request(action.detrigger, function(err, resp, body) {
-              cb && cb(err, resp, body);
+              try {
+                cb && cb(err, resp, JSON.parse(body));
+              } catch (err) {}
             });
           }
         }
