@@ -9,7 +9,7 @@ var pro = require("uglify-js").uglify;
 // the model
 var Block = require("../../models/blocks");
 
-module.exports = function(things, services, notify) {
+module.exports = function(things, services, rooms, notify) {
   var root = this;
 
   this.defaultBlock = {
@@ -196,7 +196,7 @@ module.exports = function(things, services, notify) {
           if (typeof code == "function") {
 
             // create helpers
-            helpers = helperConstructor(root.socket, things, services, notify, item);
+            helpers = helperConstructor(root.socket, things, services, notify, rooms, item);
 
             // check for an error
             if (err && root.socket) {

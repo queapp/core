@@ -3,7 +3,7 @@ var request = require("request");
 
 // some small helper apis to make outside interaction
 // possible inside of a code block
-module.exports = function(socket, things, services, notifys, item) {
+module.exports = function(socket, things, services, notifys, rooms, item) {
 
   return {
 
@@ -28,6 +28,38 @@ module.exports = function(socket, things, services, notifys, item) {
       things.get(null, function(data) {
 
         // get matching things
+        fltr = _.filter(data, function(item) {
+          return item.id == id;
+        });
+
+        // iterate over them
+        _.each(fltr, function(f, ct) {
+          cb(f, ct);
+        });
+      });
+    },
+
+    // get a room by its tag
+    getRoomByTag: function(tag, cb) {
+      rooms.get(null, function(data) {
+
+        // get matching rooms
+        fltr = _.filter(data, function(item) {
+          return _.contains(item.tags, tag);
+        });
+
+        // iterate over them
+        _.each(fltr, function(f, ct) {
+          cb(f, ct);
+        });
+      });
+    },
+
+    // get a room by its id
+    getRoomById: function(id, cb) {
+      rooms.get(null, function(data) {
+
+        // get matching rooms
         fltr = _.filter(data, function(item) {
           return item.id == id;
         });
@@ -98,7 +130,37 @@ module.exports = function(socket, things, services, notifys, item) {
       return actions;
     },
 
+    // enter and leave rooms
+    room: function(room, action, username, callback) {
 
+      // add or remove username
+      if (action || action === "enter" || action === "e") {
+        // add, but make sure user isn't already in the list
+        if (room.usersInside.indexOf(username) === -1)
+          room.usersInside.push(username);
+      } else {
+        // remove
+        room.usersInside.splice(
+          room.usersInside.indexOf(username),
+          1
+        );
+      }
+
+      // update backend
+      rooms.updateUsers(room.id, room.usersInside, function() {
+
+        // update frontend
+        rooms.get(null, function(all) {
+          socket.emit('backend-data-change', {
+            type: "room",
+            data: all
+          });
+        });
+
+        // callback
+        callback && callback();
+      });
+    },
 
 
     // log to console underneath the block
