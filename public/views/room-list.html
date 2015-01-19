@@ -54,9 +54,9 @@
     </div><!-- /.modal -->
 
 
-    <ul class="list-group">
+    <ul class="list-group" ng-controller="ThingsController as tC">
       <li class="list-group-item thing" ng-repeat="rooms in rC.rooms">
-        <h3>
+        <h3 tooltip data-toggle="tooltip" data-placement="left" title="Tags: {{rooms.tags.join(', ')}}">
           {{rooms.name}}
           <small>{{rooms.desc}}</small>
         </h3>
