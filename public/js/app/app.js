@@ -425,8 +425,18 @@ app.factory("roomsService", function($http) {
           this.cache = {};
           callback(data);
         });
+      },
+      
+      updateUsers: function(room) {
+        $http({
+          method: "post",
+          url: host + "/rooms/" + room.id + "/users",
+          data: JSON.stringify({users: room.usersInside})
+        }).success(function(data) {
+          this.cache = {};
+          callback(data);
+        });
       }
-
     };
 
     // update room chache

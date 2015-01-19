@@ -7,7 +7,8 @@ var roomSchema = mongoose.Schema({
   "desc": String,
   "id": Number,
   "tags": Array,
-  "things": Array
+  "things": Array,
+  "usersInside": Array
 });
 
 

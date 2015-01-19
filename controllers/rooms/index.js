@@ -207,6 +207,12 @@ module.exports = function(thedb) {
     return _.extend({"status": status || "OK", "msg": null}, data || {});
   }
 
-
-
+  /**
+    Update users that are currently in a room
+  */
+  this.updateUsers = function(id, users, callback) {
+    Room.update({id: id}, {usersInside: users}, {}, function() {
+      callback && callback();
+    });
+  };
 }

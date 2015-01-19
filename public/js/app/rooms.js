@@ -150,6 +150,49 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     roomsService.remove(id);
   };
 
+  // a user entered the room
+  this.enterRoom = function(user, room) {
+
+    // add username to list of users in room
+    room.usersInside.push(user.auth.username);
+    roomsService.updateUsers(room);
+
+    // for each thing in the room...
+    _.each(room.things, function(thing) {
+      // ... and each control specifed in the thing ...
+      _.each(thing.enter, function(vv, kn) {
+        // update the control.
+        obj = {};
+        obj[kn] = vv;
+        thingService.updateThingData(thing.id, obj);
+      });
+    });
+
+  };
+
+  // a user left the room
+  this.leaveRoom = function(user, room) {
+
+    // remove username to list of users in room
+    room.usersInside.splice(
+      room.usersInside.indexOf(user.auth.username),
+      1
+    );
+    roomsService.updateUsers(room);
+
+    // for each thing in the room...
+    _.each(room.things, function(thing) {
+      // ... and each control specifed in the thing ...
+      _.each(thing.leave, function(vv, kn) {
+        // update the control.
+        obj = {};
+        obj[kn] = vv;
+        thingService.updateThingData(thing.id, obj);
+      });
+    });
+
+  };
+
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "room") {

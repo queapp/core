@@ -61,6 +61,14 @@
           <small>{{rooms.desc}}</small>
         </h3>
 
+        <!-- list of users who are currently in the room -->
+        <span style="margin-left: 10px;">
+          <span ng-repeat="user in rooms.usersInside" style="margin: 4px;">
+            <span class="glyphicon glyphicon-user"></span>
+            {{user}}
+          </span>
+        </span>
+
         <button
           class="btn btn-danger pull-right"
           ng-click="rC.remove(rooms.id)"
@@ -69,12 +77,31 @@
           Delete
         </button>
 
-        <button
+        <!-- users in the room currently -->
+        <!-- <button
           class="btn btn-info pull-right"
           disabled
           >
-          In Room: Ryan, Bob
+          In Room:
+        </button> -->
+
+        <button
+          class="btn btn-primary pull-right"
+          ng-disabled="!nC.user.can('room.leave.'+room.id)"
+          ng-click="rC.leaveRoom(nC.user, rooms)"
+          ng-show="rooms.usersInside.indexOf(nC.user.auth.username) !== -1"
+          >
+          Leave
         </button>
+        <button
+          class="btn btn-success pull-right"
+          ng-disabled="!nC.user.can('room.enter.'+room.id)"
+          ng-click="rC.enterRoom(nC.user, rooms)"
+          ng-hide="rooms.usersInside.indexOf(nC.user.auth.username) !== -1"
+          >
+          Enter
+        </button>
+
 
         <!-- thing list in each room -->
         <ul class="scrollable">

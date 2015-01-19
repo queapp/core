@@ -86,4 +86,11 @@ module.exports = function(app, rooms) {
     });
   });
 
+  // update users
+  app.post("/rooms/:id/users", userCan("room.updateusers.#id"), function(req, res, next) {
+    rooms.updateUsers(parseInt(req.param("id")), req.body.users, function() {
+      res.send( rooms.createResponsePacket() );
+    });
+  });
+
 };
