@@ -93,4 +93,11 @@ module.exports = function(app, rooms) {
     });
   });
 
+  // update things
+  app.post("/rooms/:id/things", userCan("room.updatethings.#id"), function(req, res, next) {
+    rooms.updateThings(parseInt(req.param("id")), req.body.things, function(err) {
+      res.send( err || rooms.createResponsePacket() );
+    });
+  });
+
 };

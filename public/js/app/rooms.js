@@ -193,6 +193,13 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
 
   };
 
+  // update things for a room
+  this.updateThings = function(room) {
+    roomsService.updateThings(room.id, room.things, function() {
+      $(".modal").modal('hide'); // hide modal
+    });
+  }
+
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "room") {

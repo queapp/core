@@ -426,17 +426,29 @@ app.factory("roomsService", function($http) {
           callback(data);
         });
       },
-      
-      updateUsers: function(room) {
+
+      updateUsers: function(room, callback) {
         $http({
           method: "post",
           url: host + "/rooms/" + room.id + "/users",
           data: JSON.stringify({users: room.usersInside})
         }).success(function(data) {
           this.cache = {};
-          callback(data);
+          callback && callback(data);
+        });
+      },
+
+      updateThings: function(id, things, callback) {
+        $http({
+          method: "post",
+          url: host + "/rooms/" + id + "/things",
+          data: angular.toJson({things: things})
+        }).success(function(data) {
+          this.cache = {};
+          callback && callback(data);
         });
       }
+
     };
 
     // update room chache

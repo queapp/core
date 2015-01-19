@@ -215,4 +215,19 @@ module.exports = function(thedb) {
       callback && callback();
     });
   };
+
+  /**
+    Update things with new info
+  */
+  this.updateThings = function(id, things, callback) {
+    // remove clutter
+    things.forEach(function(thing) { delete thing.things; });
+
+    // update the db
+    Room.update({id: id}, {things: things}, {}, function(err) {
+      console.log(err)
+      callback && callback(err);
+    });
+  };
+
 }
