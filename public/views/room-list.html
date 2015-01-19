@@ -69,11 +69,21 @@
           Delete
         </button>
 
+        <button
+          class="btn btn-info pull-right"
+          disabled
+          >
+          In Room: Ryan, Bob
+        </button>
+
+        <!-- thing list in each room -->
         <ul class="scrollable">
           <li ng-repeat="th in rooms.things">
             <span class="title">
               {{th.thing.name}}
             </span>
+
+            <!-- action buttons -->
             <button
               class="btn btn-danger btn-xs"
               ng-click="rC.removeThing(rooms.id, th.id, $index)"
@@ -81,6 +91,25 @@
               >
               Delete
             </button>
+
+            <div class="btn-group pull-right" style="margin-right: 6px;">
+              <button
+                class="btn btn-success btn-xs"
+                ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+                ng-click=""
+                >
+                On Enter
+              </button>
+              <button
+                class="btn btn-primary btn-xs"
+                ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+                ng-click=""
+                >
+                On Leave
+              </button>
+            </div>
+
+
           </li>
         </ul>
 

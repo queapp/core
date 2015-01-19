@@ -7265,7 +7265,7 @@ textarea.settings .newuser-modal input {
   font-size: 16.8px;
   list-style-type: none;
 }
-.scrollable li button {
+.scrollable li > button {
   float: right !important;
 }
 .scrollable li span.permission.thing {
