@@ -122,7 +122,16 @@
             <div class="btn-group pull-right" style="margin-right: 6px;">
               <button
                 class="btn btn-success btn-xs"
-                ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+                ng-disabled="!nC.user.can('room.thing.firstEnter.'+thing.id)"
+                ng-click=""
+                data-toggle="modal"
+                data-target="#FirstEnterRoomModal-{{rooms.id}}-{{th.id}}"
+                >
+                First user enters
+              </button>
+              <button
+                class="btn btn-success btn-xs"
+                ng-disabled="!nC.user.can('room.thing.enter.'+thing.id)"
                 ng-click=""
                 data-toggle="modal"
                 data-target="#EnterRoomModal-{{rooms.id}}-{{th.id}}"
@@ -131,12 +140,21 @@
               </button>
               <button
                 class="btn btn-primary btn-xs"
-                ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+                ng-disabled="!nC.user.can('room.thing.leave.'+thing.id)"
                 ng-click=""
                 data-toggle="modal"
                 data-target="#LeaveRoomModal-{{rooms.id}}-{{th.id}}"
                 >
                 On Leave
+              </button>
+              <button
+                class="btn btn-primary btn-xs"
+                ng-disabled="!nC.user.can('room.thing.lastLeave.'+thing.id)"
+                ng-click=""
+                data-toggle="modal"
+                data-target="#LastLeaveRoomModal-{{rooms.id}}-{{th.id}}"
+                >
+                Last user leaves
               </button>
 
               <!-- enter configuration modal -->
