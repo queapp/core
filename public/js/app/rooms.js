@@ -198,7 +198,16 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     roomsService.updateThings(room.id, room.things, function() {
       $(".modal").modal('hide'); // hide modal
     });
-  }
+  };
+
+  // disable of enable controls
+  this.disableOrEnableControls = function(thing, which, mode) {
+    if (mode) {
+      thing[which] = thing.thing.data;
+    } else {
+      thing[which] = {};
+    }
+  };
 
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
