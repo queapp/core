@@ -120,7 +120,7 @@
             </button>
 
             <div class="btn-group pull-right" style="margin-right: 6px;">
-              <button
+              <!-- <button
                 class="btn btn-success btn-xs"
                 ng-disabled="!nC.user.can('room.thing.firstEnter.'+thing.id)"
                 ng-click=""
@@ -128,7 +128,7 @@
                 data-target="#FirstEnterRoomModal-{{rooms.id}}-{{th.id}}"
                 >
                 First user enters
-              </button>
+              </button> -->
               <button
                 class="btn btn-success btn-xs"
                 ng-disabled="!nC.user.can('room.thing.enter.'+thing.id)"
@@ -147,7 +147,7 @@
                 >
                 On Leave
               </button>
-              <button
+              <!-- <button
                 class="btn btn-primary btn-xs"
                 ng-disabled="!nC.user.can('room.thing.lastLeave.'+thing.id)"
                 ng-click=""
@@ -155,7 +155,7 @@
                 data-target="#LastLeaveRoomModal-{{rooms.id}}-{{th.id}}"
                 >
                 Last user leaves
-              </button>
+              </button> -->
 
               <!-- first enter configuration modal -->
               <div class="modal fade" class="roomModal" id="FirstEnterRoomModal-{{rooms.id}}-{{th.id}}">
@@ -180,7 +180,7 @@
                       <label>Change the stuff below:</label>
 
                       <ul class="card-form clearfix edit-data">
-                        <li class="control" ng-repeat="(k, v) in (th.enter || th.thing.data)" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+                        <li class="control" ng-repeat="(k, v) in (th.firstenter || th.thing.data)" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
                           <label
                             tooltip
                             data-toggle="tooltip"
