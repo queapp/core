@@ -161,6 +161,7 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     _.each(room.things, function(thing) {
       // ... and each control specifed in the thing ...
       _.each(thing.enter, function(vv, kn) {
+        console.log(thing, vv, kn)
         // update the control.
         obj = {};
         obj[kn] = vv;
