@@ -1,6 +1,7 @@
 /**
  * Notify controller. This module manages notification creation, reading, and
  * dismissal (deleting).
+ * @module controller/notify
  */
 
 var _ = require("underscore");
