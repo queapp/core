@@ -1,3 +1,8 @@
+/**
+ * Block Helpers. This module is injected into each running block and serves as
+ * its api to Que's functions.
+ */
+
 var _ = require("underscore");
 var request = require("request");
 
@@ -7,39 +12,58 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
 
   return {
 
-    // get a thing by its tag
+    /**
+     * Iterates over a thing container searching for the specified tag.
+     * @param {string}   tag The tag to search with
+     * @param {Function} cb  This callback is called once for each thing
+     *                       iteration, passing the thing first and the
+     *                       iteration count second
+     */
     getThingByTag: function(tag, cb) {
       things.get(null, function(data) {
 
-        // get matching things
+        // get all things with the specified tag
         fltr = _.filter(data, function(item) {
           return _.contains(item.tags, tag);
         });
 
-        // iterate over them
-        _.each(fltr, function(f, ct) {
+        // iterate over each thing
+        fltr.forEach(function(f, ct) {
           cb(f, ct);
         });
       });
     },
 
-    // get a thing by its id
+    /**
+     * Iterates over a thing container searching for the specified id. (Well,
+     * this should only 'iterate' once)
+     * @param {string}   id The id to search for
+     * @param {Function} cb  This callback is called once for each thing
+     *                       iteration, passing the thing first and the
+     *                       iteration count second
+     */
     getThingById: function(id, cb) {
       things.get(null, function(data) {
 
-        // get matching things
+        // get all things with the specified id
         fltr = _.filter(data, function(item) {
           return item.id == id;
         });
 
-        // iterate over them
-        _.each(fltr, function(f, ct) {
+        // iterate over each thing
+        fltr.forEach(function(f, ct) {
           cb(f, ct);
         });
       });
     },
 
-    // get a room by its tag
+    /**
+     * Iterates over a room container searching for the specified tag.
+     * @param {string}   tag The tag to search with
+     * @param {Function} cb  This callback is called once for each room
+     *                       iteration, passing the room first and the
+     *                       iteration count second
+     */
     getRoomByTag: function(tag, cb) {
       rooms.get(null, function(data) {
 
@@ -48,14 +72,21 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
           return _.contains(item.tags, tag);
         });
 
-        // iterate over them
+        // call the callback for each one
         _.each(fltr, function(f, ct) {
           cb(f, ct);
         });
       });
     },
 
-    // get a room by its id
+    /**
+     * Iterates over a room container searching for the specified id. (Well,
+     * this should only 'iterate' once)
+     * @param {string}   id The id to search for
+     * @param {Function} cb  This callback is called once for each room
+     *                       iteration, passing the room first and the
+     *                       iteration count second
+     */
     getRoomById: function(id, cb) {
       rooms.get(null, function(data) {
 
@@ -64,7 +95,7 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
           return item.id == id;
         });
 
-        // iterate over them
+        // call the callback for each one
         _.each(fltr, function(f, ct) {
           cb(f, ct);
         });
@@ -72,7 +103,22 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
     },
 
 
-    // set value for things
+    /**
+     * Sets a control's value within a thing.
+     * @param {number}   id       The id of the thing to modify
+     * @param {string}   key      The internal control name that should be
+     *                            modified. This can be found by looking at the
+     *                            placeholder text of textbox-based controls or
+     *                            by hovering your mouse over the control name
+     *                            in the the things view.
+     * @param {string|number|boolean}   value    The value to assign the the
+     *                                           specified key name. If a boolean
+     *                                           is passed the control will take
+     *                                           the form of a button. Any other
+     *                                           type will take the form of a
+     *                                           textbox.
+     * @param {Function} callback Callback that returns a boolean success flag.
+     */
     setThingValue: function(id, key, value, callback) {
       // set up the object
       obj = {}
@@ -102,7 +148,14 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       return true;
     },
 
-    // get all actions
+
+
+
+    /**
+     * Returns a convience object containing easy-to-call versions of each
+     * action's trigger and detriggr methods.
+     * @param {object} thing The thing to extract the actions from.
+     */
     getActions: function(thing) {
       actions = {}
       // format
@@ -117,7 +170,7 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
             });
           },
           detrigger: function(cb) {
-            // console.log("DETRIGGER", JSON.stringify(action));;
+            // console.log("DETRIGGER", JSON.stringify(action));
             request(action.detrigger, function(err, resp, body) {
               try {
                 cb && cb(err, resp, JSON.parse(body));
@@ -130,7 +183,18 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       return actions;
     },
 
-    // enter and leave rooms
+
+
+    /**
+     * Indicate that a user has entered or left a room.
+     * @param  {object}   room     The room in which to do the operation.
+     * @param  {string|boolean}   action   The action to take - if equal to
+     *                                     'enter', 'e', or a truthy value, the
+     *                                     user should enter the room, anything
+     *                                     else means to leave the room.
+     * @param  {string}   username The username to enter/leave the room.
+     * @param  {Function} callback Optional callback on operation completion.
+     */
     room: function(room, action, username, callback) {
 
       // add or remove username
@@ -163,17 +227,23 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
     },
 
 
-    // log to console underneath the block
+    /**
+     * Log to the block console.
+     * @param  {*} msg Data to log
+     */
     log: function(msg) {
       socket && socket.emit("block-log", {
         id: item.id,
         type: "info",
         when: new Date(),
-        msg: msg.toString()
+        msg: JSON.stringify(msg)
       });
     },
 
-    // log to console underneath the block (level warn)
+    /**
+     * Log to the block console, but with a warning log level.
+     * @param  {*} msg Data to log
+     */
     warn: function(msg) {
       socket && socket.emit("block-log", {
         id: item.id,
@@ -183,7 +253,10 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       });
     },
 
-    // log to console underneath the block (level error)
+    /**
+     * Log to the block console, but with an error log level.
+     * @param  {*} msg Data to log
+     */
     error: function(msg) {
       socket && socket.emit("block-log", {
         id: item.id,
@@ -193,12 +266,24 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       });
     },
 
-    // send a notification to the user
+    /**
+     * send a notification to the user, which is displayed onto the Dashboard
+     * page
+     * @param  {string} msg   The body of the notification
+     * @param  {string} title The notification title
+     */
     notify: function(msg, title) {
       notifys.createNotify(msg, title);
     },
 
-    // if the time is what has been specified
+    /**
+     * Check to see if the time specified is the current time.
+     * @param {number}   h        Hours of the time.
+     * @param {number}   m        Minutes of the time.
+     * @param {number}   s        Seconds of the time.
+     * @param {Function} callback Callback when the time matches what has been
+     *                            indicated.
+     */
     whenTime: function(h, m, s, callback) {
       d = new Date();
       if (d.getHours() == h && d.getMinutes() == m && d.getSeconds() == s) {
@@ -206,7 +291,12 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       }
     },
 
-    // canvas drawing functions
+    /**
+     * canvas drawing functions
+     * @param {number} id  Thing id to draw to
+     * @param {string} key The control name within the thing with the canvas to
+     *                     be updated.
+     */
     getCanvas: function(id, key) {
       if (!socket) return null
 
@@ -266,7 +356,10 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
 
     },
 
-    // all underscore functions
+    /**
+     * Abstrated underscore.js utility functions
+     * @type {object}
+     */
     underscore: _
 
 
