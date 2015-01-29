@@ -1,6 +1,7 @@
 /**
  * Block Helpers. This module is injected into each running block and serves as
  * its api to Que's functions.
+ * @module controller/blocks/helpers
  */
 
 var _ = require("underscore");
