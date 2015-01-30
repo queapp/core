@@ -115,7 +115,7 @@ module.exports = function(things, services, rooms, notify) {
    */
   this.update = function(id, changes, done) {
     Block.update({id: id}, changes, {}, function(err, d) {
-      done && done(d);
+      done && done(err || d);
     });
   }
 
@@ -123,7 +123,7 @@ module.exports = function(things, services, rooms, notify) {
    * converts a list of lines of code into an anonymous function - this is how
    * blocks' code are 'compiled' into a function.
    * FIXME: This whole system really isn't secure. Block code execution needs to
-   * be re-engineered so exploitation isn''t so simple.
+   * be re-engineered so exploitation isn't so simple.
    * @param {object}   block    Block to compile code from
    * @param {Function} callback Callback - first argument shows errors, the
    *                            second argument returns the compiled code
