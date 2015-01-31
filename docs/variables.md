@@ -1,8 +1,11 @@
 Environment Variables
 ===
 
-- `PORT`: Port to host the instance on
-- `HOST`: Hostname of the instance
-- `BACKENDPORT`: If you're running Que through a proxy, this is the port that
-the frontend will send all requests to
-- `MONGOURI`: Database URI
+Name | Desc | Flag | Environment Variable
+- | - | - | -
+Backend Port | Network port to bind to | `--port` | `PORT`
+Proxy Port | The port Que's frontend will be accessed at by the end user (by default, its the same as the Backend Port) | `--backendport` | `BACKENDPORT`
+Hostname | Hostname to bind to | `--host` | `HOST`
+Mongo URI | The database URI, in mongo format | `--db` | `MONGOURI`
+Logging Location | Where to store Que's Logs (by default, its /logs) | `--logto` | `LOGTO`
+Reset Que | Delete all users. After deletion, this process cannot be reverted. | `--treatasnew` | `TREATASNEW`

@@ -1,12 +1,28 @@
 var userCan = require("../controllers/auth").canMiddleware;
 
-module.exports = function(app, users) {
+module.exports = function(app, users, sessiontokens, argv) {
 
-  // is this a new que instance (with zero users?)
+  // is `TREATASNEW` set?
+  if (process.argv.TREATASNEW || argv.treatasnew) {
+    // lets delete all sessions and act as if there are no users
+    console.log("Deleting all users...");
+    users.delete(null, function(err) {
+      if (!err) {
+        console.log("Users have all been deleted.");
+      } else {
+        console.log("Users couldn't be deleted:", err);
+      }
+    });
+  };
+
+  // is this a new que instance (with zero users?), or are we
+  // pretending such is true?
   app.get("/users/any", function(req, res) {
     users.get(null, function(data) {
       res.status(200);
-      res.end(JSON.stringify({newInstance: !data.length}));
+      res.end(JSON.stringify({
+        newInstance: !data.length
+      }));
     });
   });
 

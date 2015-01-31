@@ -69,7 +69,7 @@ module.exports = function(app, server, argv) {
       res.send('var host = "http://que-app-backend.herokuapp.com";');
     } else if (process.env.PORT || argv.port || argv.host || process.env.HOST) {
       hostname = process.env.HOST || argv.host || "127.0.0.1";
-      netport = process.env.BACKENDPORT || process.env.PORT || argv.port || 8000;
+      netport = process.env.BACKENDPORT || argv.backendport || process.env.PORT || argv.port || 8000;
       res.send('var host = "http://' + hostname + ':' + netport + '";');
     } else {
       res.send('var host = "http://127.0.0.1:8000";');
@@ -96,7 +96,7 @@ module.exports = function(app, server, argv) {
   require("./things")(app, things);
   require("./rooms")(app, rooms);
   require("./blocks")(app, blocks);
-  require("./users")(app, users);
+  require("./users")(app, users, require("../models/sessiontoken"), argv);
   require("./notify")(app, notify);
 
   // auth routes

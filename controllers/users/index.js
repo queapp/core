@@ -51,7 +51,7 @@ module.exports = function() {
    */
   this.delete = function(username, done) {
     // remove the block
-    User.remove({username: username}, function(err, docs) {
+    User.remove(username ? {username: username} : {}, function(err, docs) {
       done && done(err);
     });
   }
