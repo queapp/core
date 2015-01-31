@@ -1,7 +1,7 @@
 // main: index.less
 
 // material design 'fab' button
-.material-fab(@size: 74px) {
+.material-fab(@size: 74px, @color: @brand-info) {
   position: fixed;
   bottom: 20px;
   display: inline-block;
@@ -9,28 +9,49 @@
   cursor: pointer;
   z-index: 100;
 
+  opacity: 0.75;
+
   width: @size;
   height: @size;
 
   font-size: @size*.66;
   text-align: center;
 
-  background: @brand-info;
+  background: @color;
   color: #FFF;
 
   .border-radius(@size/2);
 
   overflow: hidden;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26),
-    inset 2px 2px 5px 0 lighten(@brand-info, 4%);
+  box-shadow: 0 6px 10px rgba(0,0,0,.23),
+    0 10px 30px rgba(0, 0, 0, .19),
+    inset 2px 2px 5px 0 lighten(@color, 4%);
 
+  transition: all 0.1s ease;
+  &:hover {
+    opacity: 0.9;
+  }
 
   &:active {
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
-      inset 2px 2px 5px 0 lighten(@brand-info, 4%);
+    opacity: 0.9;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, .22),
+      0 19px 60px rgba(0, 0, 0, .3),
+      inset 2px 2px 5px 0 lighten(@color, 4%);
   }
 }
 
+// material design
+// fab button
 .add-button {
   .material-fab;
+  
+  &.things {
+    .material-fab(74px, @brand-success);
+  }
+  &.rooms {
+    .material-fab(74px, @brand-primary);
+  }
+  &.blocks {
+    .material-fab(74px, @brand-danger);
+  }
 }

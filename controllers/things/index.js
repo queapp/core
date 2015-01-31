@@ -5,7 +5,11 @@ var async = require("async");
 
 var Thing = require("../../models/things");
 
-
+/**
+ * Deeply extend an object from another object
+ * @param {object} destination The destination object to extend to
+ * @param {object} source      The object to extend from into destination
+ */
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
     if (source[property] && source[property].constructor &&
