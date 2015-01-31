@@ -1,3 +1,10 @@
+/**
+ * Block Controller. This module manages all the serverside CRUD operations
+ * pertaining to blocks, and the code within them.
+ * @module controller/blocks
+ */
+
+// requires
 var async = require("async");
 var _ = require("underscore");
 var helperConstructor = require("./helpers");
@@ -6,7 +13,7 @@ var helperConstructor = require("./helpers");
 var jsp = require("uglify-js").parser;
 var pro = require("uglify-js").uglify;
 
-// the model
+// the block model
 var Block = require("../../models/blocks");
 
 module.exports = function(things, services, rooms, notify) {
@@ -24,21 +31,25 @@ module.exports = function(things, services, rooms, notify) {
 
   this.socket = null;
 
-  /**
-    Add a new thing to the list of things
+ /**
+  * Add a new block to the block collection.
+  * @param {object}   data The data to add to the block collection
+  * @param {Function} done Optional callback. Passes the new block id on success.
   */
   this.add = function(data, done) {
-    // console.log(123, data)
-
-    // update
     this.get(null, function(all) {
 
-      // allocate id
+      // allocate a new id by picking a new one
+      // 1 highter than the previous higher one
+      //
+      // TODO: There is a high probability that
+      // ids can be lost be deleting lower numbered
+      // items before higher-numbered ones.
       maxId = _.max(all, function(i) {
         return i.id;
       }).id || 0;
 
-      // add new record
+      // add new block
       item = Object.deepExtend(root.defaultBlock, data);
       item.id = ++maxId;
 
@@ -53,48 +64,37 @@ module.exports = function(things, services, rooms, notify) {
   }
 
   /**
-    Delete a thing from the list of things
-  */
+   * Deletes a block from the block collection.
+   * @param  {number}   id   The id of the block to delete.
+   * @param  {Function} done Optional callback. Returns any error if one exists.
+   */
   this.delete = function(id, done) {
-    // update
-    this.get(null, function(all) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(all, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      all.splice(listIndex, 1);
-
-      // remove the block
-      Block.remove({id: id}, function(err, docs) {
-        done(err);
-      });
+    Block.remove({id: id}, function(err, docs) {
+      done && done(err);
     });
   }
 
   /**
-    Get a list of all things connected to the container
-  */
+   * Get a list of all blocks currently within the container.
+   * @param  {number}   id   If a number, filter by the passed id. Otherwise,
+   *                         return all ids.
+   * @param  {Function} done The callback - returns the found blocks.
+   */
   this.get = function(id, done) {
 
-    // get from persistant data store
+    // get from the collection
     Block.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
 
-        // convert to object from model
+      // convert all models to objects
+      // for encapulation
+      ret = docs.map(function(doc) {
         ob = doc.toObject();
         delete ob._id;
-
-        // add to array
-        ret.push(ob);
+        return ob;
       });
 
-      // search for id
-      if (id !== null) {
+      // if an id was passed, then search for it.
+      if (id) {
         ret = _.find(ret, function(i) {
           return i.id == id || undefined;
         });
@@ -105,38 +105,29 @@ module.exports = function(things, services, rooms, notify) {
   };
 
   /**
-    Replace modified records in one specific thing
-  */
+   * Update the identified block with the provided changes
+   * @param  {number}   id      The id for the block to update
+   * @param  {object}   changes The changes to make to the block. This doesn't
+   *                            have to be a full copy of the block, just the
+   *                            changes to be made.
+   * @param  {Function} done    Optional callback. Returns updated data on \
+   *                            success.
+   */
   this.update = function(id, changes, done) {
-
-    // update
-    this.get(null, function(data) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(data, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      // update record's data
-      if (record) {
-        // apply any changes
-        record = Object.deepExtend(record, changes || {});
-
-        // update block
-        Block.update({id: record.id}, record, {}, function(err, d) {
-          // callback
-          done && done(d);
-        });
-
-      }
+    Block.update({id: id}, changes, {}, function(err, d) {
+      done && done(err || d);
     });
   }
 
   /**
-    converts a list of lines of code into an anonymous function
-  */
+   * converts a list of lines of code into an anonymous function - this is how
+   * blocks' code are 'compiled' into a function.
+   * FIXME: This whole system really isn't secure. Block code execution needs to
+   * be re-engineered so exploitation isn't so simple.
+   * @param {object}   block    Block to compile code from
+   * @param {Function} callback Callback - first argument shows errors, the
+   *                            second argument returns the compiled code
+   */
   this.convertCode = function(block, callback) {
     // the code
     code = block.code.slice(0);
@@ -184,8 +175,9 @@ module.exports = function(things, services, rooms, notify) {
   }
 
   /**
-    given blocks, run the code contained within each
-  */
+   * given blocks, run the code contained within each - this is run once per
+   * 'clock cycle' to keep blocks executing.
+   */
   this.runAllBlocks = function() {
     root.get(null, function(data) {
 
@@ -251,7 +243,7 @@ module.exports = function(things, services, rooms, notify) {
   setInterval(this.runAllBlocks, 1000);
 
   /**
-    Create a response packet with the correct status and message
+   * Create a response packet with the correct status and message
   */
   this.createResponsePacket = function(status, data) {
     return _.extend({"status": status || "OK", "msg": null}, data || {});

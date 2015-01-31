@@ -1,7 +1,15 @@
+/**
+ * This model describes the attributes within each item of the room collection.
+ * @model models/rooms
+ */
+
 var mongoose = require('mongoose');
 var _ = require("underscore");
 
-// schema for a room
+/**
+ * This schema describes all the attributes within a room.
+ * @type {object}
+ */
 var roomSchema = mongoose.Schema({
   "name": String,
   "desc": String,
@@ -11,5 +19,5 @@ var roomSchema = mongoose.Schema({
   "usersInside": Array
 });
 
-
+// Compile the schema into a model
 module.exports = mongoose.model('Room', roomSchema);

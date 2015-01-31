@@ -1,3 +1,9 @@
+/**
+ * Rooms Controller. This module manages all the serverside CRUD operations
+ * pertaining to rooms, and the code within them.
+ * @module controller/rooms
+ */
+
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
@@ -6,14 +12,14 @@ var async = require("async");
 var Room = require("../../models/rooms");
 var Thing = require("../../models/things");
 
-// a service container
+
 module.exports = function(thedb) {
   var root = this;
 
   // currently active auth key
   this.currentAuthKey = null;
 
-  // a default room; used in .add()
+  // a default room template; used in .add()
   this.defaultRoom = {
     "name": "Untitled Room",
     "desc": "Untitled Room Description",
@@ -27,8 +33,10 @@ module.exports = function(thedb) {
   this.socket = null;
 
   /**
-    Add a new thing to the list of things
-  */
+   * Add a new room to the room collection.
+   * @param {object}   data The data to add to the collection
+   * @param {Function} done Optional callback. Passes the new room id on success.
+   */
   this.add = function(data, done) {
     // update
     this.get(null, function(all) {
@@ -61,10 +69,18 @@ module.exports = function(thedb) {
   }
 
   /**
-    Delete a thing from the list of things
-  */
+   * Deletes a room from the room collection.
+   * @param  {number}   id   The id of the room to delete.
+   * @param  {Function} done Optional callback. Returns any error if one exists.
+   */
   this.delete = function(id, done) {
     Room.remove({id: id}, function(err, all) {
+
+      // return if an error has occured
+      if (err && done) {
+        done(err);
+        return;
+      }
 
       // tell the frontend it's time to update
       Room.find({}, function(err, all) {
@@ -75,13 +91,100 @@ module.exports = function(thedb) {
       });
 
       // callback
-      done && done();
+      done && done(null);
+    });
+  }
+
+ /**
+  * Get a list of all rooms within the room container
+  * @param  {number}   id   The id to search for while retreiving things. null
+  *                         will return all things.
+  * @param  {Function} done Optional callback - returns any errors that are
+  *                         thrown.
+  */
+  this.get = function(id, done) {
+
+    // get from persistant data store
+    Room.find(function(err, docs) {
+
+      // if there was a problem, return an error.
+      if (err && done) {
+        done(err);
+        return;
+      }
+
+      // convert all models to objects
+      // for encapsulation
+      ret = docs.map(function(doc) {
+        ob = doc.toObject();
+        delete ob._id;
+        return ob;
+      });
+
+      // search for id
+      if (id !== null) {
+        ret = _.find(ret, function(i) {
+          return i.id == id || undefined;
+        });
+      }
+
+      // return data
+      done(ret);
+    });
+  };
+
+  /**
+   * Update room document with the specified changes.
+   * @param  {number}   id      The id of the room to update
+   * @param  {object}   changes The changes to make to the room. This doesn't
+   *                            have to contain all the data, just the stuff to
+   *                            be changed.
+   * @param  {Function} done    Optional callback - returns any errors that are
+   *                            thrown.
+   */
+  this.update = function(id, changes, done) {
+    Room.update({id: id}, changes, {}, function(err, d) {
+      done && done(err || d);
     });
   }
 
   /**
-    Delete a thing from the room
-  */
+   * Add a new thing to a room
+   * @param {number}   id       The room to add the thing into.
+   * @param {number}   tid      The thing's id to add into the room.
+   * @param {Function} callback Optional callback - returns any errors that are
+   *                            thrown.
+   */
+  this.addNewThing = function(id, tid, callback) {
+    Room.findOne({id: id}, function(err, thng) {
+
+      if (!err && thng) {
+
+        // only add if the array doesn't already contain the thing
+        if( thng.things.filter(function(i) {
+          return i.id === tid;
+        }).length === 0) {
+          thng.things.push({id: tid});
+        };
+
+        // update the room
+        Room.update({id: id}, thng, {}, function(err) {
+          callback && callback(err);
+        });
+      } else {
+        callback && callback(err);
+      };
+
+    });
+  }
+
+  /**
+   * Delete's a thing from the specified room
+   * @param {number}   id   The id of the room to delete from
+   * @param {number}   tid  The thing id to delete from the room. All occurances
+   *                        of the thing will be removed.
+   * @param {Function} done Optional callback on completion.
+   */
   this.deleteThing = function(id, tid, done) {
     Room.findOne({id: id}, function(err, room) {
 
@@ -97,6 +200,12 @@ module.exports = function(thedb) {
       // update the room
       Room.update({id: id}, room, {}, function(err) {
 
+        // return if an error has occured
+        if (err && done) {
+          done(err);
+          return;
+        }
+
         // tell the frontend it's time to update
         Room.find({}, function(err, all) {
           root.socket && root.socket.emit("backend-data-change", {
@@ -111,94 +220,38 @@ module.exports = function(thedb) {
     });
   };
 
+
   /**
-    Get a list of all things connected to the container
-  */
-  this.get = function(id, done) {
-
-    // get from persistant data store
-    Room.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
-
-        // convert to object from model
-        ob = doc.toObject();
-        delete ob._id;
-
-        // add to array
-        ret.push(ob);
-      });
-
-      // search for id
-      if (id !== null) {
-        ret = _.find(ret, function(i) {
-          return i.id == id || undefined;
-        });
-      }
-
-      done(ret);
+   * Update users that are currently in a room
+   * FIXME: Is this really needed when update already exists?
+   * @param {number}   id       The id of the room to update the users of
+   * @param {object}   users    An array of users to add to the room
+   * @param {Function} callback Optional callback - returns any errors that are
+   *                            thrown.
+   */
+  this.updateUsers = function(id, users, callback) {
+    Room.update({id: id}, {usersInside: users}, {}, function(err) {
+      callback && callback(err);
     });
   };
 
   /**
-    Replace modified records in one specific thing
-  */
-  this.update = function(id, changes, done) {
+   * Update containing things within a room.
+   * FIXME: Is this really needed when update already exists?
+   * @param {number}   id       The id of the room to update
+   * @param {object}   things   An array of things to put into the room.
+   * @param {Function} callback Optional callback - returns any errors that are
+   *                            thrown.
+   */
+  this.updateThings = function(id, things, callback) {
+    // remove clutter
+    things.forEach(function(thing) { delete thing.things; });
 
-    // update
-    this.get(null, function(data) {
-
-      // get the modified record
-      var listIndex = null;
-      record = _.find(data, function(i, indx) {
-        listIndex = indx;
-        return i.id == id || undefined;
-      });
-
-      // update record's data
-      if (record) {
-        // add in the new attributes, and save
-        record = Object.deepExtend(record, changes || {});
-
-        Room.update({id: id}, record, {}, function(err) {
-          // tell the frontend it's time to update
-          root.socket && root.socket.emit("backend-data-change", {
-            type: "room",
-            data: data
-          });
-
-          // callback
-          done && done();
-        });
-
-      }
+    // update the db
+    Room.update({id: id}, {things: things}, {}, function(err) {
+      callback && callback(err);
     });
-  }
-
-  /**
-    Add a new thing to a room
-  */
-  this.addNewThing = function(id, tid, callback) {
-    Room.findOne({id: id}, function(err, thng) {
-
-      if (!err && thng) {
-
-        // only add if the array doesn't already contain it
-        if( thng.things.filter(function(i) {
-          return i.id === tid;
-        }).length === 0) {
-          thng.things.push({id: tid});
-        };
-
-        Room.update({id: id}, thng, {}, function(err) {
-          callback && callback(err);
-        });
-      } else {
-        callback && callback(true);
-      };
-
-    });
-  }
+  };
 
   /**
     Create a response packet with the correct status and message
@@ -206,28 +259,5 @@ module.exports = function(thedb) {
   this.createResponsePacket = function(status, data) {
     return _.extend({"status": status || "OK", "msg": null}, data || {});
   }
-
-  /**
-    Update users that are currently in a room
-  */
-  this.updateUsers = function(id, users, callback) {
-    Room.update({id: id}, {usersInside: users}, {}, function() {
-      callback && callback();
-    });
-  };
-
-  /**
-    Update things with new info
-  */
-  this.updateThings = function(id, things, callback) {
-    // remove clutter
-    things.forEach(function(thing) { delete thing.things; });
-
-    // update the db
-    Room.update({id: id}, {things: things}, {}, function(err) {
-      console.log(err)
-      callback && callback(err);
-    });
-  };
 
 }
