@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 var pjson = require('../package.json');
 
-var Token = require("../models/token");
+var Token = require("../models/tokens");
 var userCan = require("../controllers/auth").canMiddleware;
 
 // create all of the routes for the application
