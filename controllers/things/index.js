@@ -1,3 +1,9 @@
+/**
+ * Things Controller. This module manages all the serverside CRUD operations
+ * pertaining to things, and the code within them.
+ * @module controller/things
+ */
+
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
@@ -48,8 +54,10 @@ module.exports = function(thedb) {
   this.socket = null;
 
   /**
-    Add a new thing to the list of things
-  */
+   * Add a new thing to the thing collection.
+   * @param {object}   data The data to add to the collection
+   * @param {Function} done Optional callback. Passes the new thing id on success.
+   */
   this.add = function(data, done) {
     // update
     this.get(null, function(all) {
@@ -84,10 +92,19 @@ module.exports = function(thedb) {
   }
 
   /**
-    Delete a thing from the list of things
-  */
+   * Deletes a thing from the thing collection.
+   * @param  {number}   id   The id of the thing to delete.
+   * @param  {Function} done Optional callback. Returns any error if one exists.
+   */
   this.delete = function(id, done) {
      Thing.remove({id: id}, function(err) {
+
+       // return if an error has occured
+       if (err && done) {
+         done(err);
+         return;
+       }
+
        // tell the frontend it's time to update
        Thing.find({}, function(err, all) {
          root.socket && root.socket.emit("backend-data-change", {
@@ -102,21 +119,29 @@ module.exports = function(thedb) {
   }
 
   /**
-    Get a list of all things connected to the container
-  */
+   * Get a list of all things within the thing container
+   * @param  {number}   id   The id to search for while retreiving things. a
+   *                         null value will return all things.
+   * @param  {Function} done Optional callback - returns any errors that are
+   *                         thrown.
+   */
   this.get = function(id, done) {
 
     // get from persistant data store
     Thing.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
 
-        // convert to object from model
+      // if there was a problem, return an error.
+      if (err && done) {
+        done(err);
+        return;
+      }
+
+      // convert all models to objects
+      // for encapsulation
+      ret = docs.map(function(doc) {
         ob = doc.toObject();
         delete ob._id;
-
-        // add to array
-        ret.push(ob);
+        return ob;
       });
 
       // search for id
@@ -126,13 +151,19 @@ module.exports = function(thedb) {
         });
       }
 
-      done(ret);
+      done && done(ret);
     });
   };
 
   /**
-    Replace modified records in one specific thing
-  */
+   * Update thing document with the specified changes.
+   * @param  {number}   id      The id of the thing to update
+   * @param  {object}   changes The changes to make to the thing. This doesn't
+   *                            have to contain all the data, just the stuff to
+   *                            be changed.
+   * @param  {Function} done    Optional callback - returns any errors that are
+   *                            thrown.
+   */
   this.update = function(id, changes, done) {
 
     // update
