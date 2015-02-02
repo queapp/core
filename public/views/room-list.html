@@ -160,7 +160,7 @@
                         ng-change="rC.disableOrEnableControls(th, 'enter', changeEnterStuff)"
                        />
                       <label>Change the stuff below:</label>
-                      {{th.enter}}
+                      <code>{{th.enter}}</code>
 
                       <ul class="card-form clearfix edit-data">
                         <li class="control" ng-repeat="(k, v) in th.enter" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
@@ -219,7 +219,7 @@
                         ng-change="rC.disableOrEnableControls(th, 'leave', changeLeaveStuff)"
                        />
                       <label>Change the stuff below:</label>
-                      {{th.leave}}
+                      <code>{{th.leave}}</code>
 
 
                       <ul class="card-form clearfix edit-data">
