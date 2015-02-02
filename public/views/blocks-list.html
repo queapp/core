@@ -110,6 +110,19 @@
         Enable
       </button>
 
+      <div class="log-space inline">
+
+        <span class="log-{{b.type}}" ng-repeat="b in block.log">
+          {{b.when.toLocaleString && b.when.toLocaleString()}}
+          <span class="text">{{b.msg.trim()}}</span>
+          <br/>
+        </span>
+
+        <!-- clear log button -->
+        <button type="button" class="btn btn-default btn-xs" ng-click="block.log=[]">Clear Log</button>
+
+      </div>
+
       <!-- Modal to update code for block -->
       <div class="modal fade" id="{{block.id}}-code-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

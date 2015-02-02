@@ -41,6 +41,7 @@ body {
 div.view-container {
   .container;
   position: relative;
+  margin-top: -64px;
 }
 div[ng-view].ng-enter, div[ng-view].ng-leave {
   -webkit-transition: 0.35s linear all;
@@ -139,6 +140,45 @@ ul.list-group {
     vertical-align: middle;
   }
 
+  // log area
+  .log-space {
+    .well;
+    .well-sm;
+    margin-top: 14px;
+    max-height: 200px;
+    height: 200px;
+    overflow-y: auto;
+    position: relative;
+
+    font-family: "monospace";
+
+    &.inline {
+      margin-top: 64px;
+      overflow-y: scroll;
+    }
+
+    .log-info .text {
+      color: blue;
+      &:before { content: "> "; }
+    }
+
+    .log-warn .text {
+      color: orange;
+      &:before { content: "! "; }
+    }
+
+    .log-error .text {
+      color: red;
+      &:before { content: "X "; }
+    }
+
+    button {
+      position: absolute;
+      right: 3px;
+      top: 0px;
+    }
+  }
+
   // screen that greets users with no blocks
   div.no-cards {
     height: 400px;
@@ -198,31 +238,6 @@ ul.list-group {
         width: 200px;
       }
 
-      .log-space {
-        .well;
-        .well-sm;
-        margin-top: 14px;
-        max-height: 200px;
-        height: 200px;
-        overflow-y: auto;
-
-        font-family: "monospace";
-
-        .log-info .text {
-          color: blue;
-          &:before { content: "> "; }
-        }
-
-        .log-warn .text {
-          color: orange;
-          &:before { content: "! "; }
-        }
-
-        .log-error .text {
-          color: red;
-          &:before { content: "X "; }
-        }
-      }
     }
   }
 }
