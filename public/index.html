@@ -73,7 +73,7 @@
 
         <h1>
           {{nC.getPageTitle().title}}
-          <small class="">{{nC.getPageTitle().desc}}</small>
+          <small>{{nC.getPageTitle().desc}}</small>
         </h1>
 
         <div class="search-container" ng-class="{hide: nC.pageId !== 0}">
@@ -85,7 +85,7 @@
 
       </nav>
 
-      <div class="view-container">
+      <div class="view-container" ng-class="{'no-pushup': nC.pageId == 0}">
         <div ng-view></div>
       </div>
 
