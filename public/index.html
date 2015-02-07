@@ -85,7 +85,7 @@
 
       </nav>
 
-      <div class="view-container" ng-class="{'no-pushup': nC.pageId == 0}">
+      <div class="view-container" ng-class="{'no-pushup': nC.pageId == 0 || nC.user.auth.username == null}">
         <div ng-view></div>
       </div>
 
