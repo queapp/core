@@ -16,7 +16,7 @@ var pro = require("uglify-js").uglify;
 // the block model
 var Block = require("../../models/blocks");
 
-module.exports = function(things, services, rooms, notify) {
+module.exports = function(things, services, rooms, notify, argv) {
   var root = this;
 
   this.defaultBlock = {
@@ -243,7 +243,8 @@ module.exports = function(things, services, rooms, notify) {
     });
   }
 
-  setInterval(this.runAllBlocks, 1000);
+  // run each block cycle asynchronously
+  setInterval(this.runAllBlocks, argv.blockcycle || process.env.BLOCKCYCLE || 1000);
 
   /**
    * Create a response packet with the correct status and message

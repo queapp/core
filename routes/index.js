@@ -82,7 +82,7 @@ module.exports = function(app, server, argv) {
   // create thing server and service server
   var things = new ThingServer();
   var rooms = new RoomServer();
-  var blocks = new BlockServer(things, rooms, rooms, notify);
+  var blocks = new BlockServer(things, rooms, rooms, notify, argv);
   var users = new UserServer();
 
   // web socket routes
