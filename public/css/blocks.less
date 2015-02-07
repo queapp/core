@@ -1,0 +1,124 @@
+// code blocks
+.blocks {
+
+  #addBlockModel input {
+    margin: 10px 0px;
+  }
+
+  .title {
+    .pull-left;
+    margin-top: 10px;
+    // font-size: @font-size-base * 1.75;
+
+    small {
+      font-size: 60%;
+      color: @gray-light;
+    }
+  }
+
+  button {
+    margin: 4px 0px 4px 10px;
+    vertical-align: middle;
+  }
+
+  // log area
+  .log-space {
+    .well;
+    .well-sm;
+    margin-top: 14px;
+    max-height: 200px;
+    height: 200px;
+    overflow-y: auto;
+    position: relative;
+
+    font-family: "monospace";
+
+    &.inline {
+      margin-top: 64px;
+      overflow-y: scroll;
+    }
+
+    .log-info .text {
+      color: blue;
+      &:before { content: "> "; }
+    }
+
+    .log-warn .text {
+      color: orange;
+      &:before { content: "! "; }
+    }
+
+    .log-error .text {
+      color: red;
+      &:before { content: "X "; }
+    }
+
+    button {
+      position: absolute;
+      right: 3px;
+      top: 0px;
+    }
+  }
+
+  // screen that greets users with no blocks
+  div.no-cards {
+    height: 400px;
+    margin: 0px auto;
+    background-repeat: no-repeat;
+
+    .side {
+      // float: right;
+      width: 250px;
+      margin-right: 12px;
+      margin-top: 20px;
+
+      font-size: @font-size-base * 1.2;
+
+      span {
+        color: #444;
+        font-size: 75%;
+        display: block;
+        margin-top: 5px;
+        &:before { content: "Examples: "; }
+      }
+    }
+
+    // styles to convert mobile -> desktop
+    @media (min-width: @screen-sm-min) {
+      background-image: url("../img/things-none.svg");
+      width: 800px;
+      .side {
+        float: right;
+      }
+    }
+  }
+
+  li {
+    min-height: 74px;
+
+    .modal {
+      a.help-link {
+        .pull-right;
+        padding: 0px 4px;
+      }
+      textarea {
+        .form-control;
+        width: 100%;
+        min-height: 300px;
+        font-family: monospace;
+        resize: vertical;
+      }
+
+      .block-name {
+        display: inline;
+      }
+
+      input.block-name {
+        .form-control;
+        display: inline;
+        width: 200px;
+      }
+
+    }
+  }
+}
