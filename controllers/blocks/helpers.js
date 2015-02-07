@@ -9,7 +9,7 @@ var request = require("request");
 
 // some small helper apis to make outside interaction
 // possible inside of a code block
-module.exports = function(socket, things, services, notifys, rooms, item) {
+module.exports = function(socket, things, services, notifys, rooms, item, persist) {
 
   return {
 
@@ -135,17 +135,34 @@ module.exports = function(socket, things, services, notifys, rooms, item) {
       });
     },
 
+    button: {
 
+      // a button debouncer
+      // basically, if the value changes,
+      // we'll know about it.
+      debounce: function(id, value, callback) {
+        if (persist.button_debounce) {
+          if (persist.button_debounce[id] !== value) {
+            callback(value);
+          }
+        } else {
+          persist.button_debounce = {};
+        }
+
+        // set the current state
+        persist.button_debounce[id] = value;
+      }
+    },
 
 
     // get and set persistant variables intividual to that block
     get: function(elem) {
-      return item.data[elem];
+      return persist[elem];
     },
 
     set: function(elem, value) {
-      if (!item.data) item.data = []
-      item.data[elem] = value;
+      if (!persist) persist = []
+      persist[elem] = value;
       return true;
     },
 

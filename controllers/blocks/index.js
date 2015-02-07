@@ -31,6 +31,9 @@ module.exports = function(things, services, rooms, notify) {
 
   this.socket = null;
 
+  // persistant data store
+  root.persist = {que: 1};
+
  /**
   * Add a new block to the block collection.
   * @param {object}   data The data to add to the block collection
@@ -188,7 +191,7 @@ module.exports = function(things, services, rooms, notify) {
           if (typeof code == "function") {
 
             // create helpers
-            helpers = helperConstructor(root.socket, things, services, notify, rooms, item);
+            helpers = helperConstructor(root.socket, things, services, notify, rooms, item, root.persist);
 
             // check for an error
             if (err && root.socket) {

@@ -3,6 +3,14 @@ Blocks Api
 
 ###@0.7
 
+- **button.debounce(id, value, callback)** - Debounces a button. NOTE: id must
+be unique for each debouncer, and can be a number or string.
+```javascript
+que.button.debounce("exampleDebouncer", value, function(value) {
+  que.log("value has been changed to", value);
+});
+```
+
 - **warn(msg)** - Log message to block's console, but with warning priority.
 ```javascript
 que.warn("Hmm, this isn't right.");
