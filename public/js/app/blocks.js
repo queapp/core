@@ -45,7 +45,7 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
     blockService.addBlock(this.newBlock, function() {
       // clear block cache
       blockService.cache = {};
-      
+
       // refetch blocks
       root.fetchBlocks();
     });
@@ -109,9 +109,13 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
       // convert date
       blk.when = typeof blk.when == "string" ? new Date(blk.when) : blk.when;
 
-      // log it out
-      console.log(blk);
-      b[0].log.unshift(blk);
+      // add it to the block view
+      // console.log(blk);
+      if (b[0].log.indexOf(blk) === -1) {
+        b[0].log.unshift(blk);
+      };
+
+      // update angular
       $scope.$apply();
     };
   });

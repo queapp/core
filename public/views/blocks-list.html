@@ -112,7 +112,7 @@
 
       <div class="log-space inline">
 
-        <span class="log-{{b.type}}" ng-repeat="b in block.log">
+        <span class="log-{{b.type}}" ng-repeat="b in block.log track by $index">
           {{b.when.toLocaleString && b.when.toLocaleString()}}
           <span class="text">{{b.msg.trim()}}</span>
           <br/>
