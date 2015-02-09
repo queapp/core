@@ -1,6 +1,8 @@
 
-### Take a look at [Que's website](http://que.apps.rgaus.net)
-(No need to reiterate everything here)
+#### Que is an internet of things controller for makers and power users.
+And, if you are reading this on Github, that group probably includes you.
+[Que's website](http://que.apps.rgaus.net)
+
 
 License
 ---
