@@ -1,6 +1,7 @@
 Welcome to Que's Documentation
 ===
 
+- [Getting Started](/docs/getstarted)
 - [Block API Reference](/docs/block-api)
 - [Code Examples](/docs/code-examples)
 - [Environment Variables](/docs/variables)
