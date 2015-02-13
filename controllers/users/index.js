@@ -1,3 +1,9 @@
+/**
+ * Users Controller. This module manages all the serverside CRUD operations
+ * pertaining to users, and the code within them.
+ * @module controller/users
+ */
+
 var async = require("async");
 var _ = require("underscore");
 var hash = require("sha-1");
@@ -11,8 +17,10 @@ module.exports = function() {
   this.socket = null;
 
   /**
-    Add a new thing to the list of things
-  */
+   * Add a new user to the user collection.
+   * @param {object}   data The data to add to the collection
+   * @param {Function} done Optional callback. Passes the new user id on success.
+   */
   this.add = function(data, done) {
 
     // username cannot have spaces
@@ -37,31 +45,36 @@ module.exports = function() {
   }
 
   /**
-    Delete a thing from the list of things
-  */
+   * Deletes a user from the user collection.
+   * @param  {number}   username   The username of the user to delete.
+   * @param  {Function} done Optional callback. Returns any error if one exists.
+   */
   this.delete = function(username, done) {
     // remove the block
-    User.remove({username: username}, function(err, docs) {
+    User.remove(username ? {username: username} : {}, function(err, docs) {
       done && done(err);
     });
   }
 
+
   /**
-    Get a list of all things connected to the container
-  */
+   * Get a list of all users within the user container
+   * @param  {number}   username   The username to search for while retreiving
+   *                               a user. A null value will return all users.
+   * @param  {Function} done Optional callback - returns any errors that are
+   *                         thrown.
+   */
   this.get = function(username, done) {
 
     // get from persistant data store
     User.find(function(err, docs) {
-      ret = [];
-      _.each(docs, function(doc) {
 
-        // convert to object from model
+      // convert all models to objects
+      // for encapsulation
+      ret = docs.map(function(doc) {
         ob = doc.toObject();
         delete ob._id;
-
-        // add to array
-        ret.push(ob);
+        return ob;
       });
 
       // search for username
@@ -76,14 +89,19 @@ module.exports = function() {
   };
 
   /**
-    Replace modified records in one specific thing
-  */
+   * Update user document with the specified changes.
+   * @param  {object}   username      The username of the user to update
+   * @param  {object}   changes The changes to make to the user. This doesn't
+   *                            have to contain all the data, just the stuff to
+   *                            be changed.
+   * @param  {Function} done    Optional callback - returns any errors that are
+   *                            thrown.
+   */
   this.update = function(username, changes, done) {
     // update block
     User.update({username: username}, changes, {}, function(err, d) {
-      console.log(username, err, changes)
       // callback
-      done && done(d);
+      done && done(err || d);
     });
   };
 

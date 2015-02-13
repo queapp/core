@@ -1,17 +1,9 @@
-// out: index.css, cgompress: true
+// Que Frontend LESS
+// Authors: Ryan Gaus
 @import url(//fonts.googleapis.com/css?family=Oxygen);
 @import "../bootstrap/less/bootstrap.less";
+@import "variables.less";
 @import "dashboard.less";
-
-// page bg color
-@bgcolor: #E9EDF0;
-
-// top section colors
-@top-color-yellow: #FCBD4B;
-@top-color-red: #FC4B4B;
-@top-color-blue: #4B86FC;
-@top-color-green: #42BF3F;
-@top-color-purple: #BF3F89;
 
 // custom imports
 @import "mixins.less";
@@ -19,11 +11,14 @@
 @import "material-button.less";
 @import "navbar.less";
 @import "things.less";
+@import "rooms.less";
+@import "blocks.less";
 @import "modal.less";
 @import "things-add.less";
 @import "settings-list.less";
 @import "new-instance.less";
 @import "query-results.less";
+@import "cards.less";
 
 body {
   height: 100%;
@@ -39,7 +34,13 @@ body {
 div.view-container {
   .container;
   position: relative;
+  margin-top: -64px;
+
+  &.no-pushup {
+    margin-top: 0px;
+  }
 }
+
 div[ng-view].ng-enter, div[ng-view].ng-leave {
   -webkit-transition: 0.35s linear all;
   transition: 0.35s linear all;
@@ -50,160 +51,3 @@ div[ng-view].ng-enter { opacity: 0; }
 div[ng-view].ng-enter.ng-enter-active { opacity: 1; }
 div[ng-view].ng-leave { opacity: 1; }
 div[ng-view].ng-leave.ng-leave-active { opacity: 0; }
-
-// card list
-ul.card-list {
-  list-style-type: none;
-  padding: 0px;
-  margin: 0px 0px 64px 0px;
-}
-
-ul.card-list div.no-cards {
-  height: 400px;
-  margin: 0px auto;
-  background-repeat: no-repeat;
-
-  .side {
-    // float: right;
-    width: 250px;
-    margin-right: 12px;
-    margin-top: 20px;
-
-    font-size: @font-size-base * 1.2;
-
-    span {
-      color: #444;
-      font-size: 75%;
-      display: block;
-      margin-top: 5px;
-      &:before { content: "Examples: "; }
-    }
-  }
-
-  // styles to convert mobile -> desktop
-  @media (min-width: @screen-sm-min) {
-    background-image: url("../img/things-none.svg");
-    width: 800px;
-    .side {
-      float: right;
-    }
-  }
-}
-
-pre.big {
-  font-size: @font-size-base * 2;
-}
-
-// make list group look different
-ul.list-group {
-  li.list-group-item {
-    background: #FFF;
-    border: 1px solid desaturate(#E9EDF0, 10%);
-    box-shadow: 0px 2px 0px mix(#E9EDF0, #000, 95%);
-    margin: 6px 0px;
-    .border-radius(2px);
-
-    h3 {
-      display: inline-block;
-    }
-
-    button.pull-right {
-      margin: 12px 0px 4px 10px;
-      vertical-align: middle;
-    }
-  }
-}
-
-// for the code blocks
-.blocks {
-
-  #addBlockModel input {
-    margin: 10px 0px;
-  }
-
-  .title {
-    .pull-left;
-    margin-top: 10px;
-    // font-size: @font-size-base * 1.75;
-
-    small {
-      font-size: 60%;
-      color: @gray-light;
-      margin-left: 10px;
-    }
-  }
-
-  button {
-    margin: 4px 0px 4px 10px;
-    vertical-align: middle;
-  }
-
-  // screen that greets users with no blocks
-  div.no-cards {
-    height: 400px;
-    margin: 0px auto;
-    background-repeat: no-repeat;
-
-    .side {
-      // float: right;
-      width: 250px;
-      margin-right: 12px;
-      margin-top: 20px;
-
-      font-size: @font-size-base * 1.2;
-
-      span {
-        color: #444;
-        font-size: 75%;
-        display: block;
-        margin-top: 5px;
-        &:before { content: "Examples: "; }
-      }
-    }
-
-    // styles to convert mobile -> desktop
-    @media (min-width: @screen-sm-min) {
-      background-image: url("../img/things-none.svg");
-      width: 800px;
-      .side {
-        float: right;
-      }
-    }
-  }
-
-  li {
-    min-height: 74px;
-
-    .modal {
-      a.help-link {
-        .pull-right;
-        padding: 0px 4px;
-      }
-      textarea {
-        .form-control;
-        width: 100%;
-        min-height: 300px;
-        font-family: monospace;
-        resize: vertical;
-      }
-
-      .block-name {
-        display: inline;
-      }
-
-      input.block-name {
-        .form-control;
-        display: inline;
-        width: 200px;
-      }
-
-      .log-space {
-        .well;
-        .well-sm;
-        margin-top: 14px;
-        max-height: 200px;
-        height: 200px;
-      }
-    }
-  }
-}

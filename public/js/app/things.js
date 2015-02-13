@@ -18,6 +18,11 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
   // custom thing
   this.customThing = {};
+  this.customActions = [{
+    name: "123",
+    trigger: {},
+    detrigger: {}
+  }];
 
   // spark token is validated
   this.sparktokenvalidated = false;
@@ -64,6 +69,10 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
         thing = _.extend(thing, JSON.parse(root.customThing));
         break;
 
+      case "actions":
+        thing.actions = root.customActions;
+        break;
+
       // preprocessing for spark
       case "spark":
         root.newThing.actions = [];
@@ -91,22 +100,25 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
               name: pinv
             };
 
+            // what type is the pin?
+            pintype = pin[0] === "D" && "digital" || "analog";
+
             // add actions for each pin
             thing.actions.push({
               name: pinv,
               trigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-                params: {
-                  args: pin+",HIGH",
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/"+pintype+"write",
+                form: {
+                  args: pin+","+(pintype === "digital" && "HIGH" || "255"),
                   access_token: tokenService.tokens.sparktoken
                 }
               },
               detrigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalwrite",
-                params: {
-                  args: pin+",LOW",
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/"+pintype+"write",
+                form: {
+                  args: pin+","+(pintype === "digital" && "LOW" || "0"),
                   access_token: tokenService.tokens.sparktoken
                 }
               }
@@ -131,9 +143,9 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
             thing.actions.push({
               name: pinv,
               trigger: {
-                method: "GET",
-                url: "http://api.spark.io/v1/devices/"+root.newThing.id+"/digitalread",
-                params: {
+                method: "POST",
+                url: "https://api.spark.io/v1/devices/"+root.newThing.id+"/digitalread",
+                form: {
                   args: pin,
                   access_token: tokenService.tokens.sparktoken
                 }
@@ -143,11 +155,11 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
 
 
             // add the required code to the block
-            block.code.push("  que.getActions(thing)."+pinv+".trigger(function(status, body) {");
+            block.code.push("  que.getActions(thing)."+pinv+".trigger(function(status, resp, body) {");
             block.code.push("    if (body.return_value) {");
             block.code.push("      // do something here when the pin is on");
             block.code.push("      que.log('"+pinv+" is on.');");
-            block.code.push("    } else if (body.return_value > 0) {");
+            block.code.push("    } else {");
             block.code.push("      // do something here when the pin is off");
             block.code.push("      que.log('"+pinv+" is off.');");
             block.code.push("    };")
@@ -167,8 +179,12 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
     $http({
       method: "POST",
       url: "/things/add",
-      data: JSON.stringify(thing)
+      data: angular.toJson(thing)
     }).success(function(data) {
+
+      // clear thing cache
+      thingService.cache = {};
+
       if (block) {
         // replace id
         block.code[1] = block.code[1].replace("%THINGID%", data.id);
@@ -180,11 +196,14 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
           data: JSON.stringify(block)
         }).success(function() {
           $rootScope.$broadcast('updateBlocks', null);
+          root.refresh();
         });
+      } else {
+        root.refresh();
       }
     });
 
-  }
+  };
 
   // initialize the newThing object on cancel (or on start)
   // and the customThing JSON string if the user is adding a custom thing
@@ -203,6 +222,7 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
       actions: [],
       data: []
     }, null, 2);
+    root.customActions = [];
   }
 
   // run this now
@@ -343,8 +363,11 @@ app.controller("ThingsController", function($scope, $http, $rootScope, thingServ
     });
   }
 
-  socket.on('backend-data-change', function() {
-    root.refresh();
+  socket.on('backend-data-change', function(payload) {
+    if (payload && payload.type === "thing") {
+      root.refresh();
+      $scope.$apply();
+    }
   });
 
 

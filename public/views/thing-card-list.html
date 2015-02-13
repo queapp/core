@@ -24,7 +24,7 @@
 
     <!-- button to generate new key and add a thing -->
     <div
-      class="add-button"
+      class="add-button things"
       ng-show="tC.things.length !== 0"
       data-toggle="modal"
       data-target="#addThingModal"
@@ -65,7 +65,8 @@
                 <h3>What is the type of the new thing?</h3>
                 <select class="form-control" ng-model="tC.newThing.type">
                   <option value="spark">Spark</option>
-                  <option value="manual">Custom...</option>
+                  <option value="actions">Custom Actions</option>
+                  <option value="manual">Custom JSON</option>
                 </select>
               </p>
             </div>
@@ -185,7 +186,57 @@
               </ul>
             </div>
 
-            <!-- spark options -->
+            <!-- custom http endpoints -->
+            <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'actions'">
+              <p>
+                <h3>
+                  Custom Actions
+                  <button class="btn btn-primary" ng-click="tC.customActions.push({trigger: {},detrigger: {}})">Add Action</button>
+                </h3>
+
+                <p>
+                  If you've got a cool, custom thing that Que doesn't natively support,
+                  this is the place to be. This page lets you manually add actions - each
+                  with a trigger url (called when the action is enabled), and a detrigger
+                  url (called when the action is disabled).
+                </p>
+
+                <div class="http-endpoint-action" ng-repeat="action in tC.customActions">
+                  <input type="text" placeholder="Name" class="form-control" ng-model="action.name"/>
+                  <div class="row" style="margin-top: 5px;">
+                    <div class="col-md-3">
+                      <select class="form-control" ng-model="action.trigger.method">
+                        <option value="get" default>GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="patch">PATCH</option>
+                        <option value="delete">DELETE</option>
+                      </select>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" placeholder="HTTP Trigger URL" class="form-control" ng-model="action.trigger.url" />
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 5px;">
+                    <div class="col-md-3">
+                      <select class="form-control" ng-model="action.detrigger.method">
+                        <option value="get" default>GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="patch">PATCH</option>
+                        <option value="delete">DELETE</option>
+                      </select>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" placeholder="HTTP Detrigger URL" class="form-control" ng-model="action.detrigger.url" />
+                    </div>
+                  </div>
+                </div>
+
+              </p>
+            </div>
+
+            <!-- custom json -->
             <div class="thing-add page-2 page-custom" ng-show="tC.newThing.dialogPage == 1 && tC.newThing.type == 'manual'">
               <p>
                 <h3>Enter the custom thing json</h3>
@@ -245,6 +296,8 @@
         <button class="btn btn-primary pull-right" ng-click="tC.editMode = false" ng-show="tC.editMode === thing.id">
           Done
         </button>
+
+        <!-- delete thing -->
         <button
           class="btn btn-danger pull-right"
           ng-click="tC.removeThing(thing.id, $index)"
@@ -252,8 +305,30 @@
           ng-show="tC.editMode === thing.id"
           ng-disabled="!nC.user.can('thing.delete.'+thing.id)"
           >
-          Delete
+          Delete Thing
         </button>
+
+        <!-- add to room -->
+        <span ng-controller="RoomsController as rC" ng-show="rC.onlyNotIn(rC.rooms, thing.id).length">
+          <button
+            class="btn btn-success pull-right"
+            style="margin-right: 16px;"
+            ng-click="rC.addToRoom(rC.getRoomId(roomToAdd), thing.name)"
+            ng-hide="tC.editMode === thing.id"
+            ng-disabled="!nC.user.can('room.thing.add.'+thing.id) || !roomToAdd"
+            >
+            Add to Room
+          </button>
+          <select
+            type="text"
+            class="form-control like-button pull-right"
+            style="width: auto;"
+            ng-hide="tC.editMode === thing.id"
+            ng-model="roomToAdd"
+            ng-disabled="!nC.user.can('room.thing.add.'+thing.id)">
+            <option ng-repeat="item in rC.onlyNotIn(rC.rooms, thing.id)">{{item.name}}</option>
+          </select>
+        </span>
 
 
         <!-- list of toggleable attributes -->

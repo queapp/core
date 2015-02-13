@@ -2,7 +2,7 @@
 
   <!-- button to generate new key and add a thing -->
   <div
-    class="add-button"
+    class="add-button blocks"
     ng-show="bC.blocks.length !== 0"
     data-toggle="modal"
     data-target="#addBlockModel">
@@ -74,8 +74,8 @@
       </h2>
 
       <!-- delete button -->
-      <button 
-        class="btn btn-danger pull-right" 
+      <button
+        class="btn btn-danger pull-right"
         ng-click="bC.deleteBlock(block);"
         ng-disabled="!nC.user.can('block.delete.'+block.id)"
         >
@@ -83,9 +83,9 @@
       </button>
 
       <!-- code edit button -->
-      <button 
-        class="btn btn-primary pull-right" 
-        data-toggle="modal" 
+      <button
+        class="btn btn-primary pull-right"
+        data-toggle="modal"
         data-target="#{{block.id}}-code-modal"
         ng-disabled="!(nC.user.can('block.code.view.'+block.id) || nC.user.can('block.code.edit.'+block.id))"
         >
@@ -93,22 +93,35 @@
       </button>
 
       <!-- disable button -->
-      <button 
-        class="btn btn-warning pull-right" 
-        ng-click="bC.setBlockDisabled(block, true);" 
+      <button
+        class="btn btn-warning pull-right"
+        ng-click="bC.setBlockDisabled(block, true);"
         ng-hide="block.disable"
         ng-disabled="!nC.user.can('block.disable.'+block.id)"
         >
         Disable
       </button>
-      <button 
-        class="btn btn-default pull-right" 
-        ng-click="bC.setBlockDisabled(block, false);" 
+      <button
+        class="btn btn-default pull-right"
+        ng-click="bC.setBlockDisabled(block, false);"
         ng-show="block.disable"
         ng-disabled="!nC.user.can('block.disable.'+block.id)"
         >
         Enable
       </button>
+
+      <div class="log-space inline">
+
+        <span class="log-{{b.type}}" ng-repeat="b in block.log track by $index">
+          {{b.when.toLocaleString && b.when.toLocaleString()}}
+          <span class="text">{{b.msg.trim()}}</span>
+          <br/>
+        </span>
+
+        <!-- clear log button -->
+        <button type="button" class="btn btn-default btn-xs" ng-click="block.log=[]">Clear Log</button>
+
+      </div>
 
       <!-- Modal to update code for block -->
       <div class="modal fade" id="{{block.id}}-code-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -129,20 +142,28 @@
             <div class="modal-body">
 
               <!-- api help -->
-              <a href="http://1egoman.viewdocs.io/que-iot/block-api" class="help-link">API Reference</a>
-              <a href="http://1egoman.viewdocs.io/que-iot/code-examples" class="help-link">Code Examples</a>
+              <a href="http://queapp.co/docs/block-api" class="help-link">API Reference</a>
+              <a href="http://queapp.co/docs/code-examples" class="help-link">Code Examples</a>
 
               <!-- code editor -->
               <label for="textarea">Block Code:</label>
-              <textarea 
-                ng-model="block.devCode" 
+              <textarea
+                ng-model="block.devCode"
                 placeholder="Blocks are written in javascript."
                 ng-disabled="nC.user.can('block.code.view.'+block.id) && !nC.user.can('block.code.edit.'+block.id)"
                 >
               </textarea>
 
               <!-- log area -->
-              <pre class="log-space">{{bC.formatLogs(block)}}</pre>
+              <div class="log-space">
+
+                <span class="log-{{b.type}}" ng-repeat="b in block.log">
+                  {{b.when.toLocaleString && b.when.toLocaleString()}}
+                  <span class="text">{{b.msg.trim()}}</span>
+                  <br/>
+                </span>
+
+              </div>
 
             </div>
 
@@ -150,9 +171,9 @@
               <button type="button" class="btn btn-default pull-left" ng-click="block.log=[]">Clear Log</button>
 
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button 
-                type="button" 
-                class="btn btn-primary" 
+              <button
+                type="button"
+                class="btn btn-primary"
                 ng-click="bC.updateBlock(block);"
                 ng-disabled="!nC.user.can('block.code.edit.'+block.id)"
                 >

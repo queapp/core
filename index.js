@@ -7,6 +7,7 @@ var cors = require('cors');
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var less = require('less-middleware');
 
 // parse arguments
 var argv = require('minimist')(process.argv.slice(2));
@@ -29,6 +30,9 @@ require("./controllers/logger")(argv, function(logger) {
   app.use(cors());
   app.use(bodyParser.json());
   app.use(session({secret: "secret", saveUninitialized: true, resave: true}));
+  app.use(less(__dirname+'/public'))
+
+  // static hosting of /public
   app.use(express.static(__dirname+'/public'));
 
   // log all http requests

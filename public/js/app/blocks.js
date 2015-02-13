@@ -43,6 +43,9 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
 
     // add block
     blockService.addBlock(this.newBlock, function() {
+      // clear block cache
+      blockService.cache = {};
+
       // refetch blocks
       root.fetchBlocks();
     });
@@ -59,6 +62,9 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
   this.deleteBlock = function(block) {
 
     blockService.removeBlock(block.id, function() {
+      // clear cache
+      blockService.cache = {};
+
       // refetch blocks
       root.fetchBlocks();
     });
@@ -100,8 +106,16 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
 
     // append to the log, and update the view
     if (b.length && b[0].log) {
-      console.log(blk.msg)
-      b[0].log.push(blk.msg && blk.msg.toString() || blk.msg);
+      // convert date
+      blk.when = typeof blk.when == "string" ? new Date(blk.when) : blk.when;
+
+      // add it to the block view
+      // console.log(blk);
+      if (b[0].log.indexOf(blk) === -1) {
+        b[0].log.unshift(blk);
+      };
+
+      // update angular
       $scope.$apply();
     };
   });

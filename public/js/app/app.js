@@ -17,9 +17,9 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/thing-card-list.html',
         controller: 'ThingsController'
       }).
-      when('/services', {
-        templateUrl: 'views/service-card-list.html',
-        controller: 'ServicesController'
+      when('/rooms', {
+        templateUrl: 'views/room-list.html',
+        controller: 'RoomsController'
       }).
       when('/blocks', {
         templateUrl: 'views/blocks-list.html',
@@ -93,7 +93,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
       case "/things":
         root.toPage(1);
         break;
-      case "/services":
+      case "/rooms":
         root.toPage(2);
         break;
       case "/blocks":
@@ -151,7 +151,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
         return {title: "My Things", desc: "A list of all your things"};
         break;
       case 2:
-        return {title: "My Services", desc: "A list of all services linked to this Que instance"};
+        return {title: "My Rooms", desc: "Groups of things that correspond to each physical room the things are in"};
         break;
       case 3:
         return {title: "Blocks", desc: "Blocks are what tell your things and services how to work"};
@@ -168,7 +168,7 @@ app.controller("navController", function($scope, $rootScope, $http, loginService
   this.toPage(0); // go to thing page to start (for now, will be changed back to dashboard later)
 });
 
-app.controller("DashboardController", function($scope, servicesService, thingService, notificationService) {
+app.controller("DashboardController", function($scope, thingService, roomsService, notificationService) {
   var root = $scope;
   root.notifications = [];
 
@@ -181,14 +181,13 @@ app.controller("DashboardController", function($scope, servicesService, thingSer
   }
   root.getThingCount();
 
-  // service count
-  root.serviceCount = 0;
-  root.getServiceCount = function() {
-    servicesService.getAllThings(function(data) {
-      root.serviceCount = data.length;
+  root.roomCount = 0;
+  root.getRoomCount = function() {
+    roomsService.getAllThings(function(data) {
+      root.roomCount = data.length;
     });
-  }
-  root.getServiceCount();
+  };
+  root.getRoomCount();
 
   // notifications
   root.refetch = function() {
@@ -224,13 +223,22 @@ app.factory("thingService", function($http) {
 
       getAllThings: function(callback) {
         var r = this;
-        $http({
-          method: "get",
-          url: host + "/things/all",
-        }).success(function(data) {
-          r.count = data.data.length;
-          callback(data.data);
-        });
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          // console.log("cache", this.cache)
+          callback(this.cache);
+        } else {
+          // console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/things/all",
+          }).success(function(data) {
+            // console.log("-> done", data)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       // get thing data
@@ -244,7 +252,7 @@ app.factory("thingService", function($http) {
             method: "get",
             url: host + "/things/" + id + "/data",
           }).success(function(data) {
-            thingservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
@@ -257,6 +265,9 @@ app.factory("thingService", function($http) {
           data: data
         });
 
+        // clear cache - update was made
+        this.cache = {};
+
         // $http({
         //   method: "put",
         //   url: host + "/things/" + id + "/data",
@@ -266,26 +277,34 @@ app.factory("thingService", function($http) {
         // });
       },
 
-      reorderThing: function(id, newLocation, callback) {
-        $http({
-          method: "get",
-          url: host + "/things/" + id + "/location/" + newLocation,
-        }).success(function(data) {
-          callback(data);
-        });
-      },
+      // reorderThing: function(id, newLocation, callback) {
+      //   $http({
+      //     method: "get",
+      //     url: host + "/things/" + id + "/location/" + newLocation,
+      //   }).success(function(data) {
+      //     callback(data);
+      //   });
+      // },
 
       removeThing: function(id, callback) {
         $http({
           method: "delete",
           url: host + "/things/" + id,
         }).success(function(data) {
+          // clear cache - update was made
+          this.cache = {};
           callback(data);
         });
       }
     };
 
     // update thing cache
+    socket.on('backend-data-change', function(payload) {
+      if (payload && payload.type === "thing") {
+        // console.log(payload)
+        thingservice.cache = payload.data;
+      }
+    });
     socket.on('pull-thing-data-update', function(changed) {
 
       // create the item if it doesn't exist
@@ -321,17 +340,29 @@ app.factory("tokenService", function($http) {
   return tokenService;
 });
 
-app.factory("servicesService", function($http) {
-    serviceservice = {
+app.factory("roomsService", function($http) {
+    roomservice = {
       cache: {},
+      count: 0,
 
       getAllThings: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/services/all",
-        }).success(function(data) {
-          callback(data.data);
-        });
+        var r = this;
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          // console.log("cache")
+          callback(this.cache);
+        } else {
+          // console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/rooms/all",
+          }).success(function(data) {
+            // console.log(123)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       getThingData: function(id, callback) {
@@ -340,72 +371,106 @@ app.factory("servicesService", function($http) {
         } else {
           $http({
             method: "get",
-            url: host + "/services/" + id + "/data",
+            url: host + "/rooms/" + id + "/data",
           }).success(function(data) {
-            serviceservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
       },
 
-      updateThingData: function(id, data, callback) {
-        socket.emit('push-service-data-update', {
-          id: id,
-          data: data
+      addThing: function(id, tid, callback) {
+        $http({
+          method: "post",
+          url: host + "/rooms/" + id + "/addthing",
+          data: JSON.stringify({id: tid})
+        }).success(function(data) {
+          this.cache = {};
+          callback(data);
         });
 
         // $http({
         //   method: "put",
-        //   url: host + "/services/" + id + "/data",
+        //   url: host + "/rooms/" + id + "/data",
         //   data: JSON.stringify(data)
         // }).success(function(data) {
         //   callback(data);
         // });
       },
 
-      reorderThing: function(id, newLocation, callback) {
+      add: function(data, callback) {
         $http({
-          method: "get",
-          url: host + "/services/" + id + "/location/" + newLocation,
+          method: "post",
+          url: host + "/rooms/add",
+          data: JSON.stringify(data)
         }).success(function(data) {
-          callback(data);
+          callback && callback(data);
         });
       },
 
-      removeThing: function(id, callback) {
+      remove: function(id, callback) {
         $http({
           method: "delete",
-          url: host + "/services/" + id,
+          url: host + "/rooms/" + id
         }).success(function(data) {
+          callback && callback(data);
+        });
+      },
+
+      removeThing: function(rid, tid, callback) {
+        $http({
+          method: "delete",
+          url: host + "/rooms/" + rid + "/" + tid,
+        }).success(function(data) {
+          this.cache = {};
           callback(data);
         });
       },
 
-      genAuthKey: function(callback) {
+      updateUsers: function(room, callback) {
         $http({
-          method: "get",
-          url: host + "/services/genkey",
+          method: "post",
+          url: host + "/rooms/" + room.id + "/users",
+          data: JSON.stringify({users: room.usersInside})
         }).success(function(data) {
-          callback(data);
+          this.cache = {};
+          callback && callback(data);
+        });
+      },
+
+      updateThings: function(id, things, callback) {
+        $http({
+          method: "post",
+          url: host + "/rooms/" + id + "/things",
+          data: angular.toJson({things: things})
+        }).success(function(data) {
+          this.cache = {};
+          callback && callback(data);
         });
       }
 
     };
 
-    // update thing cache
-    socket.on('pull-service-data-update', function(changed) {
+    // update room chache
+    socket.on('backend-data-change', function(payload) {
+      if (payload && payload.type === "room") {
+        roomservice.cache = payload.data;
+      }
+    });
+
+    socket.on('pull-room-data-update', function(changed) {
 
       // create the item if it doesn't exist
-      if (!serviceservice.cache[changed.id]) {
-        serviceservice.cache[changed.id] = {};
+      if (!roomservice.cache[changed.id]) {
+        roomservice.cache[changed.id] = {};
       }
 
       // update cache
       _.each(changed.data, function(v, k) {
-        serviceservice.cache[changed.id][k] = v;
+        roomservice.cache[changed.id][k] = v;
       });
     });
-    return serviceservice;
+    return roomservice;
  });
 
 app.factory("blockService", function($http) {
@@ -418,6 +483,7 @@ app.factory("blockService", function($http) {
           url: host + "/blocks/add",
           data: JSON.stringify(data)
         }).success(function(data) {
+          this.cache = {};
           callback && callback(data.id || data);
         });
       },
@@ -427,18 +493,29 @@ app.factory("blockService", function($http) {
           method: "delete",
           url: host + "/blocks/"+id
         }).success(function(data) {
-          console.log(data);
+          this.cache = {};
           callback && callback(data);
         });
       },
 
       getAllBlocks: function(callback) {
-        $http({
-          method: "get",
-          url: host + "/blocks/all",
-        }).success(function(data) {
-          callback(data.data);
-        });
+        var r = this;
+        // first, check cache
+        if (!$.isEmptyObject(this.cache)) {
+          // console.log("cache")
+          callback(this.cache);
+        } else {
+          // console.log("req")
+          // fall back to http request
+          $http({
+            method: "get",
+            url: host + "/blocks/all",
+          }).success(function(data) {
+            // console.log(123)
+            r.cache = data.data;
+            callback(data.data);
+          });
+        };
       },
 
       getBlockData: function(id, callback) {
@@ -449,7 +526,7 @@ app.factory("blockService", function($http) {
             method: "get",
             url: host + "/blocks/" + id + "/code",
           }).success(function(data) {
-            serviceservice.cache = data;
+            this.cache = {};
             callback(data);
           });
         }
@@ -461,6 +538,7 @@ app.factory("blockService", function($http) {
           url: host + "/blocks/" + id + "/code",
           data: JSON.stringify(data)
         }).success(function(data) {
+          this.cache = {};
           callback(data);
         });
       }

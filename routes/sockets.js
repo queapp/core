@@ -2,7 +2,7 @@
 var http = require('http');
 var socket = require('socket.io');
 
-module.exports = function(app, http, things, services) {
+module.exports = function(app, http, things, rooms) {
 
   // initialize sockets
   var io = socket(http);
@@ -21,11 +21,11 @@ module.exports = function(app, http, things, services) {
       io.emit('pull-thing-data-update', changed);
     });
 
-    // (services) frontend -> backend
-    socket.on('push-service-data-update', function(changed) {
+    // (rooms) frontend -> backend
+    socket.on('push-room-data-update', function(changed) {
 
       // update the backend
-      services.update(changed.id, changed.data);
+      room.update(changed.id, changed.data);
 
       // propagate the changes (backend -> frontend)
       io.emit('pull-service-data-update', changed);

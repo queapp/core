@@ -1,5 +1,5 @@
 var ThingServer = require("../controllers/things");
-var ServiceServer = require("../controllers/services");
+var RoomServer = require("../controllers/rooms");
 var BlockServer = require("../controllers/blocks");
 var UserServer = require("../controllers/users");
 var notify = require("../controllers/notify");
@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 var pjson = require('../package.json');
 
-var Token = require("../models/token");
+var Token = require("../models/tokens");
 var userCan = require("../controllers/auth").canMiddleware;
 
 // create all of the routes for the application
@@ -69,7 +69,7 @@ module.exports = function(app, server, argv) {
       res.send('var host = "http://que-app-backend.herokuapp.com";');
     } else if (process.env.PORT || argv.port || argv.host || process.env.HOST) {
       hostname = process.env.HOST || argv.host || "127.0.0.1";
-      netport = process.env.BACKENDPORT || process.env.PORT || argv.port || 8000;
+      netport = process.env.BACKENDPORT || argv.backendport || process.env.PORT || argv.port || 8000;
       res.send('var host = "http://' + hostname + ':' + netport + '";');
     } else {
       res.send('var host = "http://127.0.0.1:8000";');
@@ -81,21 +81,22 @@ module.exports = function(app, server, argv) {
 
   // create thing server and service server
   var things = new ThingServer();
-  var services = new ServiceServer();
-  var blocks = new BlockServer(things, services, notify);
+  var rooms = new RoomServer();
+  var blocks = new BlockServer(things, rooms, rooms, notify, argv);
   var users = new UserServer();
 
   // web socket routes
-  var io = require("./sockets.js")(app, server, things, services);
+  var io = require("./sockets.js")(app, server, things, rooms);
   things.socket = io;
+  rooms.socket = io;
   blocks.socket = io;
   notify.socket = io;
 
   // http routes
   require("./things")(app, things);
-  require("./services")(app, services);
+  require("./rooms")(app, rooms);
   require("./blocks")(app, blocks);
-  require("./users")(app, users);
+  require("./users")(app, users, require("../models/sessiontoken"), argv);
   require("./notify")(app, notify);
 
   // auth routes

@@ -33,10 +33,7 @@ module.exports = function(app) {
             key: uuid(),
             permissions: user.permissions,
             username: user.username,
-            createdAt: {
-              type: Date,
-              expires: '1d'
-            }
+            createdAt: new Date()
           };
 
           // create new session token!

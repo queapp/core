@@ -1,6 +1,81 @@
 Blocks Api
 ===
 
+###@0.7
+
+- **button.debounce(id, value, callback)** - Debounces a button. NOTE: id must
+be unique for each debouncer, and can be a number or string.
+```javascript
+que.button.debounce("exampleDebouncer", value, function(value) {
+  que.log("value has been changed to", value);
+});
+```
+
+- **warn(msg)** - Log message to block's console, but with warning priority.
+```javascript
+que.warn("Hmm, this isn't right.");
+```
+
+- **error(msg)** - Log message to block's console, but with error priority.
+```javascript
+que.warn("Something just went wrong.");
+```
+
+- **getRoomByTag(tag, callback)** - Get a room by its tag. The callback function
+runs once for each room. Hover over a room's name to see its tag.
+```javascript
+que.getRoomByTag("sample", function(room, n) {
+  que.log("Room:", room, " match number ", n);
+});
+```
+
+- **getRoomById(id, callback)** - Get a room by its tag. The callback function
+runs once for each room. Hover over a room's name to see its tag.
+```javascript
+que.getRoomById(0, function(room, n) {
+  que.log("Room:", room, " match number ", n);
+});
+```
+
+- **NOTE** - the room object above contains some helpful attributes:
+  - `room.things` is an array of each thing in the room.
+  - `room.name` and `room.desc` contain the room's name and
+  description, respectively.
+  - `room.tags` is an array of tags for the room.
+
+- **room(room, action, username, callback)** - Enter or leave rooms. The callback
+is optional.
+```javascript
+que.getRoomByTag("sample", function(room, n) {
+  que.room(room, 'enter', 'superadmin');
+});
+```
+```javascript
+que.getRoomByTag("sample", function(room, n) {
+  que.room(room, 'leave', 'superadmin', function() {
+    // and we've left the room
+  });
+});
+```
+
+###@0.6
+
+- **getThingById(id, callback)** - Get a thing by its tag. The callback function
+runs once for each thing. Hover over a thing's name to see its tag.
+```javascript
+que.getThingById(0, function(thing, n) {
+  que.log("Thing:", thing, " match number ", n);
+});
+```
+
+  - **NOTE** - the thing object above contains some helpful attributes:
+    - `thing.data` is an object with a thing's controls within it.
+    `thing.data.CONTROL.value` will give you the contents.
+    - `thing.name` and `thing.desc` contain the thing's name and
+    description, respectively.
+    - `thing.tags` is an array of tags for the thing.
+
+
 ###@0.5
 
 - **getActions(thing)** - returns an object containing each action name of the thing as

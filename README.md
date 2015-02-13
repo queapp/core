@@ -1,11 +1,8 @@
-Que's IoT Controller
-===
-This app is an fancy [IoT](http://en.wikipedia.org/wiki/Internet_of_Things) controller.
-However, what makes this app different is it's easy to host yourself, and it is a relatively easy
-to develop your own things. Every other platform that I've seen has a dashboard of some sort that
-you can configure stuff, and most likely get nearly what you want. It works reasonably well, but
-I, like many people, want to be able to control every aspect of each thing - this is the 'linux'
-of internet of things controllers.
+
+#### Que is an internet of things controller for makers and power users.
+And, if you are reading this on Github, that group probably includes you.
+[Que's website](http://queapp.co)
+
 
 License
 ---

@@ -48,7 +48,7 @@
                 <a href="#/things">Things</a>
               </li>
               <li ng-class="{active: nC.pageId == 2}">
-                <a href="#/services">Services</a>
+                <a href="#/rooms">Rooms</a>
               </li>
               <li ng-class="{active: nC.pageId == 3}">
                 <a href="#/blocks">Blocks</a>
@@ -60,8 +60,8 @@
                 <a href="#/login">Login</a>
               </li>
               <li ng-show="nC.user.auth.username">
-                <a ng-click="nC.user.logout()">
-                  <span class="glyphicon glyphicon-briefcase" style="vertical-align: text-bottom;"></span>
+                <a href ng-click="nC.user.logout()" title="Logout User">
+                  <!-- <span class="glyphicon glyphicon-user" style="vertical-align: text-bottom;"></span> -->
                   {{nC.user.auth.username}}
                 </a>
               </li>
@@ -73,7 +73,7 @@
 
         <h1>
           {{nC.getPageTitle().title}}
-          <small class="">{{nC.getPageTitle().desc}}</small>
+          <small>{{nC.getPageTitle().desc}}</small>
         </h1>
 
         <div class="search-container" ng-class="{hide: nC.pageId !== 0}">
@@ -85,7 +85,7 @@
 
       </nav>
 
-      <div class="view-container">
+      <div class="view-container" ng-class="{'no-pushup': nC.pageId == 0 || nC.user.auth.username == null}">
         <div ng-view></div>
       </div>
 
@@ -113,7 +113,7 @@
     <script src="js/app/settings.js"></script>
 
     <script src="js/app/things.js"></script>
-    <script src="js/app/services.js"></script>
+    <script src="js/app/rooms.js"></script>
     <script src="js/app/blocks.js"></script>
 
     <script src="js/app/login.js"></script>

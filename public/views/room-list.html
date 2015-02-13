@@ -1,0 +1,273 @@
+
+<!-- Thing View: shows a list of all things -->
+<div class="container" ng-controller="RoomsController as rC">
+  <ul class="card-list card-list-things">
+
+    <div class="no-cards" ng-show="rC.rooms.length === 0">
+      <div class="side">
+        A rooms is an intangible object that Que can control.
+        <span>Email, social networks, or other online services</span>
+        <br/>
+        <a
+          href
+          class="btn btn-primary btn-lg"
+          data-toggle="modal"
+          data-target="#addRoomModal"
+          ng-show="nC.user.can('rooms.create')"
+          >Add a room
+        </a>
+      </div>
+    </div>
+
+
+    <!-- button to generate new key and add a rooms -->
+    <div
+      class="add-button rooms"
+      ng-show="rC.rooms.length !== 0"
+      data-toggle="modal"
+      data-target="#addRoomModal"
+      ng-show="nC.user.can('rooms.create')">
+      +
+    </div>
+
+    <div class="modal fade" id="addRoomModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">Add New Room</h4>
+          </div>
+          <div class="modal-body">
+            <input class="form-control" placeholder="Room Name" ng-model="rC.newRoom.name"/>
+            <input class="form-control" placeholder="Room Description" ng-model="rC.newRoom.desc"/>
+            <input class="form-control" placeholder="Room Tags (space seperated)" ng-model="rC.newRoom.tags"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="rC.add()">Add</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <ul class="list-group" ng-controller="ThingsController as tC">
+      <li class="list-group-item thing" ng-repeat="rooms in rC.rooms">
+        <h3 tooltip data-toggle="tooltip" data-placement="left" title="Tags: {{rooms.tags.join(', ')}}">
+          {{rooms.name}}
+          <small>{{rooms.desc}}</small>
+        </h3>
+
+        <!-- list of users who are currently in the room -->
+        <span style="margin-left: 10px;">
+          <span ng-repeat="user in rooms.usersInside" style="margin: 4px;">
+            <span class="glyphicon glyphicon-user"></span>
+            {{user}}
+          </span>
+        </span>
+
+        <button
+          class="btn btn-danger pull-right"
+          ng-click="rC.remove(rooms.id)"
+          ng-disabled="!nC.user.can('room.delete.'+thing.id)"
+          >
+          Delete
+        </button>
+
+        <!-- users in the room currently -->
+        <!-- <button
+          class="btn btn-info pull-right"
+          disabled
+          >
+          In Room:
+        </button> -->
+
+        <button
+          class="btn btn-primary pull-right"
+          ng-disabled="!nC.user.can('room.leave.'+room.id)"
+          ng-click="rC.leaveRoom(nC.user, rooms)"
+          ng-show="rooms.usersInside.indexOf(nC.user.auth.username) !== -1"
+          >
+          Leave
+        </button>
+        <button
+          class="btn btn-success pull-right"
+          ng-disabled="!nC.user.can('room.enter.'+room.id)"
+          ng-click="rC.enterRoom(nC.user, rooms)"
+          ng-hide="rooms.usersInside.indexOf(nC.user.auth.username) !== -1"
+          >
+          Enter
+        </button>
+
+
+        <!-- thing list in each room -->
+        <ul class="scrollable">
+          <li ng-repeat="th in rooms.things">
+            <span class="title">
+              {{th.thing.name}}
+            </span>
+
+            <!-- action buttons -->
+            <button
+              class="btn btn-danger btn-xs"
+              ng-click="rC.removeThing(rooms.id, th.id, $index)"
+              ng-disabled="!nC.user.can('room.thing.delete.'+thing.id)"
+              >
+              Delete
+            </button>
+
+            <div class="btn-group pull-right" style="margin-right: 6px;">
+              <button
+                class="btn btn-success btn-xs"
+                ng-disabled="!nC.user.can('room.thing.enter.'+thing.id)"
+                ng-click=""
+                data-toggle="modal"
+                data-target="#EnterRoomModal-{{rooms.id}}-{{th.id}}"
+                >
+                On Enter
+              </button>
+              <button
+                class="btn btn-primary btn-xs"
+                ng-disabled="!nC.user.can('room.thing.leave.'+thing.id)"
+                ng-click=""
+                data-toggle="modal"
+                data-target="#LeaveRoomModal-{{rooms.id}}-{{th.id}}"
+                >
+                On Leave
+              </button>
+
+              <!-- enter configuration modal -->
+              <div class="modal fade" class="roomModal" id="EnterRoomModal-{{rooms.id}}-{{th.id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                      </button>
+                      <h4 class="modal-title">When a user enters the room...</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <!-- activate the below settings -->
+                      <input
+                        type="checkbox"
+                        ng-init="changeEnterStuff = th.enter != null"
+                        ng-model="changeEnterStuff"
+                        ng-change="rC.disableOrEnableControls(th, 'enter', changeEnterStuff)"
+                       />
+                      <label>Change the stuff below:</label>
+                      <code>{{th.enter}}</code>
+
+                      <ul class="card-form clearfix edit-data">
+                        <li class="control" ng-repeat="(k, v) in th.enter" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+                          <label
+                            tooltip
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="{{k}}"
+                            >
+                            {{v.label || tC.convertIntoSpaces(k)}}
+                          </label>
+                          <input
+                            ng-init="th.leave = th.leave || th.thing.data"
+                            type="{{ tC.getTypeFor(v) }}"
+                            ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
+                            placeholder="{{k}}"
+                            value="{{tC.isButton(v) &amp;&amp; v.value}}"
+                            ng-disabled="v.readonly || !nC.user.can('thing.control.write.'+k+'.'+thing.id)"
+                            ng-hide="tC.getTypeFor(v) == 'canvas'"
+                            ng-model="th.enter[k].value"
+                          />
+                          <canvas
+                            ng-show="tC.getTypeFor(v) == 'canvas'"
+                            class="canvas-{{thing.id}}-{{k}}"
+                            style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};">
+                          </canvas>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" ng-click="rC.updateThings(rooms)">Set States</button>
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+
+              <!-- leave configuration modal -->
+              <div class="modal fade" class="roomModal" id="LeaveRoomModal-{{rooms.id}}-{{th.id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                      </button>
+                      <h4 class="modal-title">When a user leaves the room...</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <!-- activate the below settings -->
+                      <input
+                        type="checkbox"
+                        ng-init="changeLeaveStuff = th.leave != null"
+                        ng-model="changeLeaveStuff"
+                        ng-change="rC.disableOrEnableControls(th, 'leave', changeLeaveStuff)"
+                       />
+                      <label>Change the stuff below:</label>
+                      <code>{{th.leave}}</code>
+
+
+                      <ul class="card-form clearfix edit-data">
+                        <li class="control" ng-repeat="(k, v) in th.leave" ng-show="nC.user.can('thing.control.read.'+k+'.'+thing.id)">
+                          <label
+                            tooltip
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="{{k}}"
+                            >
+                            {{v.label || tC.convertIntoSpaces(k)}}
+                          </label>
+                          <input
+                            ng-init="th.leave = th.leave || th.thing.data"
+                            type="{{ tC.getTypeFor(v) }}"
+                            ng-class="{'btn': tC.isButton(v), 'btn-primary': !v.readonly, 'btn-success': v.readonly &amp;&amp;v.value}"
+                            placeholder="{{k}}"
+                            value="{{tC.isButton(v) &amp;&amp; v.value}}"
+                            ng-disabled="v.readonly || !nC.user.can('thing.control.write.'+k+'.'+thing.id)"
+                            ng-hide="tC.getTypeFor(v) == 'canvas'"
+                            ng-model="th.leave[k].value"
+                          />
+                          <canvas
+                            ng-show="tC.getTypeFor(v) == 'canvas'"
+                            class="canvas-{{thing.id}}-{{k}}"
+                            style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};">
+                          </canvas>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" ng-click="rC.updateThings(rooms)">Set States</button>
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+
+
+            </div>
+
+
+          </li>
+        </ul>
+
+      </li>
+    </ul>
+
+
+  </ul>
+</div>
