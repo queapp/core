@@ -9,7 +9,8 @@ cog in the lower left)
 - Go to que's online web ui (if you don't know where that is its probably at
 `[IP OF COMPUTER]:8000` or if you're running it locally it may be at `127.0.0.1:8000`);
 - Click the "Things" tab on the top of the screen
-- Click the green "Add a thing" button
+- Click the green "Add a thing" button, or the plus button in the lower left if
+  you've added things in the past.
 - Enter in the information for the new thing - here's mine:
 
 ![1st screen](docs/spark-new-0.png)
@@ -21,11 +22,20 @@ cog in the lower left)
 
 - On the last page, you'll see a map of the spark's pins. Here, you'll be naming each pin
 based on what it does/controls. We're going to be controlling the onboard led in this example,
-so in the box next to pin D7 type the name `led` (D7 is connected to the onboard LED)
+so in the box next to pin D0 type the name `led` (D0 will be connected to a LED)
 
 ![spark led name](docs/spark-new-2.png)
 
 - Click Finish!
+
+### Hardware
+Connect your spark, following the diagram below.
+
+![spark led schematic](docs/spark-led-schematic.png)
+
+Plug it in and verify it has already been configured - the Spark should have a
+breathing <span style="color: cyan;">cyan</span> light on it. If this is not the case, try
+[connecting your spark](http://docs.spark.io/connect/).
 
 ### The moment of truth
 Go back to the "Things" tab, and click the button. If all has been done right, the led
