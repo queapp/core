@@ -42,17 +42,27 @@ Blocks
 
 Notifys
 ---
-- notify.create
-- notify.view.all
-- notify.delete.#id
+=======
+Permission                     | Description | Example
+-------------------------------|-------------|--------
+**Notifys CRUD Operations** |
+notify.create | Allows a user to create a new notification |
+notify.view.all | Allows a user to view all notifications |
+notify.delete.`#id` | Allows a user to delete a notification, indicated by `id` | notify.delete.2
 
 Auth Tokens
 ---
-- token.view
-- token.edit
+Permission                     | Description
+-------------------------------|------------
+**Auth CRUD Operations** |
+token.view |  Allows a user to ... |
+token.edit |  Allows a user to ... |
 
 Users
 ---
-- user.view.all
-- user.create
-- user.delete.#id
+Permission                     | Description | Example
+-------------------------------|-------------|--------
+**Users CRUD Operations** |
+user.view.all | Allows a user to view all user accounts |
+user.create | Allows a user to create a new user account |
+user.delete.`#id` | Allows a user to delete a user account, indicated by `id` | user.delete.2
