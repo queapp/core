@@ -1,7 +1,7 @@
 
 #### Que is an internet of things controller for makers and power users.
 And, if you are reading this on Github, that group probably includes you.
-[Que's website](http://queapp.co)
+[Que's website](http://queiot.co)
 
 
 License
