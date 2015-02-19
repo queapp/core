@@ -55,17 +55,26 @@ block.disable.`#id` | Allows a user to disable code execution within a block ide
 
 Notifys
 ---
-- notify.create
-- notify.view.all
-- notify.delete.`#id`
+Permission                     | Description | Example
+-------------------------------|-------------|--------
+**Notifys CRUD Operations** |
+notify.create | desc | Allows a user to create a new notification |
+notify.view.all | desc | Allows a user to view all notifications |
+notify.delete.`#id` | desc | Allows a user to delete a notification, indicated by `id` | notify.delete.2
 
 Auth Tokens
 ---
-- token.view
-- token.edit
+Permission                     | Description | Example
+-------------------------------|-------------|--------
+**Auth CRUD Operations** |
+token.view | desc | Allows a user to ... |
+token.edit | desc | Allows a user to ... |
 
 Users
 ---
-- user.view.all
-- user.create
-- user.delete.`#id`
+Permission                     | Description | Example
+-------------------------------|-------------|--------
+**Users CRUD Operations** |
+user.view.all | desc | Allows a user to view all user accounts |
+user.create | desc | Allows a user to create a new user account |
+user.delete.`#id` | desc | Allows a user to delete a user account, indicated by `id` | user.delete.2
