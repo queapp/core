@@ -3,8 +3,17 @@
 .form-control, .input-group-addon {
   .modal-style;
 
+  transition-delay: 0s, 0s;
+  transition-duration: 0.15s, 0.15s;
+  transition-property: border-color, box-shadow;
+  transition-timing-function: ease-in-out, ease-in-out;
+
   &:active, &:focus, &.active {
-    .modal-style;
+    box-shadow: 0px 2px 0px rgba(221, 225, 228, 0.4);
     border-color: @control-focus-color;
   }
+}
+
+.input-group-addon.active:last-child {
+  border-left: 10px;
 }
