@@ -1,6 +1,19 @@
 Permission List
 ===
 
+Que permissions are pretty powerful. First of all, as many permissions can be added
+for each user, which makes customization easy. Second of all, Que's permission's
+system supports wildcards - so `a.*.c` matches both `a.b.c` and `a.foo.c` (the
+[wildcard](https://www.npmjs.com/package/wildcard) package is used).
+
+Reading this Document
+---
+When reading this document, keep in mind some of the conventions:
+- `#id` - This refers to the id of something. It's totally ok to put a `*` here
+  to match all ids.
+- `#name` - This refers to the name of a control, within a thing (buttons,
+  textboxes, etc). Again, it's totally ok to put a `*` here to match all names.
+
 Things
 ---
 
