@@ -65,29 +65,28 @@ block.code.view.`#id`    | Allows a user to view code in a block identified by `
 block.code.edit.`#id`    | Allows a user to edit code in a block identified by `#id` | block.code.edit.2
 block.disable.`#id` | Allows a user to disable code execution within a block identified by `#id` | block.disable.2
 
-
 Notifys
 ---
 Permission                     | Description | Example
 -------------------------------|-------------|--------
 **Notifys CRUD Operations** |
-notify.create | desc | Allows a user to create a new notification |
-notify.view.all | desc | Allows a user to view all notifications |
-notify.delete.`#id` | desc | Allows a user to delete a notification, indicated by `id` | notify.delete.2
+notify.create | Allows a user to create a new notification |
+notify.view.all | Allows a user to view all notifications |
+notify.delete.`#id` | Allows a user to delete a notification, indicated by `id` | notify.delete.2
 
 Auth Tokens
 ---
-Permission                     | Description | Example
--------------------------------|-------------|--------
+Permission                     | Description
+-------------------------------|------------
 **Auth CRUD Operations** |
-token.view | desc | Allows a user to ... |
-token.edit | desc | Allows a user to ... |
+token.view |  Allows a user to view all session tokens |
+token.edit |  Allows a user to edit all session tokens |
 
 Users
 ---
 Permission                     | Description | Example
 -------------------------------|-------------|--------
 **Users CRUD Operations** |
-user.view.all | desc | Allows a user to view all user accounts |
-user.create | desc | Allows a user to create a new user account |
-user.delete.`#id` | desc | Allows a user to delete a user account, indicated by `id` | user.delete.2
+user.view.all | Allows a user to view all user accounts |
+user.create | Allows a user to create a new user account |
+user.delete.`#id` | Allows a user to delete a user account, indicated by `id` | user.delete.2
