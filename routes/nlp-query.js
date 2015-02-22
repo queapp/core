@@ -49,8 +49,8 @@ module.exports = function(app, things) {
   app.post("/natural/query", userCan("natural.query"), function(req, res) {
 
     // start by parsing the query
-    parseQuery(req.body.data || '', function(thing, operation, dataItem) {
-
+    parseQuery(req.body.data || '', function(thing, operation, dataItem, value) {
+      console.log(thing, operation, dataItem, value)
       // is the thing defined?
       if (!thing) {
         res.send(things.createResponsePacket('ERR', {
@@ -94,6 +94,17 @@ module.exports = function(app, things) {
             res.send(things.createResponsePacket('OK', {
               resp: true,
               msg: "The value of " + thing.name + " has been set to off."
+            }));
+          });
+          break;
+
+        // set: turn the specified data item to the specified value
+        case "set":
+          hash[dataItem] = {value: value};
+          things.update(thing.id, hash, function() {
+            res.send(things.createResponsePacket('OK', {
+              resp: true,
+              msg: "The value of " + thing.name + " has been set to " + value + "."
             }));
           });
           break;
