@@ -60,16 +60,18 @@
   }
 
   .navbar-collapse {
-    &.in {
+    border: 0px;
+
+    &.in, &.collapsing {
       margin-top: 15px;
-      background: #FFF;
+      background: transparent;
       z-index: 1000;
+
+      @media (min-width: @screen-sm-min) {
+        color: #FFF;
+      }
     }
 
-    &.collapsing {
-      margin-top: 15px;
-      background: #FFF;
-    }
   }
 
   .navbar-brand img {
@@ -84,7 +86,7 @@
   .navbar-nav {
     li a, a:hover, a:focus {
       background: transparent;
-      color: #000;
+      color: #FFF;
     }
 
     .active a, .active a:hover, .active a:focus {

@@ -35,7 +35,12 @@ body {
 div.view-container {
   .container;
   position: relative;
-  margin-top: -64px;
+  margin-top: 0px;
+
+  // on mobile, always no-pushup
+  @media (min-width: @screen-sm-min) {
+    margin-top: -64px;
+  }
 
   &.no-pushup {
     margin-top: 0px;
