@@ -262,7 +262,8 @@ app.factory("thingService", function($http) {
         // push it back to te server
         socket.emit('push-thing-data-update', {
           id: id,
-          data: data
+          data: data,
+          auth: sessionStorage.queKey
         });
 
         // clear cache - update was made
