@@ -359,8 +359,29 @@
               value="{{tC.isButton(v) &amp;&amp; v.value}}"
               ng-disabled="v.readonly || !nC.user.can('thing.control.write.'+k+'.'+thing.id)"
               ng-hide="tC.getTypeFor(v) == 'canvas'"
+              max="{{v.maxValue}}" min="{{v.minValue}}"
             />
             <canvas ng-show="tC.getTypeFor(v) == 'canvas'" class="canvas-{{thing.id}}-{{k}}" style="width: {{v.width || '200px'}}; height: {{v.height || '100px'}};"></canvas>
+
+            <!-- set the control min and max bounds -->
+            <div
+              class="set-bounds"
+              ng-show="tC.editMode === thing.id &amp;&amp; tC.getTypeFor(v) === 'number'"
+              >
+              <input
+                type="number"
+                ng-model="v.maxValue"
+                placeholder="Max Bound"
+                ng-change="tC.updateThingData(thing.id, k, v)"
+               />
+              <input
+                type="number"
+                ng-model="v.minValue"
+                placeholder="Min Bound"
+                ng-change="tC.updateThingData(thing.id, k, v)"
+               />
+            </div>
+
           </li>
 
           <!-- new control -->
