@@ -50,7 +50,7 @@ module.exports = function(app, things) {
 
     // start by parsing the query
     parseQuery(req.body.data || '', function(thing, operation, dataItem, value) {
-      console.log(thing, operation, dataItem, value)
+      console.log(operation, dataItem, value)
       // is the thing defined?
       if (!thing) {
         res.send(things.createResponsePacket('ERR', {
@@ -78,7 +78,19 @@ module.exports = function(app, things) {
 
         // enable: turn the specified data item on
         case "enable":
-          hash[dataItem] = {value: true};
+          // but, what exactly means on?
+          on = thing.data[dataItem].maxValue
+          if (typeof thing.data[dataItem].value === "number") {
+            on = 1;
+          } else if (typeof thing.data[dataItem].value === "string") {
+            on = 'true';
+          } else {
+            on = true;
+          }
+
+          console.log(on)
+
+          hash[dataItem] = {value: on};
           things.update(thing.id, hash, function() {
             res.send(things.createResponsePacket('OK', {
               resp: true,
@@ -89,7 +101,17 @@ module.exports = function(app, things) {
 
         // disable: turn the specified data item off
         case "disable":
-          hash[dataItem] = {value: false};
+          // but, what exactly means off?
+          off = thing.data[dataItem].minValue
+          if (typeof thing.data[dataItem].value === "number") {
+            off = 0;
+          } else if (typeof thing.data[dataItem].value === "string") {
+            off = 'false';
+          } else {
+            off = false;
+          }
+
+          hash[dataItem] = {value: off};
           things.update(thing.id, hash, function() {
             res.send(things.createResponsePacket('OK', {
               resp: true,
