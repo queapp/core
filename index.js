@@ -29,14 +29,17 @@ require("./controllers/logger")(argv, function(logger) {
   var go = function(worker) {
     var app = express();
 
+    // public directory
+    pubDir = process.env.PUBLIC || __dirname+'/public';
+
     // some middleware
     app.use(cors());
     app.use(bodyParser.json());
     app.use(session({secret: "secret", saveUninitialized: true, resave: true}));
-    app.use(less(__dirname+'/public'))
+    app.use(less(pubDir))
 
     // static hosting of /public
-    app.use(express.static(__dirname+'/public'));
+    app.use(express.static(pubDir));
 
     // log all http requests
     app.use( require('winston-request-logger').create(logger) );
