@@ -12,7 +12,7 @@ app.controller("KeysController", function($scope, $http) {
   // get keys from server
   $http({
     method: "GET",
-    url: "/tokens"
+    url: host+"/tokens"
   }).success(function(data) {
     root.keys = data;
     root.validateAll();
