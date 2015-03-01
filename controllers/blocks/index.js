@@ -118,6 +118,14 @@ module.exports = function(things, services, rooms, notify, argv) {
    */
   this.update = function(id, changes, done) {
     Block.update({id: id}, changes, {}, function(err, d) {
+
+      // update backend
+      changes.id = id;
+      root.socket && root.socket.emit("backend-data-change", {
+        type: "block",
+        data: [changes]
+      });
+
       done && done(err || d);
     });
   }

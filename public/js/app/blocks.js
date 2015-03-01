@@ -120,5 +120,22 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
     };
   });
 
+  // the backend has new data for us
+  socket.on('backend-data-change', function(payload) {
+    if (payload && payload.type === "block") {
+      console.log('B', payload)
 
+      // update the payload data
+      root.blocks = Object.deepExtend(root.blocks, payload.data);
+      console.log(root.blocks)
+
+      // clear block logs
+      root.blocks.forEach(function(b) {
+        b.log = [];
+      })
+
+      // update scope
+      $scope.$apply();
+    };
+  });
 });
