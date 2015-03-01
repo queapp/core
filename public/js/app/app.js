@@ -611,3 +611,28 @@ Object.deepExtend = function(destination, source) {
   }
   return destination;
 };
+
+// merges an item into a collection cleanly:
+// - collection is the collection
+// - items is an array of items: each must contain the key 'id'
+//   to determine where they fit.
+var mergeDataStrucures = function(collection, items) {
+
+  items.forEach(function(item) {
+    // find where the new data item should be inserted
+    a = _.filter(collection, function(i) {
+      return i.id == item.id;
+    });
+    if (a.length) {
+      // get index of the item
+      index = collection.indexOf(a[0]);
+
+      // insert 'item' at 'index' in 'collection'
+      // console.log(collection, index, item)
+      itemValue = Object.deepExtend(collection[index], item);
+      collection[index] = itemValue;
+    };
+  });
+
+  return collection;
+};

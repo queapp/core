@@ -126,7 +126,7 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
       console.log('B', payload)
 
       // update the payload data
-      root.blocks = Object.deepExtend(root.blocks, payload.data);
+      root.blocks = mergeDataStrucures(root.blocks, payload.data);
       console.log(root.blocks)
 
       // clear block logs
