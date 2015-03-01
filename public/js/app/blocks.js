@@ -123,11 +123,11 @@ app.controller("BlockController", function($scope, $rootScope, blockService) {
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "block") {
-      console.log('B', payload)
+      // console.log('B', payload)
 
       // update the payload data
-      root.blocks = mergeDataStrucures(root.blocks, payload.data);
-      console.log(root.blocks)
+      root.blocks = mergeDataStructures(root.blocks, payload.data);
+      // console.log(root.blocks)
 
       // clear block logs
       root.blocks.forEach(function(b) {
