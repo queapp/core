@@ -46,6 +46,10 @@ module.exports = function(app, http, things, rooms) {
 
     });
 
+    socket.on('data-change', function(changed) {
+      io.emit('backend-data-change', changed);
+    });
+
     // the client diconnected
     // socket.on('disconnect', function() {
       // console.log("Disconnect")

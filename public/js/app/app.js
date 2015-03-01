@@ -359,7 +359,7 @@ app.factory("roomsService", function($http) {
             method: "get",
             url: host + "/rooms/all",
           }).success(function(data) {
-            // console.log(123)
+            // console.log(data.data)
             r.cache = data.data;
             callback(data.data);
           });
@@ -445,6 +445,14 @@ app.factory("roomsService", function($http) {
           url: host + "/rooms/" + id + "/things",
           data: angular.toJson({things: things})
         }).success(function(data) {
+
+          // update room data
+          socket.emit('data-change', {
+            type: "room",
+            id: id,
+            data: [{id: id, things: things}]
+          });
+
           this.cache = {};
           callback && callback(data);
         });
@@ -455,7 +463,7 @@ app.factory("roomsService", function($http) {
     // update room chache
     socket.on('backend-data-change', function(payload) {
       if (payload && payload.type === "room") {
-        roomservice.cache = payload.data;
+        roomservice.cache = {}//Object.deepExtend(roomservice.cache, payload.data);
       }
     });
 
@@ -470,6 +478,8 @@ app.factory("roomsService", function($http) {
       _.each(changed.data, function(v, k) {
         roomservice.cache[changed.id][k] = v;
       });
+
+      console.log(JSON.stringify(changed, null, 2))
     });
     return roomservice;
  });
@@ -583,3 +593,21 @@ app.service("notificationService", function($http) {
  };
  return notificationservice;
 });
+
+/**
+ * Deeply extend an object from another object
+ * @param {object} destination The destination object to extend to
+ * @param {object} source      The object to extend from into destination
+ */
+Object.deepExtend = function(destination, source) {
+  for (var property in source) {
+    if (source[property] && source[property].constructor &&
+     source[property].constructor === Object) {
+      destination[property] = destination[property] || {};
+      arguments.callee(destination[property], source[property]);
+    } else {
+      destination[property] = source[property];
+    }
+  }
+  return destination;
+};

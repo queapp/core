@@ -213,10 +213,12 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
   // the backend has new data for us
   socket.on('backend-data-change', function(payload) {
     if (payload && payload.type === "room") {
+      console.log(payload)
 
       // update the payload data
       thingService.getAllThings(function(things) {
-        root.rooms = root.processNewData(things, payload.data);
+        root.rooms = Object.deepExtend(root.rooms, root.processNewData(things, payload.data));
+        console.log(root.rooms)
       });
 
       // update scope

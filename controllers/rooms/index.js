@@ -231,6 +231,12 @@ module.exports = function(thedb) {
    */
   this.updateUsers = function(id, users, callback) {
     Room.update({id: id}, {usersInside: users}, {}, function(err) {
+
+      // update backend
+      root.socket && root.socket.emit("backend-data-change", {
+        type: "room",
+        data: [{id: id, usersInside: users}]
+      });
       callback && callback(err);
     });
   };
