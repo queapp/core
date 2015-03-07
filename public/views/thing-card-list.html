@@ -309,7 +309,7 @@
         </button>
 
         <!-- add to room -->
-        <span ng-controller="RoomsController as rC" ng-show="rC.onlyNotIn(rC.rooms, thing.id).length">
+        <span ng-controller="RoomsController as rC" ng-hide="rC.thingInRoom(rC.rooms, thing.id)">
           <button
             class="btn btn-success pull-right"
             style="margin-right: 16px;"

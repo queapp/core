@@ -132,6 +132,13 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
     });
   }
 
+  // return true if the specified thing id is inside of a room.
+  this.thingInRoom = function(rooms, tid) {
+    return _.flatten(_.map(rooms, function(r) {
+      return _.pluck(r.things, 'id');
+    })).indexOf(tid) !== -1;
+  };
+
   // create new room
   this.add = function() {
     roomsService.add({
