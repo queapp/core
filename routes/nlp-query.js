@@ -50,7 +50,7 @@ module.exports = function(app, things) {
 
     // start by parsing the query
     parseQuery(req.body.data || '', function(thing, operation, dataItem, value) {
-      console.log(operation, dataItem, value)
+      // console.log(operation, dataItem, value)
       // is the thing defined?
       if (!thing) {
         res.send(things.createResponsePacket('ERR', {

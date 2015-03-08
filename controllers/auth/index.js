@@ -31,14 +31,16 @@ var canUser = function(auth, permission, cb) {
     if (token) {
 
       // get creation time
-      createdat = new Date(token.toObject().createdAt.toString());
+      if (token.toObject().createdAt) {
+        createdat = new Date(token.toObject().createdAt.toString());
 
-      // check for token expiration
-      if ( createdat.getTime() / 1000 + tokenexpiresafter < new Date().getTime() / 1000 ) {
-        sessionToken.remove({key: auth}, function(err) {
-          cb(err || "Token Expired - Not Authenticated");
-        });
-      }
+        // check for token expiration
+        if ( createdat.getTime() / 1000 + tokenexpiresafter < new Date().getTime() / 1000 ) {
+          sessionToken.remove({key: auth}, function(err) {
+            cb(err || "Token Expired - Not Authenticated");
+          });
+        }
+      };
 
       resp = [];
       _.each(token.permissions, function(p) {
