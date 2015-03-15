@@ -225,8 +225,8 @@ app.controller("RoomsController", function($scope, $http, roomsService, thingSer
 
       // update the payload data
       thingService.getAllThings(function(things) {
-        root.rooms = mergeDataStructures(root.rooms, root.processNewData(things, payload.data));
-        // console.log(root.rooms)
+        root.rooms = root.processNewData(things, payload.data);
+        // console.log(root.rooms, root.processNewData(things, payload.data))
       });
 
       // update scope
