@@ -35,7 +35,8 @@
   "author": "Ryan Gaus",
   "scripts": {
     "test": "mocha",
-    "deps": "sh update.sh"
+    "deps": "sh update.sh",
+    "postinstall": "bower install"
   },
   "main": "index.js",
   "devDependencies": {},
